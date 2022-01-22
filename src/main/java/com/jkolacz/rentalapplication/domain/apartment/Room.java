@@ -1,10 +1,10 @@
-package com.jkolacz.rentalapplication.doimain.apartment;
+package com.jkolacz.rentalapplication.domain.apartment;
 
-public class Room {
+class Room {
     private final String name;
     private final SquareMeter squareMeter;
 
-    public Room(String name, SquareMeter squareMeter) {
+    Room(String name, SquareMeter squareMeter) {
 
         this.name = name;
         this.squareMeter = squareMeter;

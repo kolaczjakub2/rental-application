@@ -1,17 +1,12 @@
 package com.jkolacz.rentalapplication.domain.apartment;
 
-import com.jkolacz.rentalapplication.doimain.apartment.Address;
-import com.jkolacz.rentalapplication.doimain.apartment.Apartment;
-import com.jkolacz.rentalapplication.doimain.apartment.Room;
-import com.jkolacz.rentalapplication.doimain.apartment.SquareMeter;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class ApartmentFactory {
     public Apartment create(String ownerId, String street, String postalCode, String houseNumber, String apartmentNumber,
-                             String city, String country, String description, Map<String, Double> roomsDefinition) {
+                            String city, String country, String description, Map<String, Double> roomsDefinition) {
         Address address = new Address(street, postalCode, houseNumber, apartmentNumber, city, country);
         List<Room> rooms = new ArrayList<>();
         roomsDefinition.forEach((name, size) ->

@@ -1,6 +1,6 @@
 package com.jkolacz.rentalapplication.application.apartment;
 
-import com.jkolacz.rentalapplication.doimain.apartment.Apartment;
+import com.jkolacz.rentalapplication.domain.apartment.Apartment;
 import com.jkolacz.rentalapplication.domain.apartment.ApartmentFactory;
 
 import java.util.Map;
