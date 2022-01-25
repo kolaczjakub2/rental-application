@@ -15,4 +15,9 @@ public class ApartmentJpaRepository implements ApartmentRepository {
     public void save(Apartment apartment) {
         springApartmentJpaRepository.save(apartment);
     }
+
+    @Override
+    public Apartment findById(String id) {
+        return springApartmentJpaRepository.findById(id).get();
+    }
 }
