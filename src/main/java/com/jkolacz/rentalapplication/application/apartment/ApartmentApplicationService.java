@@ -3,6 +3,7 @@ package com.jkolacz.rentalapplication.application.apartment;
 import com.jkolacz.rentalapplication.domain.apartment.Apartment;
 import com.jkolacz.rentalapplication.domain.apartment.ApartmentFactory;
 import com.jkolacz.rentalapplication.domain.apartment.ApartmentRepository;
+import com.jkolacz.rentalapplication.domain.apartment.Period;
 
 import java.time.LocalDate;
 import java.util.Map;
@@ -28,6 +29,6 @@ public class ApartmentApplicationService {
     public void book(String id, String tenantId, LocalDate start, LocalDate end) {
         Apartment apartment = apartmentRepository.findById(id);
         Period period = new Period(start,end);
-        apartment.book();
+        apartment.book(tenantId,period);
     }
 }
