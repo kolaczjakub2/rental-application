@@ -4,6 +4,7 @@ import com.jkolacz.rentalapplication.domain.apartment.Apartment;
 import com.jkolacz.rentalapplication.domain.apartment.ApartmentFactory;
 import com.jkolacz.rentalapplication.domain.apartment.ApartmentRepository;
 
+import java.time.LocalDate;
 import java.util.Map;
 
 public class ApartmentApplicationService {
@@ -21,6 +22,10 @@ public class ApartmentApplicationService {
                 apartmentNumber, city, country, description, roomsDefinition);
 
         apartmentRepository.save(apartment);
+
+    }
+
+    public void book(String id, String tenantId, LocalDate start, LocalDate end) {
 
     }
 }
