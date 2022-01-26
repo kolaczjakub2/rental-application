@@ -1,13 +1,17 @@
 package com.jkolacz.rentalapplication.domain.apartmentbookinghistory;
 
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
 import java.time.LocalDateTime;
 
+@Entity
 public class ApartmentBooking {
 
     private final LocalDateTime bookingDateTime;
     private final BookingStep step;
     private final String ownerId;
     private final String tenantId;
+    @Embedded
     private final BookingPeriod bookingPeriod;
 
     public ApartmentBooking(BookingStep step, LocalDateTime bookingDateTime, String ownerId, String tenantId, BookingPeriod bookingPeriod) {
