@@ -1,9 +1,10 @@
-package com.jkolacz.rentalapplication.application.apartment.apartmentbookinghistory;
+package com.jkolacz.rentalapplication.application.apartmentbookinghistory;
 
-import com.jkolacz.rentalapplication.domain.apartment.apartmentbookinghistory.ApartmentBooking;
-import com.jkolacz.rentalapplication.domain.apartment.apartmentbookinghistory.ApartmentBookingHistory;
+import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBooking;
+import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingHistory;
 import com.jkolacz.rentalapplication.domain.apartment.ApartmentBooked;
-import com.jkolacz.rentalapplication.domain.apartment.apartmentbookinghistory.ApartmentBookingHistoryRepository;
+import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingHistoryRepository;
+import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.BookingPeriod;
 import org.springframework.context.event.EventListener;
 
 public class ApartmentBookingHistoryEventListener {
@@ -16,9 +17,10 @@ public class ApartmentBookingHistoryEventListener {
     @EventListener
     public void consume(ApartmentBooked apartmentBooked) {
         ApartmentBookingHistory apartmentBookingHistory = getApartmentBookingHistoryFor(apartmentBooked.getApartmentId());
+        BookingPeriod bookingPeriod = new BookingPeriod(apartmentBooked.getPeriodStart(), apartmentBooked.getPeriodEnd());
 
-        apartmentBookingHistory.add(ApartmentBooking.start(apartmentBooked.getOwnerId(), apartmentBooked.getTenantId(),
-                apartmentBooked.getPeriodStart(), apartmentBooked.getPeriodEnd()));
+        apartmentBookingHistory.add(ApartmentBooking.start(apartmentBooked.getOwnerId(),
+                apartmentBooked.getTenantId(), bookingPeriod));
 
         apartmentBookingHistoryRepository.save(apartmentBookingHistory);
     }

@@ -1,4 +1,4 @@
-package com.jkolacz.rentalapplication.domain.apartment.apartmentbookinghistory;
+package com.jkolacz.rentalapplication.domain.apartmentbookinghistory;
 
 public interface ApartmentBookingHistoryRepository {
     void save(ApartmentBookingHistory apartmentBookingHistory);
