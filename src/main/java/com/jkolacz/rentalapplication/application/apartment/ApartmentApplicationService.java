@@ -10,8 +10,9 @@ public class ApartmentApplicationService {
     private final ApartmentRepository apartmentRepository;
     private final EventChannel eventChannel;
 
-    public ApartmentApplicationService(ApartmentRepository apartmentRepository) {
+    public ApartmentApplicationService(ApartmentRepository apartmentRepository, EventChannel eventChannel) {
         this.apartmentRepository = apartmentRepository;
+        this.eventChannel = eventChannel;
     }
 
     public void add(String ownerId, String street, String postalCode, String houseNumber, String apartmentNumber,
