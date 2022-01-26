@@ -1,6 +1,7 @@
 package com.jkolacz.rentalapplication.application.apartment;
 
 import com.jkolacz.rentalapplication.domain.apartment.*;
+import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
 
 import java.time.LocalDate;
 import java.util.Map;

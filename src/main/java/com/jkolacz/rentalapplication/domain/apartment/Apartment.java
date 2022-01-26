@@ -1,5 +1,7 @@
 package com.jkolacz.rentalapplication.domain.apartment;
 
+import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
+
 import javax.persistence.*;
 import java.util.List;
 

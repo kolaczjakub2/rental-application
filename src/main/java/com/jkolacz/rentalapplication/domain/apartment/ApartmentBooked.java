@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-class ApartmentBooked {
+public class ApartmentBooked {
     private final String eventId;
     private final LocalDateTime eventCreationDateTime;
     private final String apartmentId;
