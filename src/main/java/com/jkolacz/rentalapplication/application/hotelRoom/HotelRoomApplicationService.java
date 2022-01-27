@@ -1,5 +1,7 @@
 package com.jkolacz.rentalapplication.application.hotelRoom;
 
+import com.jkolacz.rentalapplication.domain.apartment.Booking;
+import com.jkolacz.rentalapplication.domain.apartment.BookingRepository;
 import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
 import com.jkolacz.rentalapplication.domain.hotelRoom.HotelRoom;
 import com.jkolacz.rentalapplication.domain.hotelRoom.HotelRoomFactory;
@@ -10,13 +12,14 @@ import java.util.List;
 import java.util.Map;
 
 public class HotelRoomApplicationService {
-
     private final HotelRoomRepository hotelRoomRepository;
+    private final BookingRepository bookingRepository;
     private final EventChannel eventChannel;
 
 
-    public HotelRoomApplicationService(HotelRoomRepository hotelRoomRepository, EventChannel eventChannel) {
+    public HotelRoomApplicationService(HotelRoomRepository hotelRoomRepository, BookingRepository bookingRepository, EventChannel eventChannel) {
         this.hotelRoomRepository = hotelRoomRepository;
+        this.bookingRepository = bookingRepository;
         this.eventChannel = eventChannel;
     }
 
@@ -27,7 +30,9 @@ public class HotelRoomApplicationService {
 
     public void book(String id, String tenantId, List<LocalDate> days){
         HotelRoom hotelRoom = hotelRoomRepository.findById(id);
-        hotelRoom.book(tenantId,days,eventChannel);
+        Booking booking = hotelRoom.book(tenantId,days,eventChannel);
+
+        bookingRepository.save(booking);
     }
 
 }

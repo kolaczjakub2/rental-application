@@ -30,6 +30,6 @@ public class Apartment {
         //publish an event
         ApartmentBooked apartmentBooked = ApartmentBooked.create(id, ownerId,tenantId,period);
         eventChannel.publish(apartmentBooked);
-        return new Booking(id,tenantId,period);
+        return Booking.apartment(id,tenantId,period);
     }
 }

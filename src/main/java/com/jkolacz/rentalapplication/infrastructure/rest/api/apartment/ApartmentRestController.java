@@ -24,4 +24,7 @@ public class ApartmentRestController {
     public void book(@PathVariable String id, @RequestBody ApartmentBookingDto apartmentBookingDto){
         apartmentApplicationService.book(id, apartmentBookingDto.getTenantId(),apartmentBookingDto.getStart(),apartmentBookingDto.getEnd());
     }
+
+
+
 }

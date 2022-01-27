@@ -1,5 +1,6 @@
 package com.jkolacz.rentalapplication.domain.hotelRoom;
 
+import com.jkolacz.rentalapplication.domain.apartment.Booking;
 import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
 
 import javax.persistence.Entity;
@@ -13,7 +14,7 @@ import java.util.List;
 public class HotelRoom {
     @Id
     @GeneratedValue
-    private String id;
+    private String hotelRoomId;
     private final String hotelId;
     private final Integer number;
     private final String description;
@@ -27,8 +28,9 @@ public class HotelRoom {
         this.rooms = rooms;
     }
 
-    public void book(String tenantId, List<LocalDate> days, EventChannel eventChannel) {
-        HotelRoomBooked hotelRoomBooked = HotelRoomBooked.create(id, tenantId, hotelId, days);
+    public Booking book(String tenantId, List<LocalDate> days, EventChannel eventChannel) {
+        HotelRoomBooked hotelRoomBooked = HotelRoomBooked.create(hotelRoomId, tenantId, hotelId, days);
         eventChannel.publish(hotelRoomBooked);
+        return Booking.hotelRoom(hotelRoomId,tenantId,days);
     }
 }
