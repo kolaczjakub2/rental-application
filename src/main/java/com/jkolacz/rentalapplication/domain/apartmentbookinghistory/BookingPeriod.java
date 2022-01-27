@@ -13,12 +13,4 @@ public class BookingPeriod {
         this.periodStart = periodStart;
         this.periodEnd = periodEnd;
     }
-
-    public LocalDate getPeriodStart() {
-        return periodStart;
-    }
-
-    public LocalDate getPeriodEnd() {
-        return periodEnd;
-    }
 }
