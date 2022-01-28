@@ -1,5 +1,7 @@
 package com.jkolacz.rentalapplication.domain.apartment;
 
+import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -8,7 +10,7 @@ import java.util.List;
 
 @Entity
 public class Booking {
-    private final RentalType apartment;
+    private final RentalType rentalType;
     @Id
     @GeneratedValue
     private String id;
@@ -17,9 +19,9 @@ public class Booking {
     private final List<LocalDate> days;
     private BookingStatus bookingStatus = BookingStatus.OPEN;
 
-    public Booking(RentalType apartment, String rentalPlaceId, String tenantId, List<LocalDate> days) {
+    public Booking(RentalType rentalType, String rentalPlaceId, String tenantId, List<LocalDate> days) {
 
-        this.apartment = apartment;
+        this.rentalType = rentalType;
         this.rentalPlaceId = rentalPlaceId;
         this.tenantId = tenantId;
         this.days = days;
@@ -37,5 +39,12 @@ public class Booking {
 
     public void reject() {
         bookingStatus = BookingStatus.REJECTED;
+    }
+
+    public void accept(EventChannel eventChannel) {
+        bookingStatus = BookingStatus.ACCEPTED;
+        BookingAccepted bookingAccepted =  BookingAccepted.create(rentalType,rentalPlaceId,tenantId,days);
+        eventChannel.publish(bookingAccepted);
+
     }
 }

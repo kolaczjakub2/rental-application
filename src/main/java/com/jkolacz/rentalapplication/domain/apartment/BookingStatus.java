@@ -1,5 +1,5 @@
 package com.jkolacz.rentalapplication.domain.apartment;
 
 public enum BookingStatus {
-    REJECTED, OPEN
+    REJECTED, ACCEPTED, OPEN
 }

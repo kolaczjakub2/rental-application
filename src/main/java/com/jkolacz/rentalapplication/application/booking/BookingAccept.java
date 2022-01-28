@@ -1,12 +1,13 @@
 package com.jkolacz.rentalapplication.application.booking;
 
 public class BookingAccept {
-    private String id;
-    public BookingAccept(String id) {
-        this.id = id;
+    private final String bookingId;
+
+    public BookingAccept(String bookingId) {
+        this.bookingId = bookingId;
     }
 
-    public String getId() {
-        return id;
+    String getBookingId() {
+        return bookingId;
     }
 }
