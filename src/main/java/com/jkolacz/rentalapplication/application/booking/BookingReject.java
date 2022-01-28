@@ -1,6 +1,13 @@
 package com.jkolacz.rentalapplication.application.booking;
 
 public class BookingReject {
-    public BookingReject(String id) {
+    private final String bookingId;
+
+    public BookingReject(String bookingId) {
+        this.bookingId = bookingId;
+    }
+
+    String getBookingId() {
+        return bookingId;
     }
 }
