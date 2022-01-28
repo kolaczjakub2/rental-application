@@ -2,7 +2,7 @@ package com.jkolacz.rentalapplication.infrastructure.rest.api.booking;
 
 import com.jkolacz.rentalapplication.application.booking.BookingAccept;
 import com.jkolacz.rentalapplication.application.booking.BookingReject;
-import com.jkolacz.rentalapplication.application.commandregistry.CommandRegister;
+import com.jkolacz.rentalapplication.application.commandregistry.CommandRegistry;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,19 +12,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/booking")
 public class BookingRestController {
 
-    private final CommandRegister commandRegister;
+    private final CommandRegistry commandRegistry;
 
-    public BookingRestController(CommandRegister commandRegister) {
-        this.commandRegister = commandRegister;
+    public BookingRestController(CommandRegistry commandRegistry) {
+        this.commandRegistry = commandRegistry;
     }
 
     @PutMapping("/reject/{id}")
     public void reject(@PathVariable String id){
-        commandRegister.register(new BookingReject(id));
+        commandRegistry.register(new BookingReject(id));
     }
 
     @PutMapping("accept/{id}")
     public void accept(@PathVariable String id){
-        commandRegister.register(new BookingAccept(id));
+        commandRegistry.register(new BookingAccept(id));
     }
 }
