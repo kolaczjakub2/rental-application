@@ -1,6 +1,7 @@
 package com.jkolacz.rentalapplication.infrastructure.rest.api.apartment;
 
 import com.jkolacz.rentalapplication.application.apartment.ApartmentApplicationService;
+import com.jkolacz.rentalapplication.query.apartment.ApartmentDetails;
 import com.jkolacz.rentalapplication.query.apartment.ApartmentReadModel;
 import com.jkolacz.rentalapplication.query.apartment.QueryApartmentRepository;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +33,11 @@ public class ApartmentRestController {
     @GetMapping
     public Iterable<ApartmentReadModel> findAll(){
         return queryApartmentRepository.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public ApartmentDetails findById(@PathVariable String id){
+        return queryApartmentRepository.findById(id);
     }
 
 }
