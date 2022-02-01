@@ -3,14 +3,12 @@ package com.jkolacz.rentalapplication.domain.hotelRoom;
 import com.jkolacz.rentalapplication.domain.apartment.Booking;
 import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
+@Table(name="HOTEL_ROOM")
 public class HotelRoom {
     @Id
     @GeneratedValue
