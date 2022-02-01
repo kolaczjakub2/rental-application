@@ -7,8 +7,7 @@ public class QueryHotelRepository {
         this.springQueryHotelRepository = springQueryHotelRepository;
     }
 
-
-    public HotelReadModel findById(String id) {
-        return springQueryHotelRepository.findById(id).get();
+    public Iterable<HotelReadModel> findAll() {
+        return springQueryHotelRepository.findAll();
     }
 }

@@ -24,8 +24,8 @@ public class HotelRestController {
                 hotelDto.getPostalCode(), hotelDto.getCity(), hotelDto.getCountry());
     }
 
-    @GetMapping("/{id}")
-    public HotelReadModel findById(@PathVariable String id){
-        return queryHotelRepository.findById(id);
+    @GetMapping
+    public Iterable<HotelReadModel> findAll(){
+        return queryHotelRepository.findAll();
     }
 }
