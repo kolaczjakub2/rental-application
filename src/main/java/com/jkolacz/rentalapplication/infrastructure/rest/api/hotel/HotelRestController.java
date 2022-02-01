@@ -1,19 +1,20 @@
 package com.jkolacz.rentalapplication.infrastructure.rest.api.hotel;
 
 import com.jkolacz.rentalapplication.application.hotel.HotelApplicationService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.jkolacz.rentalapplication.query.hotel.HotelReadModel;
+import com.jkolacz.rentalapplication.query.hotel.QueryHotelRepository;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("hotel")
 public class HotelRestController {
 
     private final HotelApplicationService hotelApplicationService;
+    private final QueryHotelRepository queryHotelRepository;
 
-    public HotelRestController(HotelApplicationService hotelApplicationService) {
+    public HotelRestController(HotelApplicationService hotelApplicationService, QueryHotelRepository queryHotelRepository) {
         this.hotelApplicationService = hotelApplicationService;
+        this.queryHotelRepository = queryHotelRepository;
     }
 
 
@@ -21,5 +22,10 @@ public class HotelRestController {
     public void add(@RequestBody HotelDto hotelDto) {
         hotelApplicationService.add(hotelDto.getName(), hotelDto.getStreet(), hotelDto.getBuildingNumber(),
                 hotelDto.getPostalCode(), hotelDto.getCity(), hotelDto.getCountry());
+    }
+
+    @GetMapping("/{id}")
+    public HotelReadModel findById(@PathVariable String id){
+        return queryHotelRepository.findById(id);
     }
 }
