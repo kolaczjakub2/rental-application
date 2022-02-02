@@ -13,16 +13,16 @@ public class JpaApartmentBookingHistoryRepository implements ApartmentBookingHis
 
     @Override
     public void save(ApartmentBookingHistory apartmentBookingHistory) {
-        historyRepository.save(apartmentBookingHistory);
+
     }
 
     @Override
     public boolean existFor(String apartmentId) {
-        return historyRepository.existsById(apartmentId);
+        return false;
     }
 
     @Override
     public ApartmentBookingHistory findFor(String apartmentId) {
-        return historyRepository.findById(apartmentId).get();
+        return null;
     }
 }

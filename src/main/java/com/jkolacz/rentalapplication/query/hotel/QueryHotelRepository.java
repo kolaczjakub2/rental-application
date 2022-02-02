@@ -8,6 +8,6 @@ public class QueryHotelRepository {
     }
 
     public Iterable<HotelReadModel> findAll() {
-        return springQueryHotelRepository.findAll();
+        return null;
     }
 }

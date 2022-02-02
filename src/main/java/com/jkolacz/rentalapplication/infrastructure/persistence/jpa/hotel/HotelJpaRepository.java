@@ -13,6 +13,6 @@ public class HotelJpaRepository implements HotelRepository {
 
     @Override
     public void save(Hotel hotel) {
-        springHotelJpaRepository.save(hotel);
+
     }
 }

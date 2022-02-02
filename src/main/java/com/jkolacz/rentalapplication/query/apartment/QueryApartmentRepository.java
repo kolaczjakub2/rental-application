@@ -10,12 +10,12 @@ public class QueryApartmentRepository {
     }
 
     public Iterable<ApartmentReadModel> findAll() {
-        return springQueryApartmentRepository.findAll();
+        return null;
     }
 
     public ApartmentDetails findById(String id) {
-        ApartmentReadModel apartmentReadModel = springQueryApartmentRepository.findById(id).get();
-        ApartmentBookingHistoryReadModel apartmentBookingHistoryReadModel = springQueryApartmentBookingHistoryRepository.findById(id).get();
+        ApartmentReadModel apartmentReadModel = null;
+        ApartmentBookingHistoryReadModel apartmentBookingHistoryReadModel = null;
         return new ApartmentDetails(apartmentReadModel, apartmentBookingHistoryReadModel);
     }
 }
