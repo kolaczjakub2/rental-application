@@ -5,7 +5,7 @@ import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
+//@Entity
 @Table(name = "APARTMENT")
 public class Apartment {
     @Id

@@ -3,7 +3,7 @@ package com.jkolacz.rentalapplication.query.hotelRoom;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
+//@Entity
 @Table(name = "HOTEL_ROOM")
 public class HotelRoomReadModel {
 

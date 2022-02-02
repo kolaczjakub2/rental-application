@@ -3,7 +3,7 @@ package com.jkolacz.rentalapplication.query.apartment;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
+//@Entity
 @Table(name = "APARTMENT")
 public class ApartmentReadModel {
 

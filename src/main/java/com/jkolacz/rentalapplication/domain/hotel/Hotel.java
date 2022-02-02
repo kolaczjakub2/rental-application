@@ -2,7 +2,7 @@ package com.jkolacz.rentalapplication.domain.hotel;
 
 import javax.persistence.*;
 
-@Entity
+//@Entity
 @Table(name = "HOTEL")
 public class Hotel {
     @Id
