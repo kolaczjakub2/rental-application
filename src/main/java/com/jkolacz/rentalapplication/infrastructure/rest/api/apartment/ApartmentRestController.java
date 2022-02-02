@@ -6,7 +6,7 @@ import com.jkolacz.rentalapplication.query.apartment.ApartmentReadModel;
 import com.jkolacz.rentalapplication.query.apartment.QueryApartmentRepository;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+//@RestController
 @RequestMapping("/apartment")
 public class ApartmentRestController {
 

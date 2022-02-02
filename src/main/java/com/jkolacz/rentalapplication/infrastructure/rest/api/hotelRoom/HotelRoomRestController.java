@@ -5,7 +5,7 @@ import com.jkolacz.rentalapplication.query.hotelRoom.HotelRoomReadModel;
 import com.jkolacz.rentalapplication.query.hotelRoom.QueryHotelRoomRepository;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+//@RestController
 @RequestMapping("/hotelroom")
 public class HotelRoomRestController {
 
