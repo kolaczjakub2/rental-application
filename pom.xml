@@ -17,6 +17,7 @@
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <h2.version>2.1.210</h2.version>
         <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
+        <maven-pmd-plugin.version>3.14.0</maven-pmd-plugin.version>
     </properties>
 
     <parent>
@@ -68,24 +69,43 @@
             <id>static-analysis</id>
             <build>
                 <plugins>
+<!--                    <plugin>-->
+<!--                        <groupId>org.apache.maven.plugins</groupId>-->
+<!--                        <artifactId>maven-checkstyle-plugin</artifactId>-->
+<!--                        <version>${maven-checkstyle-plugin.version}</version>-->
+
+<!--                        <executions>-->
+<!--                            <execution>-->
+<!--                                <id>validate</id>-->
+<!--                                <phase>validate</phase>-->
+<!--                                <goals>-->
+<!--                                    <goal>check</goal>-->
+<!--                                </goals>-->
+<!--                                <configuration>-->
+<!--                                    <configLocation>config/static-analysis/checkstyle.xml</configLocation>-->
+<!--                                    <violationSeverity>warning</violationSeverity>-->
+<!--                                </configuration>-->
+<!--                            </execution>-->
+<!--                        </executions>-->
+<!--                    </plugin>-->
+
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-checkstyle-plugin</artifactId>
-                        <version>${maven-checkstyle-plugin.version}</version>
+                        <artifactId>maven-pmd-plugin</artifactId>
+                        <version>${maven-pmd-plugin.version}</version>
 
                         <executions>
                             <execution>
-                                <id>validate</id>
                                 <phase>validate</phase>
                                 <goals>
                                     <goal>check</goal>
                                 </goals>
-                                <configuration>
-                                    <configLocation>config/static-analysis/checkstyle.xml</configLocation>
-                                    <violationSeverity>warning</violationSeverity>
-                                </configuration>
                             </execution>
                         </executions>
+
+                        <configuration>
+                            <targetJdk>11</targetJdk>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>
