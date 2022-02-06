@@ -24,7 +24,6 @@ public class ApartmentBooked {
     }
 
     static ApartmentBooked create(String apartmentId, String ownerId, String tenantId, Period period) {
-
         String eventId = UUID.randomUUID().toString();
         LocalDateTime eventCreationDateTime = LocalDateTime.now();
         return new ApartmentBooked(eventId, eventCreationDateTime, apartmentId, ownerId, tenantId, period);
