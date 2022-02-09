@@ -26,12 +26,20 @@ class PeriodTest {
         return Stream.of(
                 Arguments.of(LocalDate.of(2022, 1, 1), LocalDate.of(2022, 1, 3),
                         asList(LocalDate.of(2022, 1, 1), LocalDate.of(2022, 1, 2), LocalDate.of(2022, 1, 3))),
-               Arguments.of(LocalDate.of(2022, 10, 1), LocalDate.of(2022, 10, 2),
+                Arguments.of(LocalDate.of(2022, 10, 1), LocalDate.of(2022, 10, 2),
                         asList(LocalDate.of(2022, 10, 1), LocalDate.of(2022, 10, 2))),
                 Arguments.of(LocalDate.of(2022, 5, 5), LocalDate.of(2022, 5, 10),
                         asList(LocalDate.of(2022, 5, 5), LocalDate.of(2022, 5, 6),
                                 LocalDate.of(2022, 5, 7), LocalDate.of(2022, 5, 8), LocalDate.of(2022, 5, 9), LocalDate.of(2022, 5, 10)))
         );
+    }
+
+    @Test
+    void shouldReturnOneDateWhenStartAndEndAreTheSame() {
+        LocalDate date = LocalDate.of(2022, 10, 11);
+        List<LocalDate> actual = new Period(date, date).asDays();
+
+        assertThat(actual).containsExactly(date);
     }
 
 }
