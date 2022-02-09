@@ -8,16 +8,16 @@ import java.util.UUID;
 public class BookingAccepted {
     private final String eventId;
     private final LocalDateTime eventCreationDateTime;
-    private final String name;
+    private final String rentalType;
     private final String rentalPlaceId;
     private final String tenantId;
     private final List<LocalDate> days;
 
-    public BookingAccepted(String eventId, LocalDateTime eventCreationDateTime, String name, String rentalPlaceId, String tenantId, List<LocalDate> days) {
+    public BookingAccepted(String eventId, LocalDateTime eventCreationDateTime, String rentalType, String rentalPlaceId, String tenantId, List<LocalDate> days) {
 
         this.eventId = eventId;
         this.eventCreationDateTime = eventCreationDateTime;
-        this.name = name;
+        this.rentalType = rentalType;
         this.rentalPlaceId = rentalPlaceId;
         this.tenantId = tenantId;
         this.days = days;
@@ -37,8 +37,8 @@ public class BookingAccepted {
         return eventCreationDateTime;
     }
 
-    public String getName() {
-        return name;
+    public String getRentalType() {
+        return rentalType;
     }
 
     public String getRentalPlaceId() {
