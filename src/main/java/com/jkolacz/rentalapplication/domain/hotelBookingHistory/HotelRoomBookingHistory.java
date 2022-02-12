@@ -1,6 +1,5 @@
-package com.jkolacz.rentalapplication.domain.hotelRoomBookingHistory;
+package com.jkolacz.rentalapplication.domain.hotelBookingHistory;
 
-import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.time.LocalDate;

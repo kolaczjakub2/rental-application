@@ -1,9 +1,9 @@
 package com.jkolacz.rentalapplication.domain.apartment;
 
+import org.assertj.core.api.Assertions;
+
 import java.time.LocalDate;
 import java.util.List;
-
-import org.assertj.core.api.Assertions;
 
 import static java.util.Arrays.asList;
 
@@ -54,4 +54,8 @@ class BookingAssertion {
     }
 
 
+    public BookingAssertion isRejected() {
+        Assertions.assertThat(actual).hasFieldOrPropertyWithValue("bookingStatus", BookingStatus.REJECTED);
+        return this;
+    }
 }

@@ -1,6 +1,5 @@
-package com.jkolacz.rentalapplication.domain.hotelRoomBookingHistory;
+package com.jkolacz.rentalapplication.domain.hotelBookingHistory;
 
-import javax.persistence.Entity;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;

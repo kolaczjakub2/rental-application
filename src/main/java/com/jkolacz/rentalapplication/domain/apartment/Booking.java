@@ -2,7 +2,6 @@ package com.jkolacz.rentalapplication.domain.apartment;
 
 import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
 
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.time.LocalDate;
@@ -19,8 +18,7 @@ public class Booking {
     private final List<LocalDate> days;
     private BookingStatus bookingStatus = BookingStatus.OPEN;
 
-    public Booking(RentalType rentalType, String rentalPlaceId, String tenantId, List<LocalDate> days) {
-
+    Booking(RentalType rentalType, String rentalPlaceId, String tenantId, List<LocalDate> days) {
         this.rentalType = rentalType;
         this.rentalPlaceId = rentalPlaceId;
         this.tenantId = tenantId;

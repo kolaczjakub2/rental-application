@@ -1,9 +1,9 @@
 package com.jkolacz.rentalapplication.domain.apartmentbookinghistory;
 
+import org.assertj.core.api.Assertions;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
-import org.assertj.core.api.Assertions;
 
 
 public class ApartmentBookingAssertion {

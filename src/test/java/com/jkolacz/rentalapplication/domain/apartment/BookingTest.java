@@ -9,6 +9,10 @@ import static java.util.Arrays.asList;
 
 class BookingTest {
 
+    private static final List<LocalDate> DAYS = asList(LocalDate.now(), LocalDate.now().plusDays(1));
+    private static final String TENANT_ID = "1234";
+    private static final String RENTAL_PLACE_ID = "5748";
+
     @Test
     public void shouldCreateApartmentBooking() {
 
@@ -47,4 +51,12 @@ class BookingTest {
                 .containsAllDays(days);
     }
 
+    @Test
+    void shouldChangeStatusOfBookingOnceRejected() {
+        Booking booking =Booking.hotelRoom(RENTAL_PLACE_ID,TENANT_ID,DAYS);
+
+        booking.reject();
+
+        BookingAssertion.assertThat(booking).isRejected();
+    }
 }

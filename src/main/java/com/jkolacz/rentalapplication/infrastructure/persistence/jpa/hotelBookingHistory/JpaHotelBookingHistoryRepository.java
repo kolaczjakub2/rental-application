@@ -1,7 +1,7 @@
 package com.jkolacz.rentalapplication.infrastructure.persistence.jpa.hotelBookingHistory;
 
-import com.jkolacz.rentalapplication.domain.hotelRoomBookingHistory.HotelBookingHistory;
-import com.jkolacz.rentalapplication.domain.hotelRoomBookingHistory.HotelBookingHistoryRepository;
+import com.jkolacz.rentalapplication.domain.hotelBookingHistory.HotelBookingHistory;
+import com.jkolacz.rentalapplication.domain.hotelBookingHistory.HotelBookingHistoryRepository;
 
 public class JpaHotelBookingHistoryRepository  implements HotelBookingHistoryRepository {
     private final SpringJpaHotelBookingHistoryRepository springJpaHotelBookingHistoryRepository;

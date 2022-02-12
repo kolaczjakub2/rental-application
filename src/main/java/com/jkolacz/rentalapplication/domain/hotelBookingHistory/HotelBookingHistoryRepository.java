@@ -1,4 +1,4 @@
-package com.jkolacz.rentalapplication.domain.hotelRoomBookingHistory;
+package com.jkolacz.rentalapplication.domain.hotelBookingHistory;
 
 public interface HotelBookingHistoryRepository {
     boolean existsFor(String hotelId);
