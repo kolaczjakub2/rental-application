@@ -1,7 +1,6 @@
 package com.jkolacz.rentalapplication.domain.hotelRoom;
 
 import javax.persistence.Embedded;
-import javax.persistence.Entity;
 
 //@Entity
 class Space {

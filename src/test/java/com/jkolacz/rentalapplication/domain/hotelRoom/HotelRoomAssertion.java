@@ -37,9 +37,9 @@ public class HotelRoomAssertion {
             List<Space> spaces = (List<Space>) spacesActual;
             Assertions.assertThat(spaces).hasSize(expected.size());
 
-
-            expected.forEach(((name, squareMeter) ->
-                    Assertions.assertThat(spaces).anySatisfy(hasSpaceThat(name, squareMeter))));
+            expected.forEach((name, squareMeter) -> {
+                Assertions.assertThat(spaces).anySatisfy(hasSpaceThat(name, squareMeter));
+            });
         });
         return this;
     }

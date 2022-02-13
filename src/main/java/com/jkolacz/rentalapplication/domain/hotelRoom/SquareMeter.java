@@ -4,9 +4,9 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 class SquareMeter {
-    private Double size;
+    private Double value;
 
-    SquareMeter(Double size) {
-        this.size = size;
+    SquareMeter(Double value) {
+        this.value = value;
     }
 }
