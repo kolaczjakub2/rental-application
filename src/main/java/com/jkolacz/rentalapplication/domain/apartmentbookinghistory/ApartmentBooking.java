@@ -1,7 +1,6 @@
 package com.jkolacz.rentalapplication.domain.apartmentbookinghistory;
 
 import javax.persistence.Embedded;
-import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 
@@ -16,7 +15,7 @@ public class ApartmentBooking {
     @Embedded
     private final BookingPeriod bookingPeriod;
 
-    public ApartmentBooking(BookingStep step, LocalDateTime bookingDateTime, String ownerId, String tenantId, BookingPeriod bookingPeriod) {
+    ApartmentBooking(BookingStep step, LocalDateTime bookingDateTime, String ownerId, String tenantId, BookingPeriod bookingPeriod) {
         this.bookingDateTime = bookingDateTime;
         this.step = step;
         this.ownerId = ownerId;

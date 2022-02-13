@@ -17,13 +17,13 @@ public class HotelRoom {
     private final Integer number;
     private final String description;
     @OneToMany
-    private final List<Space> rooms;
+    private final List<Space> spaces;
 
-    HotelRoom(String hotelId, Integer number, String description, List<Space> rooms) {
+    HotelRoom(String hotelId, Integer number, String description, List<Space> spaces) {
         this.hotelId = hotelId;
         this.number = number;
         this.description = description;
-        this.rooms = rooms;
+        this.spaces = spaces;
     }
 
     public Booking book(String tenantId, List<LocalDate> days, EventChannel eventChannel) {

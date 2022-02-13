@@ -11,18 +11,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ApartmentBookedTest {
 
 
+    public static final String APARTMENT_ID = "1234";
+    public static final String OWNER_ID = "5678";
+    public static final String TENANT_ID = "3456";
+    public static final LocalDate PERIOD_START = LocalDate.of(2020, 1, 1);
+    public static final LocalDate PERIOD_END = LocalDate.of(2020, 2, 1);
+
     @Test
     void shouldCreateEventWithAllInformation() {
-        String apartmentId = "1234";
-        String ownerId = "5678";
-        String tenantId = "3456";
-        LocalDate periodStart = LocalDate.of(2020, 1, 1);
-        LocalDate periodEnd = LocalDate.of(2020, 2, 1);
-        Period period = new Period(periodStart, periodEnd);
+        Period period = new Period(PERIOD_START, PERIOD_END);
         LocalDateTime afterNow = LocalDateTime.now().plusSeconds(1);
         LocalDateTime beforeNow = LocalDateTime.now().minusSeconds(1);
 
-        ApartmentBooked actual = ApartmentBooked.create(apartmentId, ownerId, tenantId, period);
+        ApartmentBooked actual = ApartmentBooked.create(APARTMENT_ID, OWNER_ID, TENANT_ID, period);
 
 
         assertThat(actual.getEventId()).matches(Pattern.compile("[0-9a-z\\-]{36}"));
@@ -30,10 +31,10 @@ class ApartmentBookedTest {
         assertThat(actual.getEventCreationDateTime())
                 .isBefore(afterNow)
                 .isAfter(beforeNow);
-        assertThat(actual.getApartmentId()).isEqualTo(apartmentId);
-        assertThat(actual.getOwnerId()).isEqualTo(ownerId);
-        assertThat(actual.getTenantId()).isEqualTo(tenantId);
-        assertThat(actual.getPeriodStart()).isEqualTo(periodStart);
-        assertThat(actual.getPeriodEnd()).isEqualTo(periodEnd);
+        assertThat(actual.getApartmentId()).isEqualTo(APARTMENT_ID);
+        assertThat(actual.getOwnerId()).isEqualTo(OWNER_ID);
+        assertThat(actual.getTenantId()).isEqualTo(TENANT_ID);
+        assertThat(actual.getPeriodStart()).isEqualTo(PERIOD_START);
+        assertThat(actual.getPeriodEnd()).isEqualTo(PERIOD_END);
     }
 }
