@@ -23,6 +23,8 @@ class ApartmentBookingHistoryEventListenerTest {
     private static final LocalDate START = LocalDate.of(2020, 10, 11);
     private static final LocalDate END = LocalDate.of(2020, 10, 12);
     private static final Period PERIOD = new Period(START, END);
+    private static final int FIRST_SIZE = 1;
+    private static final int TWO_BOOKINGS = 2;
 
     private final ArgumentCaptor<ApartmentBookingHistory> captor = ArgumentCaptor.forClass(ApartmentBookingHistory.class);
     private final ApartmentBookingHistoryRepository repository = mock(ApartmentBookingHistoryRepository.class);
@@ -31,11 +33,11 @@ class ApartmentBookingHistoryEventListenerTest {
     @Test
     void shouldCreateApartmentBookingHistoryWhenConsumingApartmentBooked() {
         givenNotExistingApartmentBookingHistory();
+
         eventListener.consume(givenApartmentBooked());
 
         BDDMockito.then(repository).should().save(captor.capture());
-        thenApartmentBookingHistoryShouldContainOneApartmentBooking(captor.getValue());
-        thenApartmentBookingHistoryShouldHaveApartmentBookings(captor.getValue(), 1);
+        thenApartmentBookingHistoryShouldHaveApartmentBookings(captor.getValue(), FIRST_SIZE);
     }
 
     @Test
@@ -45,7 +47,7 @@ class ApartmentBookingHistoryEventListenerTest {
         eventListener.consume(givenApartmentBooked());
 
         BDDMockito.then(repository).should().save(captor.capture());
-        thenApartmentBookingHistoryShouldHaveApartmentBookings(captor.getValue(), 2);
+        thenApartmentBookingHistoryShouldHaveApartmentBookings(captor.getValue(), TWO_BOOKINGS);
     }
 
     private void givenExistingApartmentBookingHistory() {
@@ -55,6 +57,11 @@ class ApartmentBookingHistoryEventListenerTest {
         BDDMockito.given(repository.findFor(APARTMENT_ID)).willReturn(apartmentBookingHistory);
 
     }
+
+    private void givenNotExistingApartmentBookingHistory() {
+        BDDMockito.given(repository.existFor(APARTMENT_ID)).willReturn(Boolean.FALSE);
+    }
+
 
     private void thenApartmentBookingHistoryShouldHaveApartmentBookings(ApartmentBookingHistory actual, int bookingsSize) {
         assertThat(actual).extracting("bookings").satisfies(actualBookings -> {
@@ -71,14 +78,6 @@ class ApartmentBookingHistoryEventListenerTest {
 
         });
 
-    }
-
-    private void thenApartmentBookingHistoryShouldContainOneApartmentBooking(ApartmentBookingHistory value) {
-
-    }
-
-    private void givenNotExistingApartmentBookingHistory() {
-        BDDMockito.given(repository.existFor(APARTMENT_ID)).willReturn(Boolean.FALSE);
     }
 
 
