@@ -35,7 +35,7 @@ class ApartmentBookingHistoryEventListenerTest {
 
         BDDMockito.then(repository).should().save(captor.capture());
         thenApartmentBookingHistoryShouldContainOneApartmentBooking(captor.getValue());
-        thenApartmentBookingHistoryShouldHave(captor.getValue(), OWNER_ID, TENANT_ID, START, END,1);
+        thenApartmentBookingHistoryShouldHaveApartmentBookings(captor.getValue(), 1);
     }
 
     @Test
@@ -45,7 +45,7 @@ class ApartmentBookingHistoryEventListenerTest {
         eventListener.consume(givenApartmentBooked());
 
         BDDMockito.then(repository).should().save(captor.capture());
-        thenApartmentBookingHistoryShouldHave(captor.getValue(), OWNER_ID, TENANT_ID, START, END,2);
+        thenApartmentBookingHistoryShouldHaveApartmentBookings(captor.getValue(), 2);
     }
 
     private void givenExistingApartmentBookingHistory() {
@@ -56,16 +56,16 @@ class ApartmentBookingHistoryEventListenerTest {
 
     }
 
-    private void thenApartmentBookingHistoryShouldHave(ApartmentBookingHistory actual, String ownerId, String tenantId, LocalDate start, LocalDate end, int bookingsSize) {
+    private void thenApartmentBookingHistoryShouldHaveApartmentBookings(ApartmentBookingHistory actual, int bookingsSize) {
         assertThat(actual).extracting("bookings").satisfies(actualBookings -> {
             List<ApartmentBooking> bookings = (List<ApartmentBooking>) actualBookings;
             assertThat(bookings)
                     .hasSize(bookingsSize)
                     .anySatisfy(actualBooking -> {
                         ApartmentBookingAssertion.assertThat(actualBooking)
-                                .hasOwnerIdEqualTo(ownerId)
-                                .hasTenantIdEqualTo(tenantId)
-                                .hasBookingPeriodThatHas(start, end);
+                                .hasOwnerIdEqualTo(OWNER_ID)
+                                .hasTenantIdEqualTo(TENANT_ID)
+                                .hasBookingPeriodThatHas(START, END);
 
                     });
 
