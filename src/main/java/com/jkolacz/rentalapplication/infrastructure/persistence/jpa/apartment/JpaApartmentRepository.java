@@ -2,12 +2,14 @@ package com.jkolacz.rentalapplication.infrastructure.persistence.jpa.apartment;
 
 import com.jkolacz.rentalapplication.domain.apartment.Apartment;
 import com.jkolacz.rentalapplication.domain.apartment.ApartmentRepository;
+import org.springframework.stereotype.Repository;
 
-public class ApartmentJpaRepository implements ApartmentRepository {
+@Repository
+public class JpaApartmentRepository implements ApartmentRepository {
 
     private final SpringApartmentJpaRepository springApartmentJpaRepository;
 
-    public ApartmentJpaRepository(SpringApartmentJpaRepository springApartmentJpaRepository) {
+    public JpaApartmentRepository(SpringApartmentJpaRepository springApartmentJpaRepository) {
         this.springApartmentJpaRepository = springApartmentJpaRepository;
     }
 
@@ -18,6 +20,6 @@ public class ApartmentJpaRepository implements ApartmentRepository {
 
     @Override
     public Apartment findById(String id) {
-        return null;
+        throw new ApartmentNotFoundException(id);
     }
 }

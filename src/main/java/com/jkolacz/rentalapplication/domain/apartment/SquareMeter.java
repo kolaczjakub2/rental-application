@@ -9,4 +9,12 @@ class SquareMeter {
     SquareMeter(Double size) {
         this.size = size;
     }
+
+    private Double getSize() {
+        return size;
+    }
+
+    private void setSize(Double size) {
+        this.size = size;
+    }
 }
