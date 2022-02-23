@@ -6,6 +6,9 @@ import javax.persistence.Embeddable;
 class SquareMeter {
     private Double size;
 
+    private SquareMeter() {
+    }
+
     SquareMeter(Double size) {
         this.size = size;
     }

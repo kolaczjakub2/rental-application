@@ -4,23 +4,26 @@ import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "APARTMENT")
 public class Apartment {
     @Id
     @GeneratedValue
-    private String id;
-    private final String ownerId;
+    private UUID id;
+    private String ownerId;
 
     @Embedded
-    private final Address address;
-    private final String description;
+    private Address address;
+    private String description;
     @ElementCollection
-    private final List<Room> rooms;
+    private List<Room> rooms;
+
+    public Apartment() {
+    }
 
     Apartment(String ownerId, Address address, String description, List<Room> rooms) {
-
         this.ownerId = ownerId;
         this.address = address;
         this.description = description;
@@ -28,9 +31,16 @@ public class Apartment {
     }
 
     public Booking book(String tenantId, Period period, EventChannel eventChannel) {
-        //publish an event
-        ApartmentBooked apartmentBooked = ApartmentBooked.create(id, ownerId,tenantId,period);
+        ApartmentBooked apartmentBooked = ApartmentBooked.create(id(), ownerId, tenantId, period);
         eventChannel.publish(apartmentBooked);
-        return Booking.apartment(id,tenantId,period);
+        return Booking.apartment(id(), tenantId, period);
+    }
+
+    public String id() {
+        return getId().toString();
+    }
+
+    public UUID getId() {
+        return id;
     }
 }

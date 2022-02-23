@@ -13,21 +13,21 @@ public class ApartmentAssertion {
         this.actual = actual;
     }
 
-    static ApartmentAssertion assertThat(Apartment actual) {
+    public static ApartmentAssertion assertThat(Apartment actual) {
         return new ApartmentAssertion(actual);
     }
 
-    ApartmentAssertion hasOwnerIdEqualsTo(String ownerId) {
+    public ApartmentAssertion hasOwnerIdEqualsTo(String ownerId) {
         Assertions.assertThat(actual).hasFieldOrPropertyWithValue("ownerId", ownerId);
         return this;
     }
 
-    ApartmentAssertion hasDescriptionEqualsTo(String description) {
+    public ApartmentAssertion hasDescriptionEqualsTo(String description) {
         Assertions.assertThat(actual).hasFieldOrPropertyWithValue("description", description);
         return this;
     }
 
-    ApartmentAssertion hasAddressEqualsTo(String street, String postalCode, String houseNumber, String apartmentNumber, String city, String country) {
+    public ApartmentAssertion hasAddressEqualsTo(String street, String postalCode, String houseNumber, String apartmentNumber, String city, String country) {
         Assertions.assertThat(actual).extracting("address")
                 .hasFieldOrPropertyWithValue("street", street)
                 .hasFieldOrPropertyWithValue("postalCode", postalCode)
@@ -38,7 +38,7 @@ public class ApartmentAssertion {
         return this;
     }
 
-    ApartmentAssertion hasRoomsEqualsTo(Map<String, Double> roomDefinition) {
+    public ApartmentAssertion hasRoomsEqualsTo(Map<String, Double> roomDefinition) {
         Assertions.assertThat(actual).extracting("rooms").satisfies(roomsActual -> {
             List<Room> rooms = (List<Room>) roomsActual;
             Assertions.assertThat(rooms).hasSize(roomDefinition.size());
