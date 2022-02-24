@@ -6,7 +6,18 @@ import javax.persistence.Embeddable;
 class SquareMeter {
     private Double value;
 
+    public SquareMeter() {
+    }
+
     SquareMeter(Double value) {
+        this.value = value;
+    }
+
+    public Double getValue() {
+        return value;
+    }
+
+    public void setValue(Double value) {
         this.value = value;
     }
 }

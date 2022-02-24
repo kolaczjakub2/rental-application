@@ -1,19 +1,19 @@
 package com.jkolacz.rentalapplication.domain.apartmentbookinghistory;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-//@Entity
+@Entity
 @Table(name = "APARTMENT_BOOKING_HISTORY")
 public class ApartmentBookingHistory {
     @Id
-    private final String apartmentId;
-    @OneToMany
-    private final List<ApartmentBooking> bookings = new ArrayList<>();
+    private String apartmentId;
+    @ElementCollection
+    private List<ApartmentBooking> bookings = new ArrayList<>();
+
+    public ApartmentBookingHistory() {
+    }
 
     public ApartmentBookingHistory(String apartmentId) {
         this.apartmentId = apartmentId;
@@ -23,4 +23,20 @@ public class ApartmentBookingHistory {
         bookings.add(apartmentBooking);
     }
 
+
+    private String getApartmentId() {
+        return apartmentId;
+    }
+
+    private void setApartmentId(String apartmentId) {
+        this.apartmentId = apartmentId;
+    }
+
+    private List<ApartmentBooking> getBookings() {
+        return bookings;
+    }
+
+    private void setBookings(List<ApartmentBooking> bookings) {
+        this.bookings = bookings;
+    }
 }

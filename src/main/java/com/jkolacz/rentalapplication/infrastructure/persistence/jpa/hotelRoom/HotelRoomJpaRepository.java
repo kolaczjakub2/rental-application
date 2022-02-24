@@ -2,22 +2,25 @@ package com.jkolacz.rentalapplication.infrastructure.persistence.jpa.hotelRoom;
 
 import com.jkolacz.rentalapplication.domain.hotelRoom.HotelRoom;
 import com.jkolacz.rentalapplication.domain.hotelRoom.HotelRoomRepository;
+import org.springframework.stereotype.Repository;
 
-public class HotelRoomJpaRepository implements HotelRoomRepository {
+import java.util.UUID;
 
-    private final SpringHotelRoomJpaRepository springHotelRoomJpaRepository;
+@Repository
+class JpaHotelRoomRepository implements HotelRoomRepository {
+    private final SpringHotelRoomJpaRepository hotelRoomRepository;
 
-    public HotelRoomJpaRepository(SpringHotelRoomJpaRepository springHotelRoomJpaRepository) {
-        this.springHotelRoomJpaRepository = springHotelRoomJpaRepository;
+    JpaHotelRoomRepository(SpringHotelRoomJpaRepository hotelRoomRepository) {
+        this.hotelRoomRepository = hotelRoomRepository;
     }
 
     @Override
-    public void save(HotelRoom hotelRoom) {
-
+    public String save(HotelRoom hotelRoom) {
+        return hotelRoomRepository.save(hotelRoom).id();
     }
 
     @Override
     public HotelRoom findById(String id) {
-        return null;
+        return hotelRoomRepository.findById(UUID.fromString(id)).orElseThrow(() -> new HotelRoomDoesNotExistException(id));
     }
 }

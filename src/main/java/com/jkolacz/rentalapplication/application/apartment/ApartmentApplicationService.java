@@ -2,10 +2,12 @@ package com.jkolacz.rentalapplication.application.apartment;
 
 import com.jkolacz.rentalapplication.domain.apartment.*;
 import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Map;
 
+@Service
 public class ApartmentApplicationService {
 
     private final ApartmentRepository apartmentRepository;

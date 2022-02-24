@@ -1,16 +1,20 @@
 package com.jkolacz.rentalapplication.domain.hotel;
 
 import javax.persistence.*;
+import java.util.UUID;
 
-//@Entity
+@Entity
 @Table(name = "HOTEL")
 public class Hotel {
     @Id
     @GeneratedValue
-    private String id;
-    private final String name;
+    private UUID id;
+    private String name;
     @Embedded
-    private final Address address;
+    private Address address;
+
+    public Hotel() {
+    }
 
     Hotel(String name, Address address) {
 

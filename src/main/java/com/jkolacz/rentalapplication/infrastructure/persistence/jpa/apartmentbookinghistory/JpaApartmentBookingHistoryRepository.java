@@ -2,27 +2,30 @@ package com.jkolacz.rentalapplication.infrastructure.persistence.jpa.apartmentbo
 
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingHistory;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingHistoryRepository;
+import org.springframework.stereotype.Repository;
 
+import java.util.UUID;
+
+@Repository
 public class JpaApartmentBookingHistoryRepository implements ApartmentBookingHistoryRepository {
+    private final SpringJpaApartmentBookingHistoryRepository springJpaApartmentBookingHistoryRepository;
 
-    private final SpringJpaApartmentBookingHistoryRepository historyRepository;
-
-    public JpaApartmentBookingHistoryRepository(SpringJpaApartmentBookingHistoryRepository historyRepository) {
-        this.historyRepository = historyRepository;
-    }
-
-    @Override
-    public void save(ApartmentBookingHistory apartmentBookingHistory) {
-
+    JpaApartmentBookingHistoryRepository(SpringJpaApartmentBookingHistoryRepository springJpaApartmentBookingHistoryRepository) {
+        this.springJpaApartmentBookingHistoryRepository = springJpaApartmentBookingHistoryRepository;
     }
 
     @Override
     public boolean existFor(String apartmentId) {
-        return false;
+        return springJpaApartmentBookingHistoryRepository.existsById(apartmentId);
     }
 
     @Override
     public ApartmentBookingHistory findFor(String apartmentId) {
-        return null;
+        return springJpaApartmentBookingHistoryRepository.findById(apartmentId).get();
+    }
+
+    @Override
+    public void save(ApartmentBookingHistory apartmentBookingHistory) {
+        springJpaApartmentBookingHistoryRepository.save(apartmentBookingHistory);
     }
 }

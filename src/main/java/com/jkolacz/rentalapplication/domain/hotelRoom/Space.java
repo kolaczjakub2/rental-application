@@ -1,15 +1,35 @@
 package com.jkolacz.rentalapplication.domain.hotelRoom;
 
+import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 
-//@Entity
+@Embeddable
 class Space {
-    private final String name;
+    private  String name;
     @Embedded
-    private final SquareMeter squareMeter;
+    private SquareMeter squareMeter;
+
+    public Space() {
+    }
 
     Space(String name, SquareMeter squareMeter) {
         this.name = name;
+        this.squareMeter = squareMeter;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public SquareMeter getSquareMeter() {
+        return squareMeter;
+    }
+
+    public void setSquareMeter(SquareMeter squareMeter) {
         this.squareMeter = squareMeter;
     }
 }
