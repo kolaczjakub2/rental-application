@@ -7,48 +7,48 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 
-class BookingAssertion {
+public class BookingAssertion {
     private final Booking actual;
 
-    BookingAssertion(Booking actual) {
+    public BookingAssertion(Booking actual) {
         this.actual = actual;
     }
 
-    static BookingAssertion assertThat(Booking actual) {
-        return new BookingAssertion(actual);
+    public static  BookingAssertion assertThat(Booking actual) {
+        return new  BookingAssertion(actual);
     }
 
 
-    BookingAssertion hasRentalPlaceIdEqualsTo(String expected) {
+    public BookingAssertion hasRentalPlaceIdEqualsTo(String expected) {
         Assertions.assertThat(actual).hasFieldOrPropertyWithValue("rentalPlaceId", expected);
         return this;
     }
 
-    BookingAssertion hasTenantIdEqualsTo(String expected) {
+    public BookingAssertion hasTenantIdEqualsTo(String expected) {
         Assertions.assertThat(actual).hasFieldOrPropertyWithValue("tenantId", expected);
         return this;
     }
 
-    BookingAssertion isOpen() {
+    public BookingAssertion isOpen() {
         Assertions.assertThat(actual).hasFieldOrPropertyWithValue("bookingStatus", BookingStatus.OPEN);
         return this;
     }
 
-    BookingAssertion isApartment() {
+    public BookingAssertion isApartment() {
         Assertions.assertThat(actual).hasFieldOrPropertyWithValue("rentalType", RentalType.APARTMENT);
         return this;
     }
 
-    BookingAssertion isHotelRoom() {
+    public BookingAssertion isHotelRoom() {
         Assertions.assertThat(actual).hasFieldOrPropertyWithValue("rentalType", RentalType.HOTEL_ROOM);
         return this;
     }
 
-    BookingAssertion containsAllDays(LocalDate... expected) {
+    public BookingAssertion containsAllDays(LocalDate... expected) {
         return containsAllDays(asList(expected));
     }
 
-    BookingAssertion containsAllDays(List<LocalDate> expected) {
+    public BookingAssertion containsAllDays(List<LocalDate> expected) {
         Assertions.assertThat(actual).hasFieldOrPropertyWithValue("days", expected);
         return this;
     }
