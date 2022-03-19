@@ -5,12 +5,31 @@ import java.time.LocalDate;
 
 @Embeddable
 public class BookingPeriod {
-    private final LocalDate periodStart;
-    private final LocalDate periodEnd;
+    private LocalDate periodStart;
+    private LocalDate periodEnd;
 
     public BookingPeriod(LocalDate periodStart, LocalDate periodEnd) {
 
         this.periodStart = periodStart;
+        this.periodEnd = periodEnd;
+    }
+
+    public BookingPeriod() {
+    }
+
+    public LocalDate getPeriodStart() {
+        return periodStart;
+    }
+
+    public void setPeriodStart(LocalDate periodStart) {
+        this.periodStart = periodStart;
+    }
+
+    public LocalDate getPeriodEnd() {
+        return periodEnd;
+    }
+
+    public void setPeriodEnd(LocalDate periodEnd) {
         this.periodEnd = periodEnd;
     }
 }

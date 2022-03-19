@@ -6,7 +6,9 @@ import com.jkolacz.rentalapplication.domain.apartment.ApartmentBooked;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingHistoryRepository;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.BookingPeriod;
 import org.springframework.context.event.EventListener;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ApartmentBookingHistoryEventListener {
     private final ApartmentBookingHistoryRepository apartmentBookingHistoryRepository;
 

@@ -1,5 +1,7 @@
 package com.jkolacz.rentalapplication.domain.hotelBookingHistory;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.time.LocalDate;
@@ -8,14 +10,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-//@Entity
+@Entity
 public class HotelBookingHistory {
     @Id
     private String hotelId;
 
     @OneToMany
-    private final List<HotelRoomBookingHistory> hotelRoomBookingHistories = new ArrayList<>();
+    private List<HotelRoomBookingHistory> hotelRoomBookingHistories = new ArrayList<>();
 
+    public HotelBookingHistory() {
+    }
 
     public HotelBookingHistory(String hotelId) {
         this.hotelId = hotelId;
@@ -38,5 +42,10 @@ public class HotelBookingHistory {
         } else {
             return history.get();
         }
+    }
+
+    public HotelBookingHistory(String hotelId, List<HotelRoomBookingHistory> hotelRoomBookingHistories) {
+        this.hotelId = hotelId;
+        this.hotelRoomBookingHistories = hotelRoomBookingHistories;
     }
 }

@@ -2,7 +2,11 @@ package com.jkolacz.rentalapplication.infrastructure.persistence.jpa.booking;
 
 import com.jkolacz.rentalapplication.domain.apartment.Booking;
 import com.jkolacz.rentalapplication.domain.apartment.BookingRepository;
+import org.springframework.stereotype.Repository;
 
+import java.util.UUID;
+
+@Repository
 public class JpaBookingRepository implements BookingRepository {
 
     private final SpringJpaBookingRepositoryImpl springJpaBookingRepository;
@@ -13,11 +17,11 @@ public class JpaBookingRepository implements BookingRepository {
 
     @Override
     public void save(Booking booking) {
-
+        springJpaBookingRepository.save(booking);
     }
 
     @Override
     public Booking findById(String bookingId) {
-        return null;
+        return springJpaBookingRepository.findById(UUID.fromString(bookingId)).get();
     }
 }

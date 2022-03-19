@@ -5,7 +5,9 @@ import com.jkolacz.rentalapplication.domain.apartment.BookingAccepted;
 import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
 import com.jkolacz.rentalapplication.domain.hotelRoom.HotelRoomBooked;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.stereotype.Component;
 
+@Component
 class SpringEventChannelImpl implements EventChannel {
 
     private final ApplicationEventPublisher publisher;
