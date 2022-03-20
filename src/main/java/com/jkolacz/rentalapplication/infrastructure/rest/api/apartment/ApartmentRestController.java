@@ -4,9 +4,12 @@ import com.jkolacz.rentalapplication.application.apartment.ApartmentApplicationS
 import com.jkolacz.rentalapplication.query.apartment.ApartmentDetails;
 import com.jkolacz.rentalapplication.query.apartment.ApartmentReadModel;
 import com.jkolacz.rentalapplication.query.apartment.QueryApartmentRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-//@RestController
+import java.net.URI;
+
+@RestController
 @RequestMapping("/apartment")
 public class ApartmentRestController {
 
@@ -19,10 +22,12 @@ public class ApartmentRestController {
     }
 
     @PostMapping
-    public void add(@RequestBody ApartmentDto apartmentDto) {
-        apartmentApplicationService.add(apartmentDto.getOwnerId(), apartmentDto.getStreet(), apartmentDto.getPostalCode(), apartmentDto.getHouseNumber(),
+    public ResponseEntity<String> add(@RequestBody ApartmentDto apartmentDto) {
+        String id = apartmentApplicationService.add(apartmentDto.getOwnerId(), apartmentDto.getStreet(), apartmentDto.getPostalCode(), apartmentDto.getHouseNumber(),
                 apartmentDto.getApartmentNumber(), apartmentDto.getCity(), apartmentDto.getCountry(), apartmentDto.getDescription(),
                 apartmentDto.getRoomsDefinition());
+
+        return ResponseEntity.created(URI.create("/apartment/"+id)).build();
     }
 
     @PutMapping("/book/{id}")

@@ -1,37 +1,35 @@
 package com.jkolacz.rentalapplication.query.apartment;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.Embeddable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-//@Entity
-@Table(name = "APARTMENT_BOOKING_HISTORY")
+@Embeddable
 public class ApartmentBookingReadModel {
+    private String bookingStep;
+    private LocalDateTime bookingDateTime;
+    private String ownerId;
+    private String tenantId;
+    private LocalDate periodStart;
+    private LocalDate periodEnd;
 
-    private final LocalDateTime bookingDateTime;
-    private final String step;
-    private final String ownerId;
-    private final String tenantId;
-    private final LocalDate periodStart;
-    private final LocalDate periodEnd;
+    private ApartmentBookingReadModel() {}
 
-    public ApartmentBookingReadModel(LocalDateTime bookingDateTime,
-                                     String step, String ownerId, String tenantId, LocalDate periodStart, LocalDate periodEnd) {
+    ApartmentBookingReadModel(String bookingStep, LocalDateTime bookingDateTime, String ownerId, String tenantId, LocalDate periodStart, LocalDate periodEnd) {
+        this.bookingStep = bookingStep;
         this.bookingDateTime = bookingDateTime;
-        this.step = step;
         this.ownerId = ownerId;
         this.tenantId = tenantId;
         this.periodStart = periodStart;
         this.periodEnd = periodEnd;
     }
 
-    public LocalDateTime getBookingDateTime() {
-        return bookingDateTime;
+    public String getBookingStep() {
+        return bookingStep;
     }
 
-    public String getStep() {
-        return step;
+    public LocalDateTime getBookingDateTime() {
+        return bookingDateTime;
     }
 
     public String getOwnerId() {

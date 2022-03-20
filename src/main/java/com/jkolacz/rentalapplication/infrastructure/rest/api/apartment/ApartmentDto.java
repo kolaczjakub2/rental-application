@@ -2,7 +2,7 @@ package com.jkolacz.rentalapplication.infrastructure.rest.api.apartment;
 
 import java.util.Map;
 
-class ApartmentDto {
+public class ApartmentDto {
 
     private final String ownerId;
     private final String street;

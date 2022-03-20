@@ -11,8 +11,8 @@ public class JpaApartmentRepository implements ApartmentRepository {
 
     private final SpringApartmentJpaRepository springApartmentJpaRepository;
 
-    public JpaApartmentRepository(SpringApartmentJpaRepository springApartmentJpaRepository) {
-        this.springApartmentJpaRepository = springApartmentJpaRepository;
+    JpaApartmentRepository(SpringApartmentJpaRepository springJpaApartmentRepository) {
+        this.springApartmentJpaRepository = springJpaApartmentRepository;
     }
 
     @Override

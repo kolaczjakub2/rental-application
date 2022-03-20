@@ -2,14 +2,15 @@ package com.jkolacz.rentalapplication.query.apartment;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.UUID;
 
-//@Entity
+@Entity
 @Table(name = "APARTMENT")
 public class ApartmentReadModel {
 
     @Id
     @GeneratedValue
-    private  String id;
+    private UUID id;
     private final String ownerId;
 
     private final String street;
@@ -19,10 +20,10 @@ public class ApartmentReadModel {
     private final String city;
     private final String country;
     private final String description;
-    @OneToMany
+    @ElementCollection
     private List<RoomReadModel> rooms;
 
-    public ApartmentReadModel(String id, String ownerId, String street, String postalCode, String houseNumber, String apartmentNumber,
+    public ApartmentReadModel(UUID id, String ownerId, String street, String postalCode, String houseNumber, String apartmentNumber,
                               String city, String country, String description, List<RoomReadModel> rooms) {
         this.id = id;
         this.ownerId = ownerId;
@@ -36,7 +37,7 @@ public class ApartmentReadModel {
         this.rooms = rooms;
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 

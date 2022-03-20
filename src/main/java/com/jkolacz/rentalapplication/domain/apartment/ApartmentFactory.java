@@ -11,6 +11,6 @@ public class ApartmentFactory {
         List<Room> rooms = new ArrayList<>();
         roomsDefinition.forEach((name, size) ->
                 rooms.add(new Room(name, new SquareMeter(size))));
-        return new Apartment(ownerId, address, description, rooms);
+        return new Apartment(ownerId, address, rooms,description);
     }
 }

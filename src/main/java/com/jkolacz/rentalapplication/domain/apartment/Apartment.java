@@ -2,7 +2,12 @@ package com.jkolacz.rentalapplication.domain.apartment;
 
 import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
 
-import javax.persistence.*;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,35 +17,38 @@ public class Apartment {
     @Id
     @GeneratedValue
     private UUID id;
+
     private String ownerId;
 
     @Embedded
     private Address address;
-    private String description;
+
     @ElementCollection
     private List<Room> rooms;
 
-    public Apartment() {
-    }
+    private String description;
 
-    Apartment(String ownerId, Address address, String description, List<Room> rooms) {
+    private Apartment() {}
+
+    Apartment(String ownerId, Address address, List<Room> rooms, String description) {
         this.ownerId = ownerId;
         this.address = address;
-        this.description = description;
         this.rooms = rooms;
+        this.description = description;
     }
 
     public Booking book(String tenantId, Period period, EventChannel eventChannel) {
         ApartmentBooked apartmentBooked = ApartmentBooked.create(id(), ownerId, tenantId, period);
         eventChannel.publish(apartmentBooked);
-        return Booking.apartment(id(), tenantId, period);
-    }
 
-    public String id() {
-        return getId().toString();
+        return Booking.apartment(id(), tenantId, period);
     }
 
     public UUID getId() {
         return id;
+    }
+
+    public String id() {
+        return getId().toString();
     }
 }

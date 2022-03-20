@@ -11,8 +11,7 @@ import java.time.LocalDate;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-
+/* a example */
 class ApartmentTest {
 
     private static final String OWNER_ID = "1234";

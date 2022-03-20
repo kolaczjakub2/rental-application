@@ -1,20 +1,25 @@
 package com.jkolacz.rentalapplication.query.apartment;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.Embeddable;
 
-//@Entity
-@Table(name = "APARTMENT_ROOM")
+@Embeddable
 public class RoomReadModel {
-    @Id
-    private String id;
     private String name;
     private Double size;
 
-    public RoomReadModel(String id, String name, Double size) {
-        this.id = id;
+    private RoomReadModel() {
+    }
+
+    RoomReadModel(String name, Double size) {
         this.name = name;
         this.size = size;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Double getSize() {
+        return size;
     }
 }
