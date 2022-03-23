@@ -1,5 +1,8 @@
 package com.jkolacz.rentalapplication.query.hotel;
 
+import org.springframework.stereotype.Repository;
+
+@Repository
 public class QueryHotelRepository {
     private final SpringQueryHotelRepository springQueryHotelRepository;
 
@@ -8,6 +11,6 @@ public class QueryHotelRepository {
     }
 
     public Iterable<HotelReadModel> findAll() {
-        return null;
+        return springQueryHotelRepository.findAll();
     }
 }

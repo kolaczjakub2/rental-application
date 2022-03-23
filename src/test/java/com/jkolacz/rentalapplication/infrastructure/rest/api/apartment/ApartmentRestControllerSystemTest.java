@@ -1,8 +1,7 @@
 package com.jkolacz.rentalapplication.infrastructure.rest.api.apartment;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
+import com.jkolacz.rentalapplication.infrastructure.json.JsonFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -17,12 +16,12 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.Map;
 import java.util.UUID;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class ApartmentRestControllerTest {
+class ApartmentRestControllerSystemTest {
 
     private static final String OWNER_ID = "1234";
     private static final String STREET = "Florianska";
@@ -64,9 +63,6 @@ class ApartmentRestControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andReturn();
 
-        String existingId;
-
-
         mockMvc.perform(get(mvcResult.getResponse().getRedirectedUrl()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(jsonPath("$.apartment.ownerId").value(OWNER_ID))
@@ -77,10 +73,6 @@ class ApartmentRestControllerTest {
     }
 
     private String asJson(ApartmentDto apartmentDto) {
-        try {
-            return new ObjectMapper().writeValueAsString(apartmentDto);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+        return new JsonFactory().create(apartmentDto);
     }
 }

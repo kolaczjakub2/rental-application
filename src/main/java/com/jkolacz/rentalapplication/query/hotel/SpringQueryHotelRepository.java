@@ -1,6 +1,8 @@
 package com.jkolacz.rentalapplication.query.hotel;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-public interface SpringQueryHotelRepository {//extends CrudRepository<HotelReadModel, String> {
+@Repository
+public interface SpringQueryHotelRepository extends CrudRepository<HotelReadModel, String> {
 }

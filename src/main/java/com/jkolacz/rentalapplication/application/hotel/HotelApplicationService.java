@@ -3,7 +3,9 @@ package com.jkolacz.rentalapplication.application.hotel;
 import com.jkolacz.rentalapplication.domain.hotel.Hotel;
 import com.jkolacz.rentalapplication.domain.hotel.HotelFactory;
 import com.jkolacz.rentalapplication.domain.hotel.HotelRepository;
+import org.springframework.stereotype.Component;
 
+@Component
 public class HotelApplicationService {
 
     private final HotelRepository hotelRepository;
