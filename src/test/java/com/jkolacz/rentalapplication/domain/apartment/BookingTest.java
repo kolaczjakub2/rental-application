@@ -22,7 +22,7 @@ class BookingTest {
     private final EventChannel eventChannel = mock(EventChannel.class);
 
     @Test
-    public void shouldCreateApartmentBooking() {
+    void shouldCreateApartmentBooking() {
 
         String rentalPlaceId = "1234";
         String tenantId = "7890";
@@ -40,7 +40,7 @@ class BookingTest {
 
 
     @Test
-    public void shouldCreateHotelRoomBooking() {
+    void shouldCreateHotelRoomBooking() {
 
         String rentalPlaceId = "1234";
         String tenantId = "7890";

@@ -14,8 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class BookingAcceptedTest {
 
     @Test
-    public void shouldCreateBookingAcceptedWithAllRequiredInformation() {
-
+     void shouldCreateBookingAcceptedWithAllRequiredInformation() {
         String rentalPlaceId = "1234";
         String tenantId = "7890";
         List<LocalDate> days = ImmutableList.of(
