@@ -24,7 +24,7 @@ public class BookingAssertion {
         return this;
     }
 
-    public BookingAssertion hasTenantIdEqualsTo(String expected) {
+    public BookingAssertion hasTenantIdEqualTo(String expected) {
         Assertions.assertThat(actual).hasFieldOrPropertyWithValue("tenantId", expected);
         return this;
     }

@@ -43,7 +43,7 @@ class HotelRoomApplicationServiceTest {
 
         BookingAssertion.assertThat(captor.getValue())
                 .isHotelRoom()
-                .hasTenantIdEqualsTo(TENANT_ID)
+                .hasTenantIdEqualTo(TENANT_ID)
                 .containsAllDays(DAYS);
     }
 

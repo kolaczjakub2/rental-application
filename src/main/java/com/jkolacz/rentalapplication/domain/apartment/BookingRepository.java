@@ -1,7 +1,7 @@
 package com.jkolacz.rentalapplication.domain.apartment;
 
 public interface BookingRepository {
-    void save(Booking booking);
+    String save(Booking booking);
 
     Booking findById(String bookingId);
 }

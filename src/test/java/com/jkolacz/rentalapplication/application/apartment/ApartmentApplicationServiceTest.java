@@ -1,10 +1,7 @@
 package com.jkolacz.rentalapplication.application.apartment;
 
 import com.google.common.collect.ImmutableMap;
-import com.jkolacz.rentalapplication.domain.apartment.Apartment;
-import com.jkolacz.rentalapplication.domain.apartment.ApartmentAssertion;
-import com.jkolacz.rentalapplication.domain.apartment.ApartmentRepository;
-import com.jkolacz.rentalapplication.domain.apartment.BookingRepository;
+import com.jkolacz.rentalapplication.domain.apartment.*;
 import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -35,6 +32,7 @@ class ApartmentApplicationServiceTest {
     private static final LocalDate MIDDLE = LocalDate.of(2020, 3, 5);
     private static final LocalDate END = LocalDate.of(2020, 3, 6);
     private static final String BOOKING_ID = "8394234";
+    private final ApartmentFactory apartmentFactory = new ApartmentFactory();
 
     private final ApartmentRepository apartmentRepository = Mockito.mock(ApartmentRepository.class);
     private final BookingRepository bookingRepository = Mockito.mock(BookingRepository.class);
@@ -65,5 +63,36 @@ class ApartmentApplicationServiceTest {
         String actual = service.add(OWNER_ID, STREET, POSTAL_CODE, HOUSE_NUMBER, APARTMENT_NUMBER, CITY, COUNTRY, DESCRIPTION, ROOMS_DEFINITION);
 
         Assertions.assertThat(actual).isEqualTo(APARTMENT_ID);
+    }
+
+    @Test
+    void shouldCreateBookingForApartment() {
+        givenApartment();
+        ArgumentCaptor<Booking> captor = ArgumentCaptor.forClass(Booking.class);
+
+        service.book(APARTMENT_ID, TENANT_ID, START, END);
+
+        then(bookingRepository).should().save(captor.capture());
+        Booking actual = captor.getValue();
+
+        BookingAssertion.assertThat(actual)
+                .isApartment()
+                .hasTenantIdEqualTo(TENANT_ID)
+                .containsAllDays(START, MIDDLE, END);
+    }
+
+    @Test
+    void shouldReturnIdOfBookingForApartment(){
+        givenApartment();
+        given(bookingRepository.save(any())).willReturn(BOOKING_ID);
+        String actual = service.book(APARTMENT_ID, TENANT_ID, START, END);
+
+        Assertions.assertThat(actual).isEqualTo(BOOKING_ID);
+
+    }
+
+    private void givenApartment() {
+        Apartment apartment = apartmentFactory.create(OWNER_ID, STREET, POSTAL_CODE, HOUSE_NUMBER, APARTMENT_NUMBER, CITY, COUNTRY, DESCRIPTION, ROOMS_DEFINITION);
+        given(apartmentRepository.findById(APARTMENT_ID)).willReturn(apartment);
     }
 }

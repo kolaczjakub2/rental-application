@@ -52,7 +52,7 @@ class ApartmentTest {
         Booking actual = apartment.book(TENANT_ID, PERIOD, eventChannel);
         BookingAssertion.assertThat(actual)
                 .isApartment()
-                .hasTenantIdEqualsTo(TENANT_ID)
+                .hasTenantIdEqualTo(TENANT_ID)
                 .containsAllDays(START, MIDDLE, END);
     }
 

@@ -34,7 +34,7 @@ class BookingTest {
                 .isOpen()
                 .isApartment()
                 .hasRentalPlaceIdEqualsTo(rentalPlaceId)
-                .hasTenantIdEqualsTo(tenantId)
+                .hasTenantIdEqualTo(tenantId)
                 .containsAllDays(LocalDate.of(2022, 1, 1), LocalDate.of(2022, 1, 2), LocalDate.of(2022, 1, 3));
     }
 
@@ -53,7 +53,7 @@ class BookingTest {
                 .isOpen()
                 .isHotelRoom()
                 .hasRentalPlaceIdEqualsTo(rentalPlaceId)
-                .hasTenantIdEqualsTo(tenantId)
+                .hasTenantIdEqualTo(tenantId)
                 .containsAllDays(days);
     }
 

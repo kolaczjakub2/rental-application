@@ -49,6 +49,10 @@ public class Apartment {
     }
 
     public String id() {
-        return getId().toString();
+        if (id == null) {
+            return null;
+        }
+
+        return id.toString();
     }
 }
