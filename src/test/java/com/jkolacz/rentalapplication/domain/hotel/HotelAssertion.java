@@ -10,7 +10,7 @@ public class HotelAssertion {
         this.actual = actual;
     }
 
-    static HotelAssertion assertThat(Hotel actual) {
+    public static HotelAssertion assertThat(Hotel actual) {
         return new HotelAssertion(actual);
     }
 

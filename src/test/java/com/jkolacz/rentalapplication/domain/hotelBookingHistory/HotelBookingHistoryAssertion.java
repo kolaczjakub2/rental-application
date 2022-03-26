@@ -15,7 +15,7 @@ public class HotelBookingHistoryAssertion {
         this.actual = actual;
     }
 
-    static HotelBookingHistoryAssertion assertThat(HotelBookingHistory hotelBookingHistory) {
+    public static HotelBookingHistoryAssertion assertThat(HotelBookingHistory hotelBookingHistory) {
         return new HotelBookingHistoryAssertion(hotelBookingHistory);
     }
 
@@ -43,6 +43,16 @@ public class HotelBookingHistoryAssertion {
                     .hasHotelRoomBookingFor(bookingDateTime, tenantId, days);
         });
     }
+
+    public HotelBookingHistoryAssertion hasHotelRoomBookingHistoryFor(String hotelRoomId, String tenantId, List<LocalDate> days) {
+        return hasHotelRoomBookingHistoryFor(hotelRoomBookingHistory -> {
+            HotelRoomBookingHistoryAssertion.assertThat(hotelRoomBookingHistory)
+                    .hasHotelRoomIdEqualTo(hotelRoomId)
+                    .hasHotelRoomBookingFor(tenantId, days);
+        });
+    }
+
+
 
     private List<HotelRoomBookingHistory> asHotelRoomHistories(Object actualBookings) {
         return (List<HotelRoomBookingHistory>) actualBookings;

@@ -41,6 +41,14 @@ public class HotelRoomBookingHistoryAssertion {
         });
     }
 
+    public HotelRoomBookingHistoryAssertion hasHotelRoomBookingFor(String tenantId, List<LocalDate> days) {
+        return hasHotelRoomBookingFor(hotelRoomBooking -> {
+            Assertions.assertThat(hotelRoomBooking)
+                    .hasFieldOrPropertyWithValue("tenantId", tenantId)
+                    .hasFieldOrPropertyWithValue("days", days);
+        });
+    }
+
     private HotelRoomBookingHistoryAssertion hasHotelRoomBookingFor(Consumer<HotelRoomBooking> consumer) {
         hasHotelRoomBookings().satisfies(bookings -> {
             Assertions.assertThat(asHotelRoomBooking(bookings)).anySatisfy(consumer);
@@ -56,4 +64,6 @@ public class HotelRoomBookingHistoryAssertion {
     private AbstractObjectAssert<?, ?> hasHotelRoomBookings() {
         return Assertions.assertThat(actual).extracting("bookings");
     }
+
+
 }
