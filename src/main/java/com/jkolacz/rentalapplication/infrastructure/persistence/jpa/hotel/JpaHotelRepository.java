@@ -5,16 +5,16 @@ import com.jkolacz.rentalapplication.domain.hotel.HotelRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class HotelJpaRepository implements HotelRepository {
+public class JpaHotelRepository implements HotelRepository {
 
     private final SpringHotelJpaRepository springHotelJpaRepository;
 
-    public HotelJpaRepository(SpringHotelJpaRepository springHotelJpaRepository) {
+    public JpaHotelRepository(SpringHotelJpaRepository springHotelJpaRepository) {
         this.springHotelJpaRepository = springHotelJpaRepository;
     }
 
     @Override
-    public void save(Hotel hotel) {
-        springHotelJpaRepository.save(hotel);
+    public String save(Hotel hotel) {
+        return springHotelJpaRepository.save(hotel).getId().toString();
     }
 }

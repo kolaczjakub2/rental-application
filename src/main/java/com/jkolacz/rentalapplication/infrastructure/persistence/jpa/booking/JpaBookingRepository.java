@@ -9,9 +9,9 @@ import java.util.UUID;
 @Repository
 public class JpaBookingRepository implements BookingRepository {
 
-    private final SpringJpaBookingRepositoryImpl springJpaBookingRepository;
+    private final SpringJpaBookingRepository springJpaBookingRepository;
 
-    public JpaBookingRepository(SpringJpaBookingRepositoryImpl springJpaBookingRepository) {
+    public JpaBookingRepository(SpringJpaBookingRepository springJpaBookingRepository) {
         this.springJpaBookingRepository = springJpaBookingRepository;
     }
 

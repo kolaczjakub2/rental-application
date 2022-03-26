@@ -8,9 +8,9 @@ import java.util.UUID;
 
 @Repository
 class JpaHotelRoomRepository implements HotelRoomRepository {
-    private final SpringHotelRoomJpaRepository hotelRoomRepository;
+    private final SpringJpaHotelRoomRepository hotelRoomRepository;
 
-    JpaHotelRoomRepository(SpringHotelRoomJpaRepository hotelRoomRepository) {
+    JpaHotelRoomRepository(SpringJpaHotelRoomRepository hotelRoomRepository) {
         this.hotelRoomRepository = hotelRoomRepository;
     }
 

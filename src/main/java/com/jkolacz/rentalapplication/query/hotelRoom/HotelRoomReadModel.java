@@ -1,7 +1,11 @@
 package com.jkolacz.rentalapplication.query.hotelRoom;
 
-import javax.persistence.*;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.List;
+import java.util.UUID;
 
 //@Entity
 @Table(name = "HOTEL_ROOM")
@@ -9,6 +13,8 @@ public class HotelRoomReadModel {
 
     @Id
     @GeneratedValue
+    private UUID id;
+
     private String hotelRoomId;
     private final String hotelId;
     private final Integer number;
@@ -43,5 +49,9 @@ public class HotelRoomReadModel {
 
     public List<SpaceReadModel> getSpaces() {
         return spaces;
+    }
+
+    public UUID getId() {
+        return id;
     }
 }

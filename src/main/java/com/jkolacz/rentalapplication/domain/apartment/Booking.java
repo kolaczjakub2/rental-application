@@ -52,6 +52,10 @@ public class Booking {
 
     }
 
+    public UUID getId() {
+        return id;
+    }
+
     public String id() {
         return id.toString();
     }

@@ -1,9 +1,6 @@
 package com.jkolacz.rentalapplication.domain.hotelBookingHistory;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -14,7 +11,7 @@ class HotelRoomBookingHistory {
     @Id
     private String hotelRoomId;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<HotelRoomBooking> bookings = new ArrayList<>();
 
     private HotelRoomBookingHistory() {}

@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface SpringJpaBookingRepositoryImpl extends CrudRepository<Booking, UUID> {
+public interface SpringJpaBookingRepository extends CrudRepository<Booking, UUID> {
 }

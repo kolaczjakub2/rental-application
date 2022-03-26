@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface SpringHotelRoomJpaRepository extends CrudRepository<HotelRoom, UUID> {
+public interface SpringJpaHotelRoomRepository extends CrudRepository<HotelRoom, UUID> {
 }
