@@ -18,7 +18,11 @@ public class ApartmentDetails {
     }
 
     public static ApartmentDetails withHistory(ApartmentReadModel apartmentReadModel, ApartmentBookingHistoryReadModel apartmentBookingHistoryReadModel) {
-        return new ApartmentDetails(apartmentReadModel,apartmentBookingHistoryReadModel);
+        return new ApartmentDetails(apartmentReadModel, apartmentBookingHistoryReadModel);
+    }
+
+    public static ApartmentDetails withoutHistory(ApartmentReadModel apartmentReadModel) {
+        return new ApartmentDetails(apartmentReadModel, NO_HISTORY);
     }
 
     public ApartmentReadModel getApartment() {

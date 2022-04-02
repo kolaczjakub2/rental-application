@@ -12,7 +12,7 @@ import java.util.List;
 class HotelRoomBooking {
     @Id
     @GeneratedValue
-    private long studentId;
+    private long id;
     private LocalDateTime bookingDateTime;
     private String tenantId;
 

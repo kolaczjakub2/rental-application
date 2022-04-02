@@ -32,7 +32,7 @@ class HotelRestControllerTest {
     @Test
     void shouldReturnExistingHotels() throws Exception {
         HotelDto hotel1 = new HotelDto("Big Hotel", "Florianska", "13", "12-345", "Cracow", "Poland");
-        HotelDto hotel2 = new HotelDto("Bigger Hotel", "Florianska", "13", "12-345", "Cracow", "Poland");
+        HotelDto hotel2 = new HotelDto("Bigger Hotel", "Florianska", "43", "12-345", "Cracow", "Poland");
 
         addHotel(hotel1);
         addHotel(hotel2);
@@ -43,7 +43,7 @@ class HotelRestControllerTest {
                 .andExpect(jsonPath("$.[0].name").value("Big Hotel"))
                 .andExpect(jsonPath("$.[0].buildingNumber").value("13"))
                 .andExpect(jsonPath("$.[1].name").value("Bigger Hotel"))
-                .andExpect(jsonPath("$.[1].buildingNumber").value("42"));
+                .andExpect(jsonPath("$.[1].buildingNumber").value("43"));
         ;
     }
 

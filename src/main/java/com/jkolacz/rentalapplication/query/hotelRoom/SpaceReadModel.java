@@ -1,17 +1,18 @@
 package com.jkolacz.rentalapplication.query.hotelRoom;
 
 import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.Id;
 
-//@Entity
-@Table(name = "HOTEL_ROOM_SPACE")
+@Entity
 public class SpaceReadModel {
-    private final String name;
-    private final Double value;
 
-    public SpaceReadModel(String name, Double value) {
-        this.name = name;
-        this.value = value;
+    @Id
+    private long id;
+
+    private String name;
+    private Double value;
+
+    private SpaceReadModel() {
     }
 
     public String getName() {
@@ -20,5 +21,9 @@ public class SpaceReadModel {
 
     public Double getValue() {
         return value;
+    }
+
+    public long getId() {
+        return id;
     }
 }

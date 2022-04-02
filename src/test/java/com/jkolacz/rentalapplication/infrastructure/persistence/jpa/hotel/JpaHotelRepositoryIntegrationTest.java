@@ -39,7 +39,7 @@ class JpaHotelRepositoryIntegrationTest {
 
         HotelAssertion.assertThat(findBy(hotelId))
                 .hasNameEqualsTo(NAME)
-                .hasAddressEqualsTo(STREET, POSTAL_CODE, BUILDING_NUMBER, CITY, COUNTRY);
+                .hasAddressEqualsTo(STREET, POSTAL_CODE,BUILDING_NUMBER, CITY, COUNTRY);
     }
 
     private Hotel findBy(String hotelId) {

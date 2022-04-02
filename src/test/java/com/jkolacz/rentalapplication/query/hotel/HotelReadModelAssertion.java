@@ -2,6 +2,8 @@ package com.jkolacz.rentalapplication.query.hotel;
 
 import org.assertj.core.api.Assertions;
 
+import java.util.UUID;
+
 public class HotelReadModelAssertion {
     private final HotelReadModel actual;
 
@@ -14,7 +16,7 @@ public class HotelReadModelAssertion {
     }
 
     HotelReadModelAssertion hasIdEqualsTo(String expected) {
-        Assertions.assertThat(actual.getId()).isEqualTo(expected);
+        Assertions.assertThat(actual.getId()).isEqualTo(UUID.fromString(expected));
         return this;
     }
 

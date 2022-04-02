@@ -11,17 +11,20 @@ public class ApartmentReadModel {
     @Id
     @GeneratedValue
     private UUID id;
-    private final String ownerId;
+    private String ownerId;
 
-    private final String street;
-    private final String postalCode;
-    private final String houseNumber;
-    private final String apartmentNumber;
-    private final String city;
-    private final String country;
-    private final String description;
+    private String street;
+    private String postalCode;
+    private String houseNumber;
+    private String apartmentNumber;
+    private String city;
+    private String country;
+    private String description;
     @ElementCollection
     private List<RoomReadModel> rooms;
+
+    public ApartmentReadModel() {
+    }
 
     public ApartmentReadModel(UUID id, String ownerId, String street, String postalCode, String houseNumber, String apartmentNumber,
                               String city, String country, String description, List<RoomReadModel> rooms) {

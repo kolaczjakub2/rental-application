@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.UUID;
+
 import static java.util.Arrays.asList;
 
 @SpringBootTest
@@ -40,15 +42,14 @@ class QueryHotelRepositoryTest {
 
     @AfterEach
     void deleteHotels() {
-        jpaRepository.deleteAllById(asList(hotelId1, hotelId2));
+        jpaRepository.deleteAllById(asList(UUID.fromString(hotelId1), UUID.fromString(hotelId2)));
     }
-
 
     @Test
     void shouldFindAllHotels() {
-        Hotel hotel1 = hotelFactory.create(NAME_1, STREET_1, POSTAL_CODE_1, BUILDING_NUMBER_1, CITY_1, COUNTRY_1);
+        Hotel hotel1 = hotelFactory.create(NAME_1, STREET_1, BUILDING_NUMBER_1, POSTAL_CODE_1, CITY_1, COUNTRY_1);
         hotelId1 = hotelRepository.save(hotel1);
-        Hotel hotel2 = hotelFactory.create(NAME_2, STREET_2, POSTAL_CODE_2, BUILDING_NUMBER_2, CITY_2, COUNTRY_2);
+        Hotel hotel2 = hotelFactory.create(NAME_2, STREET_2, BUILDING_NUMBER_2, POSTAL_CODE_2, CITY_2, COUNTRY_2);
         hotelId2 = hotelRepository.save(hotel2);
 
         Iterable<HotelReadModel> actual = queryHotelRepository.findAll();

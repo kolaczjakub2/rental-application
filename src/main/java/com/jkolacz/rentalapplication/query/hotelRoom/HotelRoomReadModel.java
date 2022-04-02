@@ -1,57 +1,44 @@
 package com.jkolacz.rentalapplication.query.hotelRoom;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import com.jkolacz.rentalapplication.domain.hotelRoom.Space;
+
+import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
 
-//@Entity
+@Entity
 @Table(name = "HOTEL_ROOM")
 public class HotelRoomReadModel {
-
     @Id
     @GeneratedValue
     private UUID id;
+    private String hotelId;
+    private int number;
 
-    private String hotelRoomId;
-    private final String hotelId;
-    private final Integer number;
-    private final String description;
+    @ElementCollection
+    private List<Space> spaces;
 
-    @OneToMany
-    private final List<SpaceReadModel> spaces;
+    private String description;
 
-    public HotelRoomReadModel(String hotelRoomId, String hotelId, Integer number, String description, List<SpaceReadModel> spaces) {
-        this.hotelRoomId = hotelRoomId;
-        this.hotelId = hotelId;
-        this.number = number;
-        this.description = description;
-        this.spaces = spaces;
-    }
+    private HotelRoomReadModel() {}
 
-    public String getHotelRoomId() {
-        return hotelRoomId;
+    public String getId() {
+        return id.toString();
     }
 
     public String getHotelId() {
         return hotelId;
     }
 
-    public Integer getNumber() {
+    public int getNumber() {
         return number;
+    }
+
+    public List<Space> getSpaces() {
+        return spaces;
     }
 
     public String getDescription() {
         return description;
-    }
-
-    public List<SpaceReadModel> getSpaces() {
-        return spaces;
-    }
-
-    public UUID getId() {
-        return id;
     }
 }

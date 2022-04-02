@@ -1,34 +1,30 @@
 package com.jkolacz.rentalapplication.query.hotel;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "HOTEL")
 public class HotelReadModel {
     @Id
-    @GeneratedValue
-    private String id;
-    private final String name;
-    private final String street;
-    private final String buildingNumber;
-    private final String postalCode;
-    private final String city;
-    private final String country;
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @Column(columnDefinition = "BINARY(16)")
+    private UUID id;
+    private String name;
+    private String street;
+    private String buildingNumber;
+    private String postalCode;
+    private String city;
+    private String country;
 
-    public HotelReadModel(String id, String name, String street, String buildingNumber, String postalCode, String city, String country) {
-        this.id = id;
-        this.name = name;
-        this.street = street;
-        this.buildingNumber = buildingNumber;
-        this.postalCode = postalCode;
-        this.city = city;
-        this.country = country;
+    public HotelReadModel() {
     }
 
-    public String getId() {
+
+    public UUID getId() {
         return id;
     }
 

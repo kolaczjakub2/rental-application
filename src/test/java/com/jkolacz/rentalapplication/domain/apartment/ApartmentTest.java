@@ -34,7 +34,7 @@ class ApartmentTest {
     private final EventChannel eventChannel = Mockito.mock(EventChannel.class);
 
     @Test
-    public void shouldCreateApartmentWithRequiredFields() {
+    void shouldCreateApartmentWithRequiredFields() {
         Apartment actual = createApartment();
 
         ApartmentAssertion.assertThat(actual)
