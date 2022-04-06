@@ -26,6 +26,7 @@
         <jacoco-maven-plugin.version>0.8.4</jacoco-maven-plugin.version>
         <mockito-junit-jupiter.version>4.3.1</mockito-junit-jupiter.version>
         <archunit-junit5-engine.version>0.23.1</archunit-junit5-engine.version>
+        <jackson-datatype-jsr310.version>2.13.2</jackson-datatype-jsr310.version>
     </properties>
 
     <parent>
@@ -111,6 +112,12 @@
             <artifactId>archunit-junit5-engine</artifactId>
             <version>${archunit-junit5-engine.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${jackson-datatype-jsr310.version}</version>
+        </dependency>
+
     </dependencies>
 
 
