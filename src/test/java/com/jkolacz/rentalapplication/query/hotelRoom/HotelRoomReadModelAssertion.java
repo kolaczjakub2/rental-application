@@ -1,11 +1,9 @@
 package com.jkolacz.rentalapplication.query.hotelRoom;
 
 import com.google.common.collect.ImmutableMap;
-import com.jkolacz.rentalapplication.domain.hotelRoom.Space;
 import org.assertj.core.api.Assertions;
 
 import java.util.function.Consumer;
-
 class HotelRoomReadModelAssertion {
     private final HotelRoomReadModel actual;
 
@@ -42,10 +40,10 @@ class HotelRoomReadModelAssertion {
         return this;
     }
 
-    private Consumer<Space> hasSpaceThat(String name, Double squareMeter) {
-        return space -> {
-            Assertions.assertThat(space.getName()).isEqualTo(name);
-//            Assertions.assertThat(space.getSquareMeter()).isEqualTo(squareMeter);
+    private Consumer<SpaceReadModel> hasSpaceThat(String name, Double squareMeter) {
+        return spaceReadModel -> {
+            Assertions.assertThat(spaceReadModel.getName()).isEqualTo(name);
+            Assertions.assertThat(spaceReadModel.getValue()).isEqualTo(squareMeter);
         };
     }
 

@@ -24,7 +24,7 @@ public class QueryApartmentRepository {
         Optional<ApartmentReadModel> found = springQueryApartmentRepository.findById(UUID.fromString(id));
 
         if (found.isPresent()) {
-            Optional<ApartmentBookingHistoryReadModel> foundHistory = springQueryApartmentBookingHistoryRepository.findById(UUID.fromString(id));
+            Optional<ApartmentBookingHistoryReadModel> foundHistory = springQueryApartmentBookingHistoryRepository.findById(id);
 
             if (foundHistory.isPresent()) {
                 return ApartmentDetails.withHistory(found.get(), foundHistory.get());

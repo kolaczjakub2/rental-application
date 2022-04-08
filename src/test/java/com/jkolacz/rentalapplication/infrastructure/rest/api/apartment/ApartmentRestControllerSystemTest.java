@@ -23,7 +23,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 class ApartmentRestControllerSystemTest {
-
     private static final String OWNER_ID_1 = "1234";
     private static final String STREET_1 = "Florianska";
     private static final String POSTAL_CODE_1 = "12-345";
@@ -43,10 +42,8 @@ class ApartmentRestControllerSystemTest {
     private static final String DESCRIPTION_2 = "Lovely place";
     private static final Map<String, Double> ROOMS_DEFINITION_2 = ImmutableMap.of("Toilet", 15.0, "RoomOne", 20.0, "RoomTwo", 25.0);
 
-    @Autowired
-    private MockMvc mockMvc;
     private final JsonFactory jsonFactory = new JsonFactory();
-
+    @Autowired private MockMvc mockMvc;
 
     @Test
     void shouldReturnNothingWhenApartmentDoesNotExist() throws Exception {
@@ -115,9 +112,5 @@ class ApartmentRestControllerSystemTest {
 
     private MvcResult save(ApartmentDto apartmentDto) throws Exception {
         return mockMvc.perform(post("/apartment").contentType(MediaType.APPLICATION_JSON).content(jsonFactory.create(apartmentDto))).andReturn();
-    }
-
-    private String asJson(ApartmentDto apartmentDto) {
-        return new JsonFactory().create(apartmentDto);
     }
 }

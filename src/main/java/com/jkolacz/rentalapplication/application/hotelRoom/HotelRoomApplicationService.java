@@ -6,11 +6,13 @@ import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
 import com.jkolacz.rentalapplication.domain.hotelRoom.HotelRoom;
 import com.jkolacz.rentalapplication.domain.hotelRoom.HotelRoomFactory;
 import com.jkolacz.rentalapplication.domain.hotelRoom.HotelRoomRepository;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
+@Component
 public class HotelRoomApplicationService {
     private final HotelRoomRepository hotelRoomRepository;
     private final BookingRepository bookingRepository;

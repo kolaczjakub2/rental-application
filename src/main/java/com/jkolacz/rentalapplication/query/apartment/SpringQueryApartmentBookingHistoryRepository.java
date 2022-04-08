@@ -1,8 +1,8 @@
 package com.jkolacz.rentalapplication.query.apartment;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.UUID;
-
-public interface SpringQueryApartmentBookingHistoryRepository extends CrudRepository<ApartmentBookingHistoryReadModel, UUID> {
+@Repository
+public interface SpringQueryApartmentBookingHistoryRepository extends CrudRepository<ApartmentBookingHistoryReadModel, String> {
 }

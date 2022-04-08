@@ -23,6 +23,7 @@ public class HotelRoom {
     private Integer number;
     private String description;
     @ElementCollection
+    @CollectionTable(name = "HOTEL_ROOM_SPACE", joinColumns = @JoinColumn(name = "HOTEL_ROOM_ID"))
     private List<Space> spaces;
 
     public HotelRoom() {

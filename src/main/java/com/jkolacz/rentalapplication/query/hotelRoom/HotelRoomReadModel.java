@@ -1,7 +1,5 @@
 package com.jkolacz.rentalapplication.query.hotelRoom;
 
-import com.jkolacz.rentalapplication.domain.hotelRoom.Space;
-
 import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
@@ -16,7 +14,8 @@ public class HotelRoomReadModel {
     private int number;
 
     @ElementCollection
-    private List<Space> spaces;
+    @CollectionTable(name = "HOTEL_ROOM_SPACE", joinColumns = @JoinColumn(name = "HOTEL_ROOM_ID"))
+    private List<SpaceReadModel> spaces;
 
     private String description;
 
@@ -34,7 +33,7 @@ public class HotelRoomReadModel {
         return number;
     }
 
-    public List<Space> getSpaces() {
+    public List<SpaceReadModel> getSpaces() {
         return spaces;
     }
 

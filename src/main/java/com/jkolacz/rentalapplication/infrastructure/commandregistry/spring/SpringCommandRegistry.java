@@ -4,7 +4,9 @@ import com.jkolacz.rentalapplication.application.booking.BookingAccept;
 import com.jkolacz.rentalapplication.application.booking.BookingReject;
 import com.jkolacz.rentalapplication.application.commandregistry.CommandRegistry;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.stereotype.Component;
 
+@Component
 public class SpringCommandRegistry implements CommandRegistry {
 
     private final ApplicationEventPublisher applicationEventPublisher;

@@ -9,10 +9,12 @@ import java.util.List;
 public class ApartmentBookingHistory {
     @Id
     private String apartmentId;
+
     @ElementCollection
+    @CollectionTable(name = "APARTMENT_BOOKING", joinColumns = @JoinColumn(name = "APARTMENT_ID"))
     private List<ApartmentBooking> bookings = new ArrayList<>();
 
-    public ApartmentBookingHistory() {
+    private ApartmentBookingHistory() {
     }
 
     public ApartmentBookingHistory(String apartmentId) {
@@ -21,22 +23,5 @@ public class ApartmentBookingHistory {
 
     public void add(ApartmentBooking apartmentBooking) {
         bookings.add(apartmentBooking);
-    }
-
-
-    private String getApartmentId() {
-        return apartmentId;
-    }
-
-    private void setApartmentId(String apartmentId) {
-        this.apartmentId = apartmentId;
-    }
-
-    private List<ApartmentBooking> getBookings() {
-        return bookings;
-    }
-
-    private void setBookings(List<ApartmentBooking> bookings) {
-        this.bookings = bookings;
     }
 }

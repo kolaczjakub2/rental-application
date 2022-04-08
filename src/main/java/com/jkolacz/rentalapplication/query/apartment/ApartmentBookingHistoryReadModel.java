@@ -1,26 +1,22 @@
 package com.jkolacz.rentalapplication.query.apartment;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Table(name = "APARTMENT_BOOKING_HISTORY")
 public class ApartmentBookingHistoryReadModel {
     @Id
-    private final UUID apartmentId;
+    private String apartmentId;
 
     @ElementCollection
+    @CollectionTable(name = "APARTMENT_BOOKING", joinColumns = @JoinColumn(name = "APARTMENT_ID"))
     private List<ApartmentBookingReadModel> bookings = new ArrayList<>();
-    public ApartmentBookingHistoryReadModel(UUID apartmentId) {
-        this.apartmentId = apartmentId;
-    }
 
-    public UUID getApartmentId() {
+    private ApartmentBookingHistoryReadModel() {}
+
+    public String getApartmentId() {
         return apartmentId;
     }
 

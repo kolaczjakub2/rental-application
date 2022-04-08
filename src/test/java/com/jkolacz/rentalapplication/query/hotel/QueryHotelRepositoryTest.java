@@ -3,6 +3,7 @@ package com.jkolacz.rentalapplication.query.hotel;
 import com.jkolacz.rentalapplication.domain.hotel.Hotel;
 import com.jkolacz.rentalapplication.domain.hotel.HotelFactory;
 import com.jkolacz.rentalapplication.domain.hotel.HotelRepository;
+import com.jkolacz.rentalapplication.infrastructure.persistence.jpa.hotel.SpringJpaHotelTestRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -34,7 +35,7 @@ class QueryHotelRepositoryTest {
     private QueryHotelRepository queryHotelRepository;
     @Autowired
     private HotelRepository hotelRepository;
-
+    @Autowired private SpringJpaHotelTestRepository springJpaHotelTestRepository;
     @Autowired
     private SpringQueryHotelRepository jpaRepository;
     private String hotelId1;
@@ -42,7 +43,7 @@ class QueryHotelRepositoryTest {
 
     @AfterEach
     void deleteHotels() {
-        jpaRepository.deleteAllById(asList(UUID.fromString(hotelId1), UUID.fromString(hotelId2)));
+        springJpaHotelTestRepository.deleteAll(asList(hotelId1, hotelId2));
     }
 
     @Test

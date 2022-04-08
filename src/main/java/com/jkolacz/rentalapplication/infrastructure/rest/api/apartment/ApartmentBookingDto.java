@@ -3,7 +3,6 @@ package com.jkolacz.rentalapplication.infrastructure.rest.api.apartment;
 import java.time.LocalDate;
 
 public class ApartmentBookingDto {
-
     private final String tenantId;
     private final LocalDate start;
     private final LocalDate end;
