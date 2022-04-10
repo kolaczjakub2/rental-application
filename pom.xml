@@ -208,7 +208,7 @@
                                 </goals>
                                 <configuration>
                                     <excludes>
-                                        <exclude>com/smalaca/rentalapplication/RentalApplication.class</exclude>
+                                        <exclude>com/jkolacz/rentalapplication/RentalApplication.class</exclude>
                                     </excludes>
                                     <rules>
                                         <rule>
@@ -223,7 +223,7 @@
                                                 <limit>
                                                     <counter>CLASS</counter>
                                                     <value>MISSEDCOUNT</value>
-                                                    <maximum>0</maximum>
+                                                    <maximum>2</maximum>
                                                 </limit>
                                             </limits>
                                         </rule>

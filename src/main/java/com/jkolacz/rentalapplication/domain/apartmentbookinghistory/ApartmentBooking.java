@@ -29,43 +29,4 @@ public class ApartmentBooking {
         return new ApartmentBooking(BookingStep.START, bookingDateTime, ownerId, tenantId, bookingPeriod);
     }
 
-    private LocalDateTime getBookingDateTime() {
-        return bookingDateTime;
-    }
-
-    private void setBookingDateTime(LocalDateTime bookingDateTime) {
-        this.bookingDateTime = bookingDateTime;
-    }
-
-    private BookingStep getStep() {
-        return step;
-    }
-
-    private void setStep(BookingStep step) {
-        this.step = step;
-    }
-
-    private String getOwnerId() {
-        return ownerId;
-    }
-
-    private void setOwnerId(String ownerId) {
-        this.ownerId = ownerId;
-    }
-
-    private String getTenantId() {
-        return tenantId;
-    }
-
-    private void setTenantId(String tenantId) {
-        this.tenantId = tenantId;
-    }
-
-    private BookingPeriod getBookingPeriod() {
-        return bookingPeriod;
-    }
-
-    private void setBookingPeriod(BookingPeriod bookingPeriod) {
-        this.bookingPeriod = bookingPeriod;
-    }
 }

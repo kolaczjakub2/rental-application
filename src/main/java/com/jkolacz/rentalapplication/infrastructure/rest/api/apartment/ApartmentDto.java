@@ -14,7 +14,7 @@ public class ApartmentDto {
     private final String description;
     private final Map<String, Double> roomsDefinition;
 
-    ApartmentDto(String ownerId, String street, String postalCode, String houseNumber, String apartmentNumber,
+    public ApartmentDto(String ownerId, String street, String postalCode, String houseNumber, String apartmentNumber,
                         String city, String country, String description, Map<String, Double> roomsDefinition) {
         this.ownerId = ownerId;
         this.street = street;

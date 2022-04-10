@@ -23,23 +23,6 @@ public class ApartmentReadModel {
     @ElementCollection
     private List<RoomReadModel> rooms;
 
-    public ApartmentReadModel() {
-    }
-
-    public ApartmentReadModel(UUID id, String ownerId, String street, String postalCode, String houseNumber, String apartmentNumber,
-                              String city, String country, String description, List<RoomReadModel> rooms) {
-        this.id = id;
-        this.ownerId = ownerId;
-        this.street = street;
-        this.postalCode = postalCode;
-        this.houseNumber = houseNumber;
-        this.apartmentNumber = apartmentNumber;
-        this.city = city;
-        this.country = country;
-        this.description = description;
-        this.rooms = rooms;
-    }
-
     public UUID getId() {
         return id;
     }

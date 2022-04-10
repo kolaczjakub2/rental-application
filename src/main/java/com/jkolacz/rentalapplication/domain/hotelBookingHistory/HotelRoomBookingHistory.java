@@ -28,19 +28,4 @@ class HotelRoomBookingHistory {
         bookings.add(new HotelRoomBooking(bookingDateTime, tenantId, days));
     }
 
-    public String getHotelRoomId() {
-        return hotelRoomId;
-    }
-
-    public void setHotelRoomId(String hotelRoomId) {
-        this.hotelRoomId = hotelRoomId;
-    }
-
-    public List<HotelRoomBooking> getBookings() {
-        return bookings;
-    }
-
-    public void setBookings(List<HotelRoomBooking> bookings) {
-        this.bookings = bookings;
-    }
 }

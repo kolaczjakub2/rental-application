@@ -25,11 +25,6 @@ public class HotelBookingHistory {
         this.hotelId = hotelId;
     }
 
-    public HotelBookingHistory(String hotelId, List<HotelRoomBookingHistory> hotelRoomBookingHistories) {
-        this.hotelId = hotelId;
-        this.hotelRoomBookingHistories = hotelRoomBookingHistories;
-    }
-
     public void add(String hotelRoomId, LocalDateTime bookingDateTime, String tenantId, List<LocalDate> days) {
         HotelRoomBookingHistory hotelRoomBookingHistory = findFor(hotelRoomId);
         hotelRoomBookingHistory.add(bookingDateTime, tenantId, days);
