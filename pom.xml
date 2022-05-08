@@ -208,7 +208,7 @@
                                 </goals>
                                 <configuration>
                                     <excludes>
-                                        <exclude>com/jkolacz/rentalapplication/RentalApplication.class</exclude>
+                                        <exclude>**/*com/jkolacz/rentalapplication/RentalApplication.class</exclude>
                                     </excludes>
                                     <rules>
                                         <rule>

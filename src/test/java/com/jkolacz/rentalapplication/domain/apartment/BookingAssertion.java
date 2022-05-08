@@ -19,7 +19,7 @@ public class BookingAssertion {
     }
 
 
-    public BookingAssertion hasRentalPlaceIdEqualsTo(String expected) {
+    public BookingAssertion hasRentalPlaceIdEqualTo(String expected) {
         Assertions.assertThat(actual).hasFieldOrPropertyWithValue("rentalPlaceId", expected);
         return this;
     }

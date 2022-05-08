@@ -19,7 +19,6 @@ class SpringEventChannelImpl implements EventChannel {
     @Override
     public void publish(ApartmentBooked apartmentBooked) {
         publisher.publishEvent(apartmentBooked);
-
     }
 
     @Override
