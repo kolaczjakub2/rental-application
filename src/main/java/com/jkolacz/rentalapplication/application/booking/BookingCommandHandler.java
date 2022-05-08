@@ -27,7 +27,7 @@ public class BookingCommandHandler {
 
 
     @EventListener
-    public void accept(BookingAccept bookingAccept){
+    public void accept(BookingAccept bookingAccept) {
         Booking booking = bookingRepository.findById(bookingAccept.getBookingId());
         booking.accept(eventChannel);
 

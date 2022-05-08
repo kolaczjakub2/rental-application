@@ -17,7 +17,7 @@ public class HotelBookingHistoryEventListener {
     public void consume(HotelRoomBooked hotelRoomBooked) {
         HotelBookingHistory hotelBookingHistory = getHotelRoomBookingHistoryFor(hotelRoomBooked.getHotelId());
 
-        hotelBookingHistory.add(hotelRoomBooked.getHotelRoomId(),hotelRoomBooked.getEventCreationDateTime(),
+        hotelBookingHistory.add(hotelRoomBooked.getHotelRoomId(), hotelRoomBooked.getEventCreationDateTime(),
                 hotelRoomBooked.getTenantId(), hotelRoomBooked.getDays());
 
         hotelBookingHistoryRepository.save(hotelBookingHistory);

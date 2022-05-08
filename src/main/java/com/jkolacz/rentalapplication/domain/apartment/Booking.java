@@ -2,12 +2,18 @@ package com.jkolacz.rentalapplication.domain.apartment;
 
 import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
 
-import javax.persistence.*;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
+@SuppressWarnings("PMD.UnusedPrivateField")
 public class Booking {
     @Id
     @GeneratedValue
@@ -58,5 +64,49 @@ public class Booking {
 
     public String id() {
         return id.toString();
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public RentalType getRentalType() {
+        return rentalType;
+    }
+
+    public void setRentalType(RentalType rentalType) {
+        this.rentalType = rentalType;
+    }
+
+    public String getRentalPlaceId() {
+        return rentalPlaceId;
+    }
+
+    public void setRentalPlaceId(String rentalPlaceId) {
+        this.rentalPlaceId = rentalPlaceId;
+    }
+
+    public String getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
+    }
+
+    public List<LocalDate> getDays() {
+        return days;
+    }
+
+    public void setDays(List<LocalDate> days) {
+        this.days = days;
+    }
+
+    public BookingStatus getBookingStatus() {
+        return bookingStatus;
+    }
+
+    public void setBookingStatus(BookingStatus bookingStatus) {
+        this.bookingStatus = bookingStatus;
     }
 }

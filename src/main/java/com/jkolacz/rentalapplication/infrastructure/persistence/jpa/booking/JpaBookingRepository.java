@@ -8,16 +8,15 @@ import java.util.UUID;
 
 @Repository
 public class JpaBookingRepository implements BookingRepository {
-
     private final SpringJpaBookingRepository springJpaBookingRepository;
 
-    public JpaBookingRepository(SpringJpaBookingRepository springJpaBookingRepository) {
+    JpaBookingRepository(SpringJpaBookingRepository springJpaBookingRepository) {
         this.springJpaBookingRepository = springJpaBookingRepository;
     }
 
     @Override
     public String save(Booking booking) {
-       return springJpaBookingRepository.save(booking).id();
+        return springJpaBookingRepository.save(booking).id();
     }
 
     @Override

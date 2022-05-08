@@ -13,7 +13,8 @@ public class BookingAccepted {
     private final String tenantId;
     private final List<LocalDate> days;
 
-    public BookingAccepted(String eventId, LocalDateTime eventCreationDateTime, String rentalType, String rentalPlaceId, String tenantId, List<LocalDate> days) {
+    public BookingAccepted(String eventId, LocalDateTime eventCreationDateTime, String rentalType, String rentalPlaceId,
+                           String tenantId, List<LocalDate> days) {
 
         this.eventId = eventId;
         this.eventCreationDateTime = eventCreationDateTime;
@@ -24,9 +25,9 @@ public class BookingAccepted {
     }
 
     public static BookingAccepted create(RentalType rentalType, String rentalPlaceId, String tenantId, List<LocalDate> days) {
-        String eventId= UUID.randomUUID().toString();
+        String eventId = UUID.randomUUID().toString();
         LocalDateTime eventCreationDateTime = LocalDateTime.now();
-        return new BookingAccepted(eventId,eventCreationDateTime, rentalType.name(),rentalPlaceId,tenantId,days);
+        return new BookingAccepted(eventId, eventCreationDateTime, rentalType.name(), rentalPlaceId, tenantId, days);
     }
 
     public String getEventId() {

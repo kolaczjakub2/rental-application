@@ -19,12 +19,12 @@ public class BookingRestController {
     }
 
     @PutMapping("/reject/{id}")
-    public void reject(@PathVariable String id){
+    public void reject(@PathVariable String id) {
         commandRegistry.register(new BookingReject(id));
     }
 
     @PutMapping("accept/{id}")
-    public void accept(@PathVariable String id){
+    public void accept(@PathVariable String id) {
         commandRegistry.register(new BookingAccept(id));
     }
 }

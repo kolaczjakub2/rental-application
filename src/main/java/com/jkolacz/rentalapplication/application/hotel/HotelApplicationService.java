@@ -14,10 +14,11 @@ public class HotelApplicationService {
         this.hotelRepository = hotelRepository;
     }
 
-    public String add(String name,String street,String buildingNumber,String postalCode,String city,String country){
-       Hotel hotel =  new HotelFactory().create(name, street, buildingNumber, postalCode, city, country);
+    @SuppressWarnings("checkstyle:ParameterNumber")
+    public String add(String name, String street, String buildingNumber, String postalCode, String city, String country) {
+        Hotel hotel = new HotelFactory().create(name, street, buildingNumber, postalCode, city, country);
 
-       return hotelRepository.save(hotel);
+        return hotelRepository.save(hotel);
     }
 
 }

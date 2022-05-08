@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
+@SuppressWarnings("PMD.UnusedPrivateField")
 class HotelRoomBooking {
     @Id
     @GeneratedValue

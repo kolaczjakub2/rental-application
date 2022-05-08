@@ -4,7 +4,6 @@ import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBoo
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingHistoryRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.UUID;
 
 @Repository
 public class JpaApartmentBookingHistoryRepository implements ApartmentBookingHistoryRepository {

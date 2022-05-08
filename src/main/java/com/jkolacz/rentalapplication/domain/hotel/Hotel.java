@@ -2,11 +2,17 @@ package com.jkolacz.rentalapplication.domain.hotel;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.UUID;
 
 @Entity
 @Table(name = "HOTEL")
+@SuppressWarnings("PMD.UnusedPrivateField")
 public class Hotel {
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -19,7 +25,8 @@ public class Hotel {
     @Embedded
     private Address address;
 
-    private Hotel() {}
+    private Hotel() {
+    }
 
     Hotel(String name, Address address) {
         this.name = name;
@@ -28,5 +35,25 @@ public class Hotel {
 
     public UUID getId() {
         return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }

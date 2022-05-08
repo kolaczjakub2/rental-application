@@ -5,7 +5,11 @@ import com.jkolacz.rentalapplication.query.hotel.HotelReadModel;
 import com.jkolacz.rentalapplication.query.hotel.QueryHotelRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/hotel")
@@ -29,7 +33,7 @@ public class HotelRestController {
     }
 
     @GetMapping
-    public Iterable<HotelReadModel> findAll(){
+    public Iterable<HotelReadModel> findAll() {
         return queryHotelRepository.findAll();
     }
 }

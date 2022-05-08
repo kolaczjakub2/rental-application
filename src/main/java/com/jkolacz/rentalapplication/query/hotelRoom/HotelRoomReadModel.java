@@ -1,6 +1,12 @@
 package com.jkolacz.rentalapplication.query.hotelRoom;
 
-import javax.persistence.*;
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Table;
 import java.util.List;
 import java.util.UUID;
 

@@ -30,9 +30,9 @@ public class HotelRoomApplicationService {
         return hotelRoomRepository.save(hotelRoom);
     }
 
-    public String book(String id, String tenantId, List<LocalDate> days){
+    public String book(String id, String tenantId, List<LocalDate> days) {
         HotelRoom hotelRoom = hotelRoomRepository.findById(id);
-        Booking booking = hotelRoom.book(tenantId,days,eventChannel);
+        Booking booking = hotelRoom.book(tenantId, days, eventChannel);
 
         return bookingRepository.save(booking);
     }

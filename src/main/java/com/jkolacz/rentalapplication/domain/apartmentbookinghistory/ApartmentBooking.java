@@ -1,9 +1,13 @@
 package com.jkolacz.rentalapplication.domain.apartmentbookinghistory;
 
-import javax.persistence.*;
+import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.time.LocalDateTime;
 
 @Embeddable
+@SuppressWarnings("PMD.UnusedPrivateField")
 public class ApartmentBooking {
 
     private LocalDateTime bookingDateTime;
@@ -29,4 +33,43 @@ public class ApartmentBooking {
         return new ApartmentBooking(BookingStep.START, bookingDateTime, ownerId, tenantId, bookingPeriod);
     }
 
+    public LocalDateTime getBookingDateTime() {
+        return bookingDateTime;
+    }
+
+    public void setBookingDateTime(LocalDateTime bookingDateTime) {
+        this.bookingDateTime = bookingDateTime;
+    }
+
+    public BookingStep getStep() {
+        return step;
+    }
+
+    public void setStep(BookingStep step) {
+        this.step = step;
+    }
+
+    public String getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public String getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
+    }
+
+    public BookingPeriod getBookingPeriod() {
+        return bookingPeriod;
+    }
+
+    public void setBookingPeriod(BookingPeriod bookingPeriod) {
+        this.bookingPeriod = bookingPeriod;
+    }
 }

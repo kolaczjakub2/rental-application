@@ -3,6 +3,7 @@ package com.jkolacz.rentalapplication.domain.apartment;
 import javax.persistence.Embeddable;
 
 @Embeddable
+@SuppressWarnings("PMD.UnusedPrivateField")
 class SquareMeter {
     private Double size;
 
@@ -13,11 +14,11 @@ class SquareMeter {
         this.size = size;
     }
 
-    private Double getSize() {
+    public Double getSize() {
         return size;
     }
 
-    private void setSize(Double size) {
+    public void setSize(Double size) {
         this.size = size;
     }
 }

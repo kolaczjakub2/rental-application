@@ -174,7 +174,6 @@
 
         <profile>
             <id>runtime-analysis</id>
-
             <build>
                 <plugins>
                     <plugin>
@@ -217,13 +216,13 @@
                                                 <limit>
                                                     <counter>LINE</counter>
                                                     <value>COVEREDRATIO</value>
-                                                    <minimum>1.00</minimum>
+                                                    <minimum>0.84</minimum>
                                                 </limit>
 
                                                 <limit>
                                                     <counter>CLASS</counter>
                                                     <value>MISSEDCOUNT</value>
-                                                    <maximum>2</maximum>
+                                                    <maximum>1</maximum>
                                                 </limit>
                                             </limits>
                                         </rule>

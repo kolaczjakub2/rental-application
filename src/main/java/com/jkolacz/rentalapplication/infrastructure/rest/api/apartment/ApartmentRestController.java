@@ -5,7 +5,13 @@ import com.jkolacz.rentalapplication.query.apartment.ApartmentDetails;
 import com.jkolacz.rentalapplication.query.apartment.ApartmentReadModel;
 import com.jkolacz.rentalapplication.query.apartment.QueryApartmentRepository;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 
@@ -27,7 +33,7 @@ public class ApartmentRestController {
                 apartmentDto.getApartmentNumber(), apartmentDto.getCity(), apartmentDto.getCountry(), apartmentDto.getDescription(),
                 apartmentDto.getRoomsDefinition());
 
-        return ResponseEntity.created(URI.create("/apartment/"+id)).build();
+        return ResponseEntity.created(URI.create("/apartment/" + id)).build();
     }
 
     @PutMapping("/book/{id}")
@@ -39,12 +45,12 @@ public class ApartmentRestController {
     }
 
     @GetMapping
-    public Iterable<ApartmentReadModel> findAll(){
+    public Iterable<ApartmentReadModel> findAll() {
         return queryApartmentRepository.findAll();
     }
 
     @GetMapping("/{id}")
-    public ApartmentDetails findById(@PathVariable String id){
+    public ApartmentDetails findById(@PathVariable String id) {
         return queryApartmentRepository.findById(id);
     }
 
