@@ -1,10 +1,12 @@
 package com.jkolacz.rentalapplication.architecture;
 
 import com.tngtech.archunit.core.domain.JavaClasses;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 
+@Tag("ArchitectureTest")
 class PackageStructureTest {
 
     private static final String DOMAIN = "..domain..";
