@@ -13,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.UUID;
 
 @SpringBootTest
-@Tag("IntegrationTest")
+@Tag("DomainRepositoryIntegrationTest")
 class JpaHotelRepositoryIntegrationTest {
     private static final String NAME = "Great hotel";
     private static final String STREET = "Unknown";

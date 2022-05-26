@@ -17,7 +17,7 @@ import java.util.UUID;
 import static java.util.Arrays.asList;
 
 @SpringBootTest
-@Tag("IntegrationTest")
+@Tag("DomainRepositoryIntegrationTest")
 class JpaBookingRepositoryIntegrationTest {
 
     @Autowired

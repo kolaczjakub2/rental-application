@@ -12,6 +12,11 @@ class ApartmentBookingHistoryReadModelAssertion {
         this.actual = actual;
     }
 
+    ApartmentBookingHistoryReadModelAssertion hasApartmentIdEqualsTo(String expected) {
+        Assertions.assertThat(actual.getApartmentId()).isEqualTo(expected);
+        return this;
+    }
+
     static ApartmentBookingHistoryReadModelAssertion assertThat(ApartmentBookingHistoryReadModel actual) {
         return new ApartmentBookingHistoryReadModelAssertion(actual);
     }
