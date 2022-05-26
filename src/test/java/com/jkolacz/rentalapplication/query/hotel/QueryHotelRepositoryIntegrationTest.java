@@ -6,16 +6,16 @@ import com.jkolacz.rentalapplication.domain.hotel.HotelRepository;
 import com.jkolacz.rentalapplication.infrastructure.persistence.jpa.hotel.SpringJpaHotelTestRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.UUID;
-
 import static java.util.Arrays.asList;
 
 @SpringBootTest
-class QueryHotelRepositoryTest {
+@Tag("IntegrationTest")
+class QueryHotelRepositoryIntegrationTest {
     private static final String NAME_1 = "Great hotel";
     private static final String STREET_1 = "Florianska";
     private static final String POSTAL_CODE_1 = "12-345";

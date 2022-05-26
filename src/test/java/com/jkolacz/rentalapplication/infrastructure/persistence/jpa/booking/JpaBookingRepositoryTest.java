@@ -4,6 +4,7 @@ import com.jkolacz.rentalapplication.domain.apartment.Booking;
 import com.jkolacz.rentalapplication.domain.apartment.BookingAssertion;
 import com.jkolacz.rentalapplication.domain.apartment.BookingRepository;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +17,7 @@ import java.util.UUID;
 import static java.util.Arrays.asList;
 
 @SpringBootTest
+@Tag("IntegrationTest")
 class JpaBookingRepositoryIntegrationTest {
 
     @Autowired

@@ -1,7 +1,13 @@
 package com.jkolacz.rentalapplication.infrastructure.persistence.jpa.apartmentbookinghistory;
 
-import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.*;
+import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBooking;
+import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingAssertion;
+import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingHistory;
+import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingHistoryAssertion;
+import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingHistoryRepository;
+import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.BookingPeriod;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,6 +20,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
+@Tag("IntegrationTest")
 class JpaApartmentBookingHistoryRepositoryIntegrationTest {
     @Autowired
     private ApartmentBookingHistoryRepository repository;
