@@ -10,7 +10,6 @@ import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Map;
 
 @Service
 public class ApartmentApplicationService {
@@ -25,11 +24,10 @@ public class ApartmentApplicationService {
         this.bookingRepository = bookingRepository;
     }
 
-    @SuppressWarnings("checkstyle:ParameterNumber")
-    public String add(String ownerId, String street, String postalCode, String houseNumber, String apartmentNumber,
-                      String city, String country, String description, Map<String, Double> roomsDefinition) {
-        Apartment apartment = new ApartmentFactory().create(ownerId, street, postalCode, houseNumber,
-                apartmentNumber, city, country, description, roomsDefinition);
+    public String add(ApartmentDto apartmentDto) {
+        Apartment apartment = new ApartmentFactory().create(apartmentDto.getOwnerId(), apartmentDto.getStreet(), apartmentDto.getPostalCode(), apartmentDto.getHouseNumber(),
+                apartmentDto.getApartmentNumber(), apartmentDto.getCity(), apartmentDto.getCountry(), apartmentDto.getDescription(),
+                apartmentDto.getRoomsDefinition());
 
         return apartmentRepository.save(apartment);
     }

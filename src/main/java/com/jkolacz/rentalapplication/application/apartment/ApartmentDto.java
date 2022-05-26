@@ -1,4 +1,4 @@
-package com.jkolacz.rentalapplication.infrastructure.rest.api.apartment;
+package com.jkolacz.rentalapplication.application.apartment;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

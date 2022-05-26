@@ -1,6 +1,7 @@
 package com.jkolacz.rentalapplication.infrastructure.rest.api.apartment;
 
 import com.google.common.collect.ImmutableMap;
+import com.jkolacz.rentalapplication.application.apartment.ApartmentDto;
 import com.jkolacz.rentalapplication.infrastructure.json.JsonFactory;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;

@@ -3,7 +3,7 @@ package com.jkolacz.rentalapplication.infrastructure.rest.api.booking;
 import com.google.common.collect.ImmutableMap;
 import com.jkolacz.rentalapplication.infrastructure.json.JsonFactory;
 import com.jkolacz.rentalapplication.infrastructure.rest.api.apartment.ApartmentBookingDto;
-import com.jkolacz.rentalapplication.infrastructure.rest.api.apartment.ApartmentDto;
+import com.jkolacz.rentalapplication.application.apartment.ApartmentDto;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
