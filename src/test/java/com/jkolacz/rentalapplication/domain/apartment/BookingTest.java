@@ -1,6 +1,6 @@
 package com.jkolacz.rentalapplication.domain.apartment;
 
-import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
+import com.jkolacz.rentalapplication.domain.eventchannel.ApartmentEventsPublisher;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -19,7 +19,7 @@ class BookingTest {
     private static final String TENANT_ID = "1234";
     private static final String RENTAL_PLACE_ID = "5748";
 
-    private final EventChannel eventChannel = mock(EventChannel.class);
+    private final ApartmentEventsPublisher eventChannel = mock(ApartmentEventsPublisher.class);
 
     @Test
     void shouldCreateBookingForApartment() {

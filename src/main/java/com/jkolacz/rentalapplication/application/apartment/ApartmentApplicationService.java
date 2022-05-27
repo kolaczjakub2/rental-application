@@ -1,28 +1,26 @@
 package com.jkolacz.rentalapplication.application.apartment;
 
 import com.jkolacz.rentalapplication.domain.apartment.Apartment;
+import com.jkolacz.rentalapplication.domain.apartment.ApartmentEventsPublisher;
 import com.jkolacz.rentalapplication.domain.apartment.ApartmentRepository;
 import com.jkolacz.rentalapplication.domain.apartment.Booking;
 import com.jkolacz.rentalapplication.domain.apartment.BookingRepository;
 import com.jkolacz.rentalapplication.domain.apartment.Period;
-import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 
 import static com.jkolacz.rentalapplication.domain.apartment.Apartment.Builder.apartment;
 
-@Service
 public class ApartmentApplicationService {
 
     private final ApartmentRepository apartmentRepository;
-    private final EventChannel eventChannel;
     private final BookingRepository bookingRepository;
+    private final ApartmentEventsPublisher publisher;
 
-    public ApartmentApplicationService(ApartmentRepository apartmentRepository, EventChannel eventChannel, BookingRepository bookingRepository) {
+    ApartmentApplicationService(ApartmentRepository apartmentRepository, BookingRepository bookingRepository, ApartmentEventsPublisher publisher) {
         this.apartmentRepository = apartmentRepository;
-        this.eventChannel = eventChannel;
         this.bookingRepository = bookingRepository;
+        this.publisher = publisher;
     }
 
     public String add(ApartmentDto apartmentDto) {
@@ -44,7 +42,8 @@ public class ApartmentApplicationService {
     public String book(String id, String tenantId, LocalDate start, LocalDate end) {
         Apartment apartment = apartmentRepository.findById(id);
         Period period = new Period(start, end);
-        Booking booking = apartment.book(tenantId, period, eventChannel);
+
+        Booking booking = apartment.book(tenantId, period, publisher);
 
         return bookingRepository.save(booking);
     }

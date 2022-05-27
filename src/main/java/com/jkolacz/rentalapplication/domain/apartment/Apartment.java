@@ -1,7 +1,5 @@
 package com.jkolacz.rentalapplication.domain.apartment;
 
-import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
-import lombok.Builder;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Column;
@@ -16,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-@Builder
 @Entity
 @Table(name = "APARTMENT")
 @SuppressWarnings("PMD.UnusedPrivateField")
@@ -47,10 +44,8 @@ public class Apartment {
         this.description = description;
     }
 
-    public Booking book(String tenantId, Period period, EventChannel eventChannel) {
-        ApartmentBooked apartmentBooked = ApartmentBooked.create(id(), ownerId, tenantId, period);
-        eventChannel.publish(apartmentBooked);
-
+    public Booking book(String tenantId, Period period, com.jkolacz.rentalapplication.domain.apartment.ApartmentEventsPublisher publisher) {
+        publisher.publishApartmentBooked(id(), ownerId, tenantId, period);
         return Booking.apartment(id(), tenantId, period);
     }
 

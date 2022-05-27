@@ -1,9 +1,7 @@
 package com.jkolacz.rentalapplication.domain.apartment;
 
 import com.google.common.collect.ImmutableMap;
-import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.BDDMockito;
 import org.mockito.Mockito;
 
@@ -11,7 +9,9 @@ import java.time.LocalDate;
 import java.util.Map;
 
 import static com.jkolacz.rentalapplication.domain.apartment.Apartment.Builder.apartment;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+
 /* a example */
 class ApartmentTest {
 
@@ -31,7 +31,9 @@ class ApartmentTest {
     private static final LocalDate MIDDLE = LocalDate.of(2022, 3, 5);
     private static final LocalDate END = LocalDate.of(2022, 3, 6);
     private static final Period PERIOD = new Period(START, END);
-    private final EventChannel eventChannel = Mockito.mock(EventChannel.class);
+
+
+    private final ApartmentEventsPublisher publisher = Mockito.mock(ApartmentEventsPublisher.class);
 
     @Test
     void shouldCreateApartmentWithRequiredFields() {
@@ -49,7 +51,7 @@ class ApartmentTest {
     void shouldCreateBookingOnceBooked() {
         Apartment apartment = createApartment();
 
-        Booking actual = apartment.book(TENANT_ID, PERIOD, eventChannel);
+        Booking actual = apartment.book(TENANT_ID, PERIOD, publisher);
         BookingAssertion.assertThat(actual)
                 .isApartment()
                 .hasTenantIdEqualTo(TENANT_ID)
@@ -59,17 +61,11 @@ class ApartmentTest {
 
     @Test
     void shouldPublishApartmentBooked() {
-        ArgumentCaptor<ApartmentBooked> captor = ArgumentCaptor.forClass(ApartmentBooked.class);
         Apartment apartment = createApartment();
 
-        apartment.book(TENANT_ID, PERIOD, eventChannel);
-        BDDMockito.then(eventChannel).should().publish(captor.capture());
+        apartment.book(TENANT_ID, PERIOD, publisher);
+        BDDMockito.then(publisher).should().publishApartmentBooked(any(), eq(OWNER_ID), eq(TENANT_ID), eq(new Period(START, END)));
 
-        ApartmentBooked actual = captor.getValue();
-        assertThat(actual.getOwnerId()).isEqualTo(OWNER_ID);
-        assertThat(actual.getTenantId()).isEqualTo(TENANT_ID);
-        assertThat(actual.getPeriodStart()).isEqualTo(START);
-        assertThat(actual.getPeriodEnd()).isEqualTo(END);
     }
 
     private Apartment createApartment() {

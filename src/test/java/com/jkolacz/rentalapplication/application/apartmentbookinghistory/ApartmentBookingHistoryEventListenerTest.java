@@ -20,6 +20,7 @@ class ApartmentBookingHistoryEventListenerTest {
     private static final String APARTMENT_ID = "1234";
     private static final String OWNER_ID = "5678";
     private static final String TENANT_ID = "8989";
+    private static final String EVENT_ID = "8989";
     private static final LocalDate START = LocalDate.of(2020, 10, 11);
     private static final LocalDate END = LocalDate.of(2020, 10, 12);
     private static final Period PERIOD = new Period(START, END);
@@ -62,7 +63,6 @@ class ApartmentBookingHistoryEventListenerTest {
         BDDMockito.given(repository.existFor(APARTMENT_ID)).willReturn(Boolean.FALSE);
     }
 
-
     private void thenApartmentBookingHistoryShouldHaveApartmentBookings(ApartmentBookingHistory actual, int bookingsSize) {
         assertThat(actual).extracting("bookings").satisfies(actualBookings -> {
             List<ApartmentBooking> bookings = (List<ApartmentBooking>) actualBookings;
@@ -80,8 +80,7 @@ class ApartmentBookingHistoryEventListenerTest {
 
     }
 
-
     private ApartmentBooked givenApartmentBooked() {
-        return ApartmentBookedTestFactory.create(APARTMENT_ID, OWNER_ID, TENANT_ID, PERIOD);
+        return ApartmentBookedTestFactory.create(EVENT_ID, APARTMENT_ID, OWNER_ID, TENANT_ID, PERIOD);
     }
 }

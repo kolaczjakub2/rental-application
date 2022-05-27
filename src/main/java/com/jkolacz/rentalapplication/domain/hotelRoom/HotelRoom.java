@@ -1,7 +1,7 @@
 package com.jkolacz.rentalapplication.domain.hotelRoom;
 
 import com.jkolacz.rentalapplication.domain.apartment.Booking;
-import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
+import com.jkolacz.rentalapplication.domain.eventchannel.ApartmentEventsPublisher;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.CollectionTable;
@@ -44,7 +44,7 @@ public class HotelRoom {
         this.spaces = spaces;
     }
 
-    public Booking book(String tenantId, List<LocalDate> days, EventChannel eventChannel) {
+    public Booking book(String tenantId, List<LocalDate> days, ApartmentEventsPublisher eventChannel) {
         HotelRoomBooked hotelRoomBooked = HotelRoomBooked.create(id(), hotelId, tenantId, days);
         eventChannel.publish(hotelRoomBooked);
         return Booking.hotelRoom(id(), tenantId, days);

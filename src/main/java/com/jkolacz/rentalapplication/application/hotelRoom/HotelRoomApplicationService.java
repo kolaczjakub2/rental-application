@@ -2,7 +2,7 @@ package com.jkolacz.rentalapplication.application.hotelRoom;
 
 import com.jkolacz.rentalapplication.domain.apartment.Booking;
 import com.jkolacz.rentalapplication.domain.apartment.BookingRepository;
-import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
+import com.jkolacz.rentalapplication.domain.eventchannel.ApartmentEventsPublisher;
 import com.jkolacz.rentalapplication.domain.hotelRoom.HotelRoom;
 import com.jkolacz.rentalapplication.domain.hotelRoom.HotelRoomFactory;
 import com.jkolacz.rentalapplication.domain.hotelRoom.HotelRoomRepository;
@@ -16,10 +16,10 @@ import java.util.Map;
 public class HotelRoomApplicationService {
     private final HotelRoomRepository hotelRoomRepository;
     private final BookingRepository bookingRepository;
-    private final EventChannel eventChannel;
+    private final ApartmentEventsPublisher eventChannel;
 
 
-    public HotelRoomApplicationService(HotelRoomRepository hotelRoomRepository, BookingRepository bookingRepository, EventChannel eventChannel) {
+    public HotelRoomApplicationService(HotelRoomRepository hotelRoomRepository, BookingRepository bookingRepository, ApartmentEventsPublisher eventChannel) {
         this.hotelRoomRepository = hotelRoomRepository;
         this.bookingRepository = bookingRepository;
         this.eventChannel = eventChannel;

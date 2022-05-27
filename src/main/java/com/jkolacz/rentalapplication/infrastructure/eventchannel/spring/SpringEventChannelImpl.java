@@ -2,13 +2,13 @@ package com.jkolacz.rentalapplication.infrastructure.eventchannel.spring;
 
 import com.jkolacz.rentalapplication.domain.apartment.ApartmentBooked;
 import com.jkolacz.rentalapplication.domain.apartment.BookingAccepted;
-import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
+import com.jkolacz.rentalapplication.domain.eventchannel.ApartmentEventsPublisher;
 import com.jkolacz.rentalapplication.domain.hotelRoom.HotelRoomBooked;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 @Component
-class SpringEventChannelImpl implements EventChannel {
+class SpringEventChannelImpl implements ApartmentEventsPublisher {
 
     private final ApplicationEventPublisher publisher;
 

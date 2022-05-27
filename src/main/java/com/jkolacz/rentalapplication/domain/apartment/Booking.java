@@ -1,6 +1,6 @@
 package com.jkolacz.rentalapplication.domain.apartment;
 
-import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
+import com.jkolacz.rentalapplication.domain.eventchannel.ApartmentEventsPublisher;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -51,7 +51,7 @@ public class Booking {
         bookingStatus = BookingStatus.REJECTED;
     }
 
-    public void accept(EventChannel eventChannel) {
+    public void accept(ApartmentEventsPublisher eventChannel) {
         bookingStatus = BookingStatus.ACCEPTED;
         BookingAccepted bookingAccepted = BookingAccepted.create(rentalType, rentalPlaceId, tenantId, days);
         eventChannel.publish(bookingAccepted);
