@@ -1,12 +1,13 @@
 package com.jkolacz.rentalapplication.domain.apartment;
 
 import com.jkolacz.rentalapplication.domain.event.EventIdFactory;
+import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
 
 public class ApartmentEventsPublisher {
     private EventIdFactory eventIdFactory;
-    private com.jkolacz.rentalapplication.domain.eventchannel.ApartmentEventsPublisher eventChannel;
+    private EventChannel eventChannel;
 
-    public ApartmentEventsPublisher(EventIdFactory eventIdFactory, com.jkolacz.rentalapplication.domain.eventchannel.ApartmentEventsPublisher eventChannel) {
+    public ApartmentEventsPublisher(EventIdFactory eventIdFactory, EventChannel eventChannel) {
         this.eventIdFactory = eventIdFactory;
         this.eventChannel = eventChannel;
     }

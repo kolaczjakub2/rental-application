@@ -2,7 +2,7 @@ package com.jkolacz.rentalapplication.application.apartment;
 
 import com.google.common.collect.ImmutableMap;
 import com.jkolacz.rentalapplication.domain.apartment.*;
-import com.jkolacz.rentalapplication.domain.eventchannel.ApartmentEventsPublisher;
+import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -39,7 +39,7 @@ class ApartmentApplicationServiceTest {
 
     private final ApartmentRepository apartmentRepository = Mockito.mock(ApartmentRepository.class);
     private final BookingRepository bookingRepository = Mockito.mock(BookingRepository.class);
-    private final ApartmentEventsPublisher eventChannel = Mockito.mock(ApartmentEventsPublisher.class);
+    private final EventChannel eventChannel = Mockito.mock(EventChannel.class);
     ApartmentApplicationService service = new ApartmentApplicationServiceFactory().create(apartmentRepository, eventChannel, bookingRepository);
 
     @Test

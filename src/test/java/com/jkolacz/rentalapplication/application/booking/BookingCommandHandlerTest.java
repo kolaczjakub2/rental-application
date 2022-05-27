@@ -4,7 +4,7 @@ import com.jkolacz.rentalapplication.domain.apartment.Booking;
 import com.jkolacz.rentalapplication.domain.apartment.BookingAccepted;
 import com.jkolacz.rentalapplication.domain.apartment.BookingAssertion;
 import com.jkolacz.rentalapplication.domain.apartment.BookingRepository;
-import com.jkolacz.rentalapplication.domain.eventchannel.ApartmentEventsPublisher;
+import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -27,7 +27,7 @@ class BookingCommandHandlerTest {
     private final ArgumentCaptor<Booking> captor = ArgumentCaptor.forClass(Booking.class);
 
     private final BookingRepository bookingRepository = mock(BookingRepository.class);
-    private final ApartmentEventsPublisher eventChannel = mock(ApartmentEventsPublisher.class);
+    private final EventChannel eventChannel = mock(EventChannel.class);
     private final BookingCommandHandler commandHandler = new BookingCommandHandler(bookingRepository, eventChannel);
 
     @Test

@@ -3,7 +3,7 @@ package com.jkolacz.rentalapplication.domain.hotelRoom;
 import com.google.common.collect.ImmutableMap;
 import com.jkolacz.rentalapplication.domain.apartment.Booking;
 import com.jkolacz.rentalapplication.domain.apartment.BookingAssertion;
-import com.jkolacz.rentalapplication.domain.eventchannel.ApartmentEventsPublisher;
+import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
@@ -24,7 +24,7 @@ class HotelRoomTest {
     private static final String TENANT_ID = "325426";
     private static final List<LocalDate> DAYS = asList(LocalDate.now(), LocalDate.now().plusDays(1));
     private final HotelRoomFactory factory = new HotelRoomFactory();
-    private final ApartmentEventsPublisher eventChannel = mock(ApartmentEventsPublisher.class);
+    private final EventChannel eventChannel = mock(EventChannel.class);
 
     @Test
     void shouldCreateHotelRoomWithAllRequiredInformation() {

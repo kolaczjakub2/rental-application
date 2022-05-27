@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.jkolacz.rentalapplication.domain.apartment.Booking;
 import com.jkolacz.rentalapplication.domain.apartment.BookingAssertion;
 import com.jkolacz.rentalapplication.domain.apartment.BookingRepository;
-import com.jkolacz.rentalapplication.domain.eventchannel.ApartmentEventsPublisher;
+import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
 import com.jkolacz.rentalapplication.domain.hotelRoom.HotelRoom;
 import com.jkolacz.rentalapplication.domain.hotelRoom.HotelRoomAssertion;
 import com.jkolacz.rentalapplication.domain.hotelRoom.HotelRoomFactory;
@@ -36,7 +36,7 @@ class HotelRoomApplicationServiceTest {
 
     private final HotelRoomRepository hotelRoomRepository = Mockito.mock(HotelRoomRepository.class);
     private final BookingRepository bookingRepository = Mockito.mock(BookingRepository.class);
-    private final ApartmentEventsPublisher eventChannel = Mockito.mock(ApartmentEventsPublisher.class);
+    private final EventChannel eventChannel = Mockito.mock(EventChannel.class);
     private final HotelRoomApplicationService service = new HotelRoomApplicationService(hotelRoomRepository, bookingRepository, eventChannel);
 
     @Test

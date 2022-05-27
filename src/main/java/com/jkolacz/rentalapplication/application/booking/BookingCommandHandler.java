@@ -2,7 +2,7 @@ package com.jkolacz.rentalapplication.application.booking;
 
 import com.jkolacz.rentalapplication.domain.apartment.Booking;
 import com.jkolacz.rentalapplication.domain.apartment.BookingRepository;
-import com.jkolacz.rentalapplication.domain.eventchannel.ApartmentEventsPublisher;
+import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component;
 public class BookingCommandHandler {
 
     private final BookingRepository bookingRepository;
-    private final ApartmentEventsPublisher eventChannel;
+    private final EventChannel eventChannel;
 
-    public BookingCommandHandler(BookingRepository bookingRepository, ApartmentEventsPublisher eventChannel) {
+    public BookingCommandHandler(BookingRepository bookingRepository, EventChannel eventChannel) {
         this.bookingRepository = bookingRepository;
         this.eventChannel = eventChannel;
     }
