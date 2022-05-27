@@ -2,7 +2,6 @@ package com.jkolacz.rentalapplication.infrastructure.persistence.jpa.hotel;
 
 import com.jkolacz.rentalapplication.domain.hotel.Hotel;
 import com.jkolacz.rentalapplication.domain.hotel.HotelAssertion;
-import com.jkolacz.rentalapplication.domain.hotel.HotelFactory;
 import com.jkolacz.rentalapplication.domain.hotel.HotelRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Tag;
@@ -11,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.UUID;
+
+import static com.jkolacz.rentalapplication.domain.hotel.Hotel.Builder.hotel;
 
 @SpringBootTest
 @Tag("DomainRepositoryIntegrationTest")
@@ -35,7 +36,14 @@ class JpaHotelRepositoryIntegrationTest {
 
     @Test
     void shouldSaveHotel() {
-        Hotel hotel = new HotelFactory().create(NAME, STREET, POSTAL_CODE, BUILDING_NUMBER, CITY, COUNTRY);
+        Hotel hotel = hotel()
+                .withName(NAME)
+                .withStreet(STREET)
+                .withPostalCode(POSTAL_CODE)
+                .withBuildingNumber(BUILDING_NUMBER)
+                .withCity(CITY)
+                .withCountry(COUNTRY)
+                .build();
 
         hotelId = repository.save(hotel);
 

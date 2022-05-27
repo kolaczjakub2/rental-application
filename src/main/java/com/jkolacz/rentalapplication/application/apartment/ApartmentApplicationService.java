@@ -41,7 +41,6 @@ public class ApartmentApplicationService {
         return apartmentRepository.save(apartment);
     }
 
-    @SuppressWarnings("checkstyle:ParameterNumber")
     public String book(String id, String tenantId, LocalDate start, LocalDate end) {
         Apartment apartment = apartmentRepository.findById(id);
         Period period = new Period(start, end);

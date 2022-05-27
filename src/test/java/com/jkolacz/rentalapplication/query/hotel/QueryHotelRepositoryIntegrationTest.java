@@ -1,7 +1,6 @@
 package com.jkolacz.rentalapplication.query.hotel;
 
 import com.jkolacz.rentalapplication.domain.hotel.Hotel;
-import com.jkolacz.rentalapplication.domain.hotel.HotelFactory;
 import com.jkolacz.rentalapplication.domain.hotel.HotelRepository;
 import com.jkolacz.rentalapplication.infrastructure.persistence.jpa.hotel.SpringJpaHotelTestRepository;
 import org.assertj.core.api.Assertions;
@@ -11,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static com.jkolacz.rentalapplication.domain.hotel.Hotel.Builder.hotel;
 import static java.util.Arrays.asList;
 
 @SpringBootTest
@@ -29,7 +29,6 @@ class QueryHotelRepositoryIntegrationTest {
     private static final String CITY_2 = "Berlin";
     private static final String COUNTRY_2 = "Germany";
 
-    private final HotelFactory hotelFactory = new HotelFactory();
 
     @Autowired
     private QueryHotelRepository queryHotelRepository;
@@ -48,9 +47,23 @@ class QueryHotelRepositoryIntegrationTest {
 
     @Test
     void shouldFindAllHotels() {
-        Hotel hotel1 = hotelFactory.create(NAME_1, STREET_1, BUILDING_NUMBER_1, POSTAL_CODE_1, CITY_1, COUNTRY_1);
+        Hotel hotel1 = hotel()
+                .withName(NAME_1)
+                .withStreet(STREET_1)
+                .withPostalCode(BUILDING_NUMBER_1)
+                .withBuildingNumber(POSTAL_CODE_1)
+                .withCity(CITY_1)
+                .withCountry(COUNTRY_1)
+                .build();
         hotelId1 = hotelRepository.save(hotel1);
-        Hotel hotel2 = hotelFactory.create(NAME_2, STREET_2, BUILDING_NUMBER_2, POSTAL_CODE_2, CITY_2, COUNTRY_2);
+        Hotel hotel2 = hotel()
+                .withName(NAME_2)
+                .withStreet(STREET_2)
+                .withPostalCode(BUILDING_NUMBER_2)
+                .withBuildingNumber(POSTAL_CODE_2)
+                .withCity(CITY_2)
+                .withCountry(COUNTRY_2)
+                .build();
         hotelId2 = hotelRepository.save(hotel2);
 
         Iterable<HotelReadModel> actual = queryHotelRepository.findAll();

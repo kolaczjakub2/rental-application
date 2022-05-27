@@ -24,7 +24,8 @@ class HotelApplicationServiceTest {
     void shouldCreateHotel() {
         ArgumentCaptor<Hotel> captor = ArgumentCaptor.forClass(Hotel.class);
 
-        service.add(NAME, STREET, POSTAL_CODE, BUILDING_NUMBER, CITY, COUNTRY);
+        HotelDto dto = new HotelDto(NAME, STREET, POSTAL_CODE, BUILDING_NUMBER, CITY, COUNTRY);
+        service.add(dto);
 
         then(repository).should().save(captor.capture());
         HotelAssertion.assertThat(captor.getValue())

@@ -1,6 +1,7 @@
 package com.jkolacz.rentalapplication.infrastructure.rest.api.hotel;
 
 import com.jkolacz.rentalapplication.application.hotel.HotelApplicationService;
+import com.jkolacz.rentalapplication.application.hotel.HotelDto;
 import com.jkolacz.rentalapplication.query.hotel.HotelReadModel;
 import com.jkolacz.rentalapplication.query.hotel.QueryHotelRepository;
 import org.springframework.http.HttpStatus;
@@ -26,8 +27,7 @@ public class HotelRestController {
 
     @PostMapping
     public ResponseEntity<Void> add(@RequestBody HotelDto hotelDto) {
-        hotelApplicationService.add(hotelDto.getName(), hotelDto.getStreet(), hotelDto.getBuildingNumber(),
-                hotelDto.getPostalCode(), hotelDto.getCity(), hotelDto.getCountry());
+        hotelApplicationService.add(hotelDto);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

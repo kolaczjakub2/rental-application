@@ -2,6 +2,8 @@ package com.jkolacz.rentalapplication.domain.hotel;
 
 import org.junit.jupiter.api.Test;
 
+import static com.jkolacz.rentalapplication.domain.hotel.Hotel.Builder.hotel;
+
 class HotelFactoryTest {
 
     public static final String NAME = "hotel1";
@@ -13,7 +15,14 @@ class HotelFactoryTest {
 
     @Test
     void shouldReturnNewHotelWithAllRequiredFields(){
-        Hotel actual = new HotelFactory().create(NAME, STREET, BUILDING_NUMBER, POSTAL_CODE, CITY, COUNTRY);
+        Hotel actual = hotel()
+                .withName(NAME)
+                .withStreet(STREET)
+                .withPostalCode(BUILDING_NUMBER)
+                .withBuildingNumber(POSTAL_CODE)
+                .withCity(CITY)
+                .withCountry(COUNTRY)
+                .build();
 
         HotelAssertion.assertThat(actual)
                 .hasNameEqualsTo(NAME)
