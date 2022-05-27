@@ -3,7 +3,6 @@ package com.jkolacz.rentalapplication.application.apartmentbookinghistory;
 import com.google.common.collect.ImmutableMap;
 import com.jkolacz.rentalapplication.application.apartment.ApartmentApplicationService;
 import com.jkolacz.rentalapplication.domain.apartment.Apartment;
-import com.jkolacz.rentalapplication.domain.apartment.ApartmentFactory;
 import com.jkolacz.rentalapplication.domain.apartment.ApartmentRepository;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBooking;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingAssertion;
@@ -19,6 +18,8 @@ import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+
+import static com.jkolacz.rentalapplication.domain.apartment.Apartment.Builder.apartment;
 
 @SpringBootTest
 @Tag("IntegrationTest")
@@ -72,8 +73,16 @@ class ApartmentBookingHistoryEventListenerIntegrationTest {
     }
 
     private Apartment createApartment() {
-        return new ApartmentFactory().create(
-                OWNER_ID, STREET, POSTAL_CODE, HOUSE_NUMBER, APARTMENT_NUMBER, CITY, COUNTRY,
-                DESCRIPTION, ROOMS_DEFINITION);
+        return apartment()
+                .withOwnerId(OWNER_ID)
+                .withStreet(STREET)
+                .withPostalCode(POSTAL_CODE)
+                .withHouseNumber(HOUSE_NUMBER)
+                .withApartmentNumber(APARTMENT_NUMBER)
+                .withCity(CITY)
+                .withCountry(COUNTRY)
+                .withDescription(DESCRIPTION)
+                .withRoomsDefinition(ROOMS_DEFINITION)
+                .build();
     }
 }

@@ -11,6 +11,7 @@ import org.mockito.Mockito;
 import java.time.LocalDate;
 import java.util.Map;
 
+import static com.jkolacz.rentalapplication.domain.apartment.Apartment.Builder.apartment;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
@@ -32,7 +33,6 @@ class ApartmentApplicationServiceTest {
     private static final LocalDate MIDDLE = LocalDate.of(2020, 3, 5);
     private static final LocalDate END = LocalDate.of(2020, 3, 6);
     private static final String BOOKING_ID = "8394234";
-    private final ApartmentFactory apartmentFactory = new ApartmentFactory();
 
     private final ApartmentRepository apartmentRepository = Mockito.mock(ApartmentRepository.class);
     private final BookingRepository bookingRepository = Mockito.mock(BookingRepository.class);
@@ -94,7 +94,17 @@ class ApartmentApplicationServiceTest {
     }
 
     private void givenApartment() {
-        Apartment apartment = apartmentFactory.create(OWNER_ID, STREET, POSTAL_CODE, HOUSE_NUMBER, APARTMENT_NUMBER, CITY, COUNTRY, DESCRIPTION, ROOMS_DEFINITION);
+        Apartment apartment = apartment()
+                .withOwnerId(OWNER_ID)
+                .withStreet(STREET)
+                .withPostalCode(POSTAL_CODE)
+                .withHouseNumber(HOUSE_NUMBER)
+                .withApartmentNumber(APARTMENT_NUMBER)
+                .withCity(CITY)
+                .withCountry(COUNTRY)
+                .withDescription(DESCRIPTION)
+                .withRoomsDefinition(ROOMS_DEFINITION)
+                .build();
         given(apartmentRepository.findById(APARTMENT_ID)).willReturn(apartment);
     }
 

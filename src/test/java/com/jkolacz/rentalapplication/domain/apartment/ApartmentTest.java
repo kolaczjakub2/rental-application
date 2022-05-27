@@ -10,6 +10,7 @@ import org.mockito.Mockito;
 import java.time.LocalDate;
 import java.util.Map;
 
+import static com.jkolacz.rentalapplication.domain.apartment.Apartment.Builder.apartment;
 import static org.assertj.core.api.Assertions.assertThat;
 /* a example */
 class ApartmentTest {
@@ -25,7 +26,6 @@ class ApartmentTest {
     private static final Map<String, Double> ROOM_DEFINITION = ImmutableMap.of(
             "Toilet", 10.0, "Bedroom", 30.0
     );
-    public static final ApartmentFactory APARTMENT_FACTORY = new ApartmentFactory();
     private static final String TENANT_ID = "123";
     private static final LocalDate START = LocalDate.of(2022, 3, 4);
     private static final LocalDate MIDDLE = LocalDate.of(2022, 3, 5);
@@ -73,8 +73,16 @@ class ApartmentTest {
     }
 
     private Apartment createApartment() {
-        return APARTMENT_FACTORY.create(
-                OWNER_ID, STREET, POSTAL_CODE, HOUSE_NUMBER, APARTMENT_NUMBER, CITY, COUNTRY,
-                DESCRIPTION, ROOM_DEFINITION);
+        return apartment()
+                .withOwnerId(OWNER_ID)
+                .withStreet(STREET)
+                .withPostalCode(POSTAL_CODE)
+                .withHouseNumber(HOUSE_NUMBER)
+                .withApartmentNumber(APARTMENT_NUMBER)
+                .withCity(CITY)
+                .withCountry(COUNTRY)
+                .withDescription(DESCRIPTION)
+                .withRoomsDefinition(ROOM_DEFINITION)
+                .build();
     }
 }

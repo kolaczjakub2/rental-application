@@ -3,7 +3,6 @@ package com.jkolacz.rentalapplication.infrastructure.persistence.jpa.apartment;
 import com.google.common.collect.ImmutableMap;
 import com.jkolacz.rentalapplication.domain.apartment.Apartment;
 import com.jkolacz.rentalapplication.domain.apartment.ApartmentAssertion;
-import com.jkolacz.rentalapplication.domain.apartment.ApartmentFactory;
 import com.jkolacz.rentalapplication.domain.apartment.ApartmentRepository;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -14,6 +13,7 @@ import javax.transaction.Transactional;
 import java.util.Map;
 import java.util.UUID;
 
+import static com.jkolacz.rentalapplication.domain.apartment.Apartment.Builder.apartment;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -33,7 +33,6 @@ class JpaApartmentRepositoryIntegrationTest {
             "Toilet", 10.0, "Bedroom", 30.0
     );
 
-    public final ApartmentFactory APARTMENT_FACTORY = new ApartmentFactory();
 
     @Autowired
     private ApartmentRepository apartmentRepository;
@@ -67,11 +66,41 @@ class JpaApartmentRepositoryIntegrationTest {
     @Test
     @Transactional
     void shouldReturnExistingApartmentWeWant() {
-        Apartment apartment1 = APARTMENT_FACTORY.create("1234", "Florianska", "98-765", "12","34","Krakow", "Poland", "The Greatest", ImmutableMap.of("Room1",50.0));
+        Apartment apartment1 = apartment()
+                .withOwnerId("1234")
+                .withStreet("Florianska")
+                .withPostalCode("98-765")
+                .withHouseNumber("12")
+                .withApartmentNumber("34")
+                .withCity("Krakow")
+                .withCountry("Poland")
+                .withDescription("The Greatest")
+                .withRoomsDefinition(ImmutableMap.of("Room1", 50.0))
+                .build();
         apartmentRepository.save(apartment1);
-        Apartment apartment2 = APARTMENT_FACTORY.create("1234", "Florianska", "98-765", "12","34","Krakow", "Poland", "The Greatest", ImmutableMap.of("Room1",50.0));
+        Apartment apartment2 = apartment()
+                .withOwnerId("1234")
+                .withStreet("Florianska")
+                .withPostalCode("98-765")
+                .withHouseNumber("12")
+                .withApartmentNumber("34")
+                .withCity("Krakow")
+                .withCountry("Poland")
+                .withDescription("The Greatest")
+                .withRoomsDefinition(ImmutableMap.of("Room1", 50.0))
+                .build();
         apartmentRepository.save(apartment2);
-        Apartment apartment3 = APARTMENT_FACTORY.create("1234", "Florianska", "98-765", "12","34","Krakow", "Poland", "The Greatest", ImmutableMap.of("Room1",50.0));
+        Apartment apartment3 = apartment()
+                .withOwnerId("1234")
+                .withStreet("Florianska")
+                .withPostalCode("98-765")
+                .withHouseNumber("12")
+                .withApartmentNumber("34")
+                .withCity("Krakow")
+                .withCountry("Poland")
+                .withDescription("The Greatest")
+                .withRoomsDefinition(ImmutableMap.of("Room1", 50.0))
+                .build();
         apartmentRepository.save(apartment3);
         Apartment apartment = createApartment();
         String existingId = apartmentRepository.save(apartment);
@@ -87,8 +116,16 @@ class JpaApartmentRepositoryIntegrationTest {
 
 
     private Apartment createApartment() {
-        return APARTMENT_FACTORY.create(
-                OWNER_ID, STREET, POSTAL_CODE, HOUSE_NUMBER, APARTMENT_NUMBER, CITY, COUNTRY,
-                DESCRIPTION, ROOM_DEFINITION);
+        return apartment()
+                .withOwnerId(OWNER_ID)
+                .withStreet(STREET)
+                .withPostalCode(POSTAL_CODE)
+                .withHouseNumber(HOUSE_NUMBER)
+                .withApartmentNumber(APARTMENT_NUMBER)
+                .withCity(CITY)
+                .withCountry(COUNTRY)
+                .withDescription(DESCRIPTION)
+                .withRoomsDefinition(ROOM_DEFINITION)
+                .build();
     }
 }
