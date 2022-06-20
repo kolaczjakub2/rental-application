@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class ApartmentBookingHistoryAssertion {
-    private ApartmentBookingHistory actual;
+    private final ApartmentBookingHistory actual;
 
-    public ApartmentBookingHistoryAssertion(ApartmentBookingHistory actual) {
+    private ApartmentBookingHistoryAssertion(ApartmentBookingHistory actual) {
         this.actual = actual;
     }
 
@@ -17,17 +17,28 @@ public class ApartmentBookingHistoryAssertion {
         return new ApartmentBookingHistoryAssertion(actual);
     }
 
-
-    public ApartmentBookingHistoryAssertion hasApartmentIdEqualsTo(String apartmentId) {
-        Assertions.assertThat(actual).hasFieldOrPropertyWithValue("apartmentId", apartmentId);
+    ApartmentBookingHistoryAssertion hasApartmentIdEqualsTo(String expected) {
+        Assertions.assertThat(actual).hasFieldOrPropertyWithValue("apartmentId", expected);
         return this;
     }
 
+    public ApartmentBookingHistoryAssertion hasOneApartmentBooking() {
+        return hasApartmentBookingsAmount(1);
+    }
 
-    public ApartmentBookingHistoryAssertion hasApartmentBookingSatisfies(Consumer<ApartmentBooking> consumer) {
+    public ApartmentBookingHistoryAssertion hasApartmentBookingsAmount(int expected) {
         hasApartmentBookings().satisfies(actualBookings -> {
-            Assertions.assertThat(asApartmentBookingList(actualBookings)).anySatisfy(consumer);
+            Assertions.assertThat(asApartmentBookings(actualBookings)).hasSize(expected);
         });
+
+        return this;
+    }
+
+    public ApartmentBookingHistoryAssertion hasApartmentBookingThatSatisfies(Consumer<ApartmentBooking> requirements) {
+        hasApartmentBookings().satisfies(actualBookings -> {
+            Assertions.assertThat(asApartmentBookings(actualBookings)).anySatisfy(requirements);
+        });
+
         return this;
     }
 
@@ -35,13 +46,7 @@ public class ApartmentBookingHistoryAssertion {
         return Assertions.assertThat(actual).extracting("bookings");
     }
 
-    private List<ApartmentBooking> asApartmentBookingList(Object bookings) {
-        return (List<ApartmentBooking>) bookings;
-    }
-
-    public ApartmentBookingHistoryAssertion hasApartmentBookingsAmount(int size) {
-        hasApartmentBookings().satisfies(bookings ->
-                Assertions.assertThat(asApartmentBookingList(bookings)).hasSize(size));
-        return this;
+    private List<ApartmentBooking> asApartmentBookings(Object actualBookings) {
+        return (List<ApartmentBooking>) actualBookings;
     }
 }

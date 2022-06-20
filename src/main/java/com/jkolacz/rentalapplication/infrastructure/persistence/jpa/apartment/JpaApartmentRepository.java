@@ -7,21 +7,30 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public class JpaApartmentRepository implements ApartmentRepository {
+class JpaApartmentRepository implements ApartmentRepository {
+    private final SpringJpaApartmentRepository springJpaApartmentRepository;
 
-    private final SpringApartmentJpaRepository springApartmentJpaRepository;
-
-    JpaApartmentRepository(SpringApartmentJpaRepository springJpaApartmentRepository) {
-        this.springApartmentJpaRepository = springJpaApartmentRepository;
+    JpaApartmentRepository(SpringJpaApartmentRepository springJpaApartmentRepository) {
+        this.springJpaApartmentRepository = springJpaApartmentRepository;
     }
 
     @Override
     public String save(Apartment apartment) {
-        return springApartmentJpaRepository.save(apartment).id();
+        return springJpaApartmentRepository.save(apartment).id();
     }
 
     @Override
-    public Apartment findById(String id) {
-        return springApartmentJpaRepository.findById(UUID.fromString(id)).orElseThrow(() -> new ApartmentNotFoundException(id));
+    public Apartment findById(String apartmentId) {
+        return springJpaApartmentRepository.findById(asUUID(apartmentId))
+                .orElseThrow(() -> new ApartmentDoesNotExistException(apartmentId));
+    }
+
+    @Override
+    public boolean existById(String apartmentId) {
+        return springJpaApartmentRepository.existsById(asUUID(apartmentId));
+    }
+
+    private UUID asUUID(String id) {
+        return UUID.fromString(id);
     }
 }

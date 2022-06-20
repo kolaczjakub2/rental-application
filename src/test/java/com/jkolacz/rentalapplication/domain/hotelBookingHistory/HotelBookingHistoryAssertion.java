@@ -1,5 +1,6 @@
-package com.jkolacz.rentalapplication.domain.hotelBookingHistory;
+package com.jkolacz.rentalapplication.domain.hotelbookinghistory;
 
+import com.jkolacz.rentalapplication.rentalapplication.domain.hotelbookinghistory.HotelRoomBookingHistory;
 import org.assertj.core.api.AbstractObjectAssert;
 import org.assertj.core.api.Assertions;
 
@@ -9,32 +10,15 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class HotelBookingHistoryAssertion {
-    private HotelBookingHistory actual;
+    private final HotelBookingHistory actual;
 
-    public HotelBookingHistoryAssertion(HotelBookingHistory actual) {
+    private HotelBookingHistoryAssertion(HotelBookingHistory actual) {
         this.actual = actual;
     }
 
-    public static HotelBookingHistoryAssertion assertThat(HotelBookingHistory hotelBookingHistory) {
-        return new HotelBookingHistoryAssertion(hotelBookingHistory);
+    public static HotelBookingHistoryAssertion assertThat(HotelBookingHistory actual) {
+        return new HotelBookingHistoryAssertion(actual);
     }
-
-    public HotelBookingHistoryAssertion hasInformationAboutHistoryOfHotelRooms(int size) {
-        hasHotelRoomBookingHistories().satisfies(actualBookings -> {
-            Assertions.assertThat(asHotelRoomHistories(actualBookings)).hasSize(size);
-        });
-        return this;
-    }
-
-
-    public HotelBookingHistoryAssertion hasInformationAboutHistoryOfHotelRoom(String hotelRoomId, int size) {
-        return hasHotelRoomBookingHistoryFor(hotelRoomBookingHistory -> {
-            HotelRoomBookingHistoryAssertion.assertThat(hotelRoomBookingHistory)
-                    .hasHotelRoomIdEqualTo(hotelRoomId)
-                    .hasInformationAboutBookings(size);
-        });
-    }
-
 
     public HotelBookingHistoryAssertion hasHotelRoomBookingHistoryFor(String hotelRoomId, LocalDateTime bookingDateTime, String tenantId, List<LocalDate> days) {
         return hasHotelRoomBookingHistoryFor(hotelRoomBookingHistory -> {
@@ -52,14 +36,12 @@ public class HotelBookingHistoryAssertion {
         });
     }
 
-
-
-    private List<HotelRoomBookingHistory> asHotelRoomHistories(Object actualBookings) {
-        return (List<HotelRoomBookingHistory>) actualBookings;
-    }
-
-    private AbstractObjectAssert<?, ?> hasHotelRoomBookingHistories() {
-        return Assertions.assertThat(actual).extracting("hotelRoomBookingHistories");
+    public HotelBookingHistoryAssertion hasInformationAboutHistoryOfHotelRoom(String hotelRoomId, int size) {
+        return hasHotelRoomBookingHistoryFor(hotelRoomBookingHistory -> {
+            HotelRoomBookingHistoryAssertion.assertThat(hotelRoomBookingHistory)
+                    .hasHotelRoomIdEqualTo(hotelRoomId)
+                    .hasInformationAboutBookings(size);
+        });
     }
 
     private HotelBookingHistoryAssertion hasHotelRoomBookingHistoryFor(Consumer<HotelRoomBookingHistory> consumer) {
@@ -68,5 +50,21 @@ public class HotelBookingHistoryAssertion {
         });
 
         return this;
+    }
+
+    public HotelBookingHistoryAssertion hasInformationAboutHistoryOfHotelRooms(int size) {
+        hasHotelRoomBookingHistories().satisfies(actualBookings -> {
+            Assertions.assertThat(asHotelRoomHistories(actualBookings)).hasSize(size);
+        });
+
+        return this;
+    }
+
+    private AbstractObjectAssert<?, ?> hasHotelRoomBookingHistories() {
+        return Assertions.assertThat(actual).extracting("hotelRoomBookingHistories");
+    }
+
+    private List<HotelRoomBookingHistory> asHotelRoomHistories(Object actualBookings) {
+        return (List<HotelRoomBookingHistory>) actualBookings;
     }
 }

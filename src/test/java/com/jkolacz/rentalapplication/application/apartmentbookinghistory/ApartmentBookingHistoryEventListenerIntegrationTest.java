@@ -2,13 +2,16 @@ package com.jkolacz.rentalapplication.application.apartmentbookinghistory;
 
 import com.google.common.collect.ImmutableMap;
 import com.jkolacz.rentalapplication.application.apartment.ApartmentApplicationService;
+import com.jkolacz.rentalapplication.application.apartment.ApartmentBookingDto;
 import com.jkolacz.rentalapplication.domain.apartment.Apartment;
 import com.jkolacz.rentalapplication.domain.apartment.ApartmentRepository;
-import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBooking;
+import com.jkolacz.rentalapplication.infrastructure.persistence.jpa.apartment.SpringJpaApartmentTestRepository;
+import com.jkolacz.rentalapplication.infrastructure.persistence.jpa.apartmentbookinghistory.SpringJpaApartmentBookingHistoryTestRepository;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingAssertion;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingHistory;
+import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingHistoryAssertion;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingHistoryRepository;
-import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +19,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Map;
 
 import static com.jkolacz.rentalapplication.domain.apartment.Apartment.Builder.apartment;
@@ -34,14 +36,19 @@ class ApartmentBookingHistoryEventListenerIntegrationTest {
     private static final String DESCRIPTION = "Nice place to stay";
     private static final Map<String, Double> ROOMS_DEFINITION = ImmutableMap.of("Toilet", 10.0, "Bedroom", 30.0);
 
-    @Autowired
-    private ApartmentApplicationService apartmentApplicationService;
+    @Autowired private ApartmentApplicationService apartmentApplicationService;
+    @Autowired private ApartmentBookingHistoryRepository apartmentBookingHistoryRepository;
+    @Autowired private SpringJpaApartmentBookingHistoryTestRepository springJpaApartmentBookingHistoryTestRepository;
+    @Autowired private ApartmentRepository apartmentRepository;
+    @Autowired private SpringJpaApartmentTestRepository springJpaApartmentTestRepository;
 
-    @Autowired
-    private ApartmentBookingHistoryRepository apartmentBookingHistoryRepository;
+    private String apartmentId;
 
-    @Autowired
-    private ApartmentRepository apartmentRepository;
+    @AfterEach
+    void removeApartment() {
+        springJpaApartmentTestRepository.deleteById(apartmentId);
+        springJpaApartmentBookingHistoryTestRepository.deleteById(apartmentId);
+    }
 
     @Test
     @Transactional
@@ -49,27 +56,25 @@ class ApartmentBookingHistoryEventListenerIntegrationTest {
         String tenantId = "11223344";
         LocalDate start = LocalDate.of(2020, 1, 13);
         LocalDate end = LocalDate.of(2020, 1, 14);
-        String apartmentId = givenExistingApartment();
+        givenExistingApartment();
+        ApartmentBookingDto apartmentBookingDto = new ApartmentBookingDto(apartmentId, tenantId, start, end);
 
-        apartmentApplicationService.book(apartmentId, tenantId, start, end);
+
+        apartmentApplicationService.book(apartmentBookingDto);
         ApartmentBookingHistory actual = apartmentBookingHistoryRepository.findFor(apartmentId);
 
-        Assertions.assertThat(actual).extracting("bookings").satisfies(actualBookings -> {
-            List<ApartmentBooking> bookings = (List<ApartmentBooking>) actualBookings;
-
-            Assertions.assertThat(bookings).hasSize(1)
-                    .allSatisfy(booking -> {
-                        ApartmentBookingAssertion.assertThat(booking)
-                                .isStart()
-                                .hasOwnerIdEqualTo(OWNER_ID)
-                                .hasTenantIdEqualTo(tenantId)
-                                .hasBookingPeriodThatHas(start, end);
-                    });
-        });
+        ApartmentBookingHistoryAssertion.assertThat(actual)
+                .hasOneApartmentBooking()
+                .hasApartmentBookingThatSatisfies(actualBooking -> {
+                    ApartmentBookingAssertion.assertThat(actualBooking)
+                            .hasOwnerIdEqualTo(OWNER_ID)
+                            .hasTenantIdEqualTo(tenantId)
+                            .hasBookingPeriodThatHas(start, end);
+                });
     }
 
-    private String givenExistingApartment() {
-        return apartmentRepository.save(createApartment());
+    private void givenExistingApartment() {
+        apartmentId = apartmentRepository.save(createApartment());
     }
 
     private Apartment createApartment() {

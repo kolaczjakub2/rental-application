@@ -8,8 +8,8 @@ import lombok.Getter;
 public class HotelDto {
     private final String name;
     private final String street;
-    private final String buildingNumber;
     private final String postalCode;
+    private final String buildingNumber;
     private final String city;
     private final String country;
 }

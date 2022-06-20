@@ -4,13 +4,13 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class QueryHotelRepository {
-    private final SpringQueryHotelRepository springQueryHotelRepository;
+    private final SpringJpaQueryHotelRepository repository;
 
-    public QueryHotelRepository(SpringQueryHotelRepository springQueryHotelRepository) {
-        this.springQueryHotelRepository = springQueryHotelRepository;
+    public QueryHotelRepository(SpringJpaQueryHotelRepository repository) {
+        this.repository = repository;
     }
 
     public Iterable<HotelReadModel> findAll() {
-        return springQueryHotelRepository.findAll();
+        return repository.findAll();
     }
 }

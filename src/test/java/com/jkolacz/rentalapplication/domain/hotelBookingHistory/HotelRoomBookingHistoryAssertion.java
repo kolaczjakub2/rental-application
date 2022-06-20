@@ -1,5 +1,7 @@
-package com.jkolacz.rentalapplication.domain.hotelBookingHistory;
+package com.jkolacz.rentalapplication.domain.hotelbookinghistory;
 
+import com.jkolacz.rentalapplication.rentalapplication.domain.hotelbookinghistory.HotelRoomBooking;
+import com.jkolacz.rentalapplication.rentalapplication.domain.hotelbookinghistory.HotelRoomBookingHistory;
 import org.assertj.core.api.AbstractObjectAssert;
 import org.assertj.core.api.Assertions;
 
@@ -8,31 +10,23 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class HotelRoomBookingHistoryAssertion {
-    private HotelRoomBookingHistory actual;
+class HotelRoomBookingHistoryAssertion {
+    private final HotelRoomBookingHistory actual;
 
-    public HotelRoomBookingHistoryAssertion(HotelRoomBookingHistory hotelRoomBookingHistory) {
-        actual = hotelRoomBookingHistory;
+    private HotelRoomBookingHistoryAssertion(HotelRoomBookingHistory actual) {
+        this.actual = actual;
     }
 
-    public static HotelRoomBookingHistoryAssertion assertThat(HotelRoomBookingHistory hotelRoomBookingHistory) {
-        return new HotelRoomBookingHistoryAssertion(hotelRoomBookingHistory);
+    static HotelRoomBookingHistoryAssertion assertThat(HotelRoomBookingHistory actual) {
+        return new HotelRoomBookingHistoryAssertion(actual);
     }
 
-    public HotelRoomBookingHistoryAssertion hasHotelRoomIdEqualTo(String hotelRoomId) {
-        Assertions.assertThat(actual).hasFieldOrPropertyWithValue("hotelRoomId", hotelRoomId);
-        return this;
-
-    }
-
-    public HotelRoomBookingHistoryAssertion hasInformationAboutBookings(int size) {
-        Assertions.assertThat(actual).extracting("bookings")
-                .satisfies(bookings -> Assertions.assertThat(asHotelRoomBooking(bookings)).hasSize(size));
+    HotelRoomBookingHistoryAssertion hasHotelRoomIdEqualTo(String expected) {
+        Assertions.assertThat(actual).hasFieldOrPropertyWithValue("hotelRoomId", expected);
         return this;
     }
 
-
-    public HotelRoomBookingHistoryAssertion hasHotelRoomBookingFor(LocalDateTime bookingDateTime, String tenantId, List<LocalDate> days) {
+    HotelRoomBookingHistoryAssertion hasHotelRoomBookingFor(LocalDateTime bookingDateTime, String tenantId, List<LocalDate> days) {
         return hasHotelRoomBookingFor(hotelRoomBooking -> {
             Assertions.assertThat(hotelRoomBooking)
                     .hasFieldOrPropertyWithValue("bookingDateTime", bookingDateTime)
@@ -41,7 +35,7 @@ public class HotelRoomBookingHistoryAssertion {
         });
     }
 
-    public HotelRoomBookingHistoryAssertion hasHotelRoomBookingFor(String tenantId, List<LocalDate> days) {
+    HotelRoomBookingHistoryAssertion hasHotelRoomBookingFor(String tenantId, List<LocalDate> days) {
         return hasHotelRoomBookingFor(hotelRoomBooking -> {
             Assertions.assertThat(hotelRoomBooking)
                     .hasFieldOrPropertyWithValue("tenantId", tenantId)
@@ -51,19 +45,25 @@ public class HotelRoomBookingHistoryAssertion {
 
     private HotelRoomBookingHistoryAssertion hasHotelRoomBookingFor(Consumer<HotelRoomBooking> consumer) {
         hasHotelRoomBookings().satisfies(bookings -> {
-            Assertions.assertThat(asHotelRoomBooking(bookings)).anySatisfy(consumer);
+            Assertions.assertThat(asHotelRoomBookings(bookings)).anySatisfy(consumer);
         });
 
         return this;
     }
 
-    private List<HotelRoomBooking> asHotelRoomBooking(Object bookings) {
-        return (List<HotelRoomBooking>) bookings;
+    HotelRoomBookingHistoryAssertion hasInformationAboutBookings(int size) {
+        hasHotelRoomBookings().satisfies(bookings -> {
+            Assertions.assertThat(asHotelRoomBookings(bookings)).hasSize(size);
+        });
+
+        return this;
     }
 
     private AbstractObjectAssert<?, ?> hasHotelRoomBookings() {
         return Assertions.assertThat(actual).extracting("bookings");
     }
 
-
+    private List<HotelRoomBooking> asHotelRoomBookings(Object actualBookings) {
+        return (List<HotelRoomBooking>) actualBookings;
+    }
 }

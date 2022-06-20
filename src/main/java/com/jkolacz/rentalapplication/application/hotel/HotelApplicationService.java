@@ -2,21 +2,18 @@ package com.jkolacz.rentalapplication.application.hotel;
 
 import com.jkolacz.rentalapplication.domain.hotel.Hotel;
 import com.jkolacz.rentalapplication.domain.hotel.HotelRepository;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-import static com.jkolacz.rentalapplication.domain.hotel.Hotel.Builder.hotel;
-
-@Component
+@Service
 public class HotelApplicationService {
-
     private final HotelRepository hotelRepository;
 
     public HotelApplicationService(HotelRepository hotelRepository) {
         this.hotelRepository = hotelRepository;
     }
 
-    public String add(HotelDto hotelDto) {
-        Hotel hotel = hotel()
+    public void add(HotelDto hotelDto) {
+        Hotel hotel = Hotel.Builder.hotel()
                 .withName(hotelDto.getName())
                 .withStreet(hotelDto.getStreet())
                 .withPostalCode(hotelDto.getPostalCode())
@@ -25,7 +22,6 @@ public class HotelApplicationService {
                 .withCountry(hotelDto.getCountry())
                 .build();
 
-        return hotelRepository.save(hotel);
+        hotelRepository.save(hotel);
     }
-
 }

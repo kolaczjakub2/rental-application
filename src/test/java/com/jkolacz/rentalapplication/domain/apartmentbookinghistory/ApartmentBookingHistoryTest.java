@@ -15,24 +15,23 @@ class ApartmentBookingHistoryTest {
     private static final LocalDateTime BOOKING_DATE_TIME_2 = LocalDateTime.of(2020, 1, 3, 5, 7);
     private static final String TENANT_ID_2 = "1212";
     private static final LocalDate START_2 = LocalDate.of(2020, 1, 2);
-    private static final LocalDate END_2 = LocalDate.of(2020, 3,4);
+    private static final LocalDate END_2 = LocalDate.of(2020, 3, 4);
 
     @Test
-    void shouldAddEntryToApartmentBookingHistory(){
+    void shouldAddFirstApartmentBookingIntoHistory() {
         ApartmentBookingHistory actual = new ApartmentBookingHistory(APARTMENT_ID);
-
-        actual.add(ApartmentBooking.start(BOOKING_DATE_TIME_1,OWNER_ID,TENANT_ID_1,new BookingPeriod(START_1,END_1)));
+        actual.add(ApartmentBooking.start(BOOKING_DATE_TIME_1, OWNER_ID, TENANT_ID_1, new BookingPeriod(START_1, END_1)));
 
         ApartmentBookingHistoryAssertion.assertThat(actual)
                 .hasApartmentIdEqualsTo(APARTMENT_ID)
-                .hasApartmentBookingsAmount(1)
-                .hasApartmentBookingSatisfies(actualBooking ->{
+                .hasOneApartmentBooking()
+                .hasApartmentBookingThatSatisfies(actualBooking -> {
                     ApartmentBookingAssertion.assertThat(actualBooking)
                             .isStart()
                             .hasBookingDateTimeEqualTo(BOOKING_DATE_TIME_1)
                             .hasOwnerIdEqualTo(OWNER_ID)
                             .hasTenantIdEqualTo(TENANT_ID_1)
-                            .hasBookingPeriodThatHas(START_1,END_1);
+                            .hasBookingPeriodThatHas(START_1, END_1);
                 });
     }
 
@@ -46,7 +45,7 @@ class ApartmentBookingHistoryTest {
         ApartmentBookingHistoryAssertion.assertThat(actual)
                 .hasApartmentIdEqualsTo(APARTMENT_ID)
                 .hasApartmentBookingsAmount(2)
-                .hasApartmentBookingSatisfies(actualBooking -> {
+                .hasApartmentBookingThatSatisfies(actualBooking -> {
                     ApartmentBookingAssertion.assertThat(actualBooking)
                             .isStart()
                             .hasBookingDateTimeEqualTo(BOOKING_DATE_TIME_1)
@@ -54,7 +53,7 @@ class ApartmentBookingHistoryTest {
                             .hasTenantIdEqualTo(TENANT_ID_1)
                             .hasBookingPeriodThatHas(START_1, END_1);
                 })
-                .hasApartmentBookingSatisfies(actualBooking -> {
+                .hasApartmentBookingThatSatisfies(actualBooking -> {
                     ApartmentBookingAssertion.assertThat(actualBooking)
                             .isStart()
                             .hasBookingDateTimeEqualTo(BOOKING_DATE_TIME_2)

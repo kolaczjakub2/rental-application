@@ -1,16 +1,15 @@
-package com.jkolacz.rentalapplication.application.hotelBookingHistory;
-
+package com.jkolacz.rentalapplication.application.hotelbookinghistory;
 
 import com.google.common.collect.ImmutableMap;
-import com.jkolacz.rentalapplication.application.hotelRoom.HotelRoomApplicationService;
-import com.jkolacz.rentalapplication.domain.hotelBookingHistory.HotelBookingHistory;
-import com.jkolacz.rentalapplication.domain.hotelBookingHistory.HotelBookingHistoryAssertion;
-import com.jkolacz.rentalapplication.domain.hotelBookingHistory.HotelBookingHistoryRepository;
-import com.jkolacz.rentalapplication.domain.hotelRoom.HotelRoom;
-import com.jkolacz.rentalapplication.domain.hotelRoom.HotelRoomFactory;
-import com.jkolacz.rentalapplication.domain.hotelRoom.HotelRoomRepository;
-import com.jkolacz.rentalapplication.infrastructure.persistence.jpa.hotelRoom.SpringJpaHotelRoomTestRepository;
-import com.jkolacz.rentalapplication.infrastructure.persistence.jpa.hotelBookingHistory.SpringJpaHotelBookingHistoryTestRepository;
+import com.jkolacz.rentalapplication.application.hotelroom.HotelRoomApplicationService;
+import com.jkolacz.rentalapplication.application.hotelroom.HotelRoomBookingDto;
+import com.jkolacz.rentalapplication.domain.hotelbookinghistory.HotelBookingHistory;
+import com.jkolacz.rentalapplication.infrastructure.persistence.jpa.hotelbookinghistory.SpringJpaHotelBookingHistoryTestRepository;
+import com.jkolacz.rentalapplication.infrastructure.persistence.jpa.hotelroom.SpringJpaHotelRoomTestRepository;
+import com.jkolacz.rentalapplication.domain.hotelbookinghistory.HotelBookingHistoryAssertion;
+import com.jkolacz.rentalapplication.domain.hotelbookinghistory.HotelBookingHistoryRepository;
+import com.jkolacz.rentalapplication.domain.hotelroom.HotelRoom;
+import com.jkolacz.rentalapplication.domain.hotelroom.HotelRoomRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -23,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import static com.jkolacz.rentalapplication.domain.hotelroom.HotelRoom.Builder.hotelRoom;
 import static java.util.Arrays.asList;
 
 @SpringBootTest
@@ -33,8 +33,7 @@ class HotelBookingHistoryEventListenerIntegrationTest {
     private static final Map<String, Double> SPACES_DEFINITION = ImmutableMap.of("RoomOne", 20.0, "RoomTwo", 20.0);
     private static final String DESCRIPTION = "What a lovely place";
 
-    @Autowired
-    private HotelRoomApplicationService hotelRoomApplicationService;
+    @Autowired private HotelRoomApplicationService hotelRoomApplicationService;
     @Autowired private HotelBookingHistoryRepository hotelBookingHistoryRepository;
     @Autowired private SpringJpaHotelBookingHistoryTestRepository springJpaHotelBookingHistoryTestRepository;
     @Autowired private HotelRoomRepository hotelRoomRepository;
@@ -53,19 +52,25 @@ class HotelBookingHistoryEventListenerIntegrationTest {
     void shouldUpdateHotelBookingHistory() {
         String tenantId = "11223344";
         List<LocalDate> days = asList(LocalDate.of(2020, 1, 13), LocalDate.of(2020, 1, 14));
-        givenExistingHotelRoom();
+        hotelRoomId = givenExistingHotelRoom();
+        HotelRoomBookingDto hotelRoomBookingDto = new HotelRoomBookingDto(hotelRoomId, tenantId, days);
 
-        hotelRoomApplicationService.book(hotelRoomId, tenantId, days);
+        hotelRoomApplicationService.book(hotelRoomBookingDto);
         HotelBookingHistory actual = hotelBookingHistoryRepository.findFor(HOTEL_ID);
 
         HotelBookingHistoryAssertion.assertThat(actual).hasHotelRoomBookingHistoryFor(hotelRoomId, tenantId, days);
     }
 
-    private void givenExistingHotelRoom() {
-        hotelRoomId = hotelRoomRepository.save(createHotelRoom());
+    private String givenExistingHotelRoom() {
+        return hotelRoomRepository.save(createHotelRoom());
     }
 
     private HotelRoom createHotelRoom() {
-        return new HotelRoomFactory().create(HOTEL_ID, HOTEL_NUMBER,DESCRIPTION, SPACES_DEFINITION);
+        return hotelRoom()
+                .withHotelId(HOTEL_ID)
+                .withNumber(HOTEL_NUMBER)
+                .withSpacesDefinition(SPACES_DEFINITION)
+                .withDescription(DESCRIPTION)
+                .build();
     }
 }

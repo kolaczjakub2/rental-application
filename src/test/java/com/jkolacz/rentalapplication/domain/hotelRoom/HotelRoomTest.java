@@ -1,19 +1,20 @@
-package com.jkolacz.rentalapplication.domain.hotelRoom;
+package com.jkolacz.rentalapplication.domain.hotelroom;
 
 import com.google.common.collect.ImmutableMap;
-import com.jkolacz.rentalapplication.domain.apartment.Booking;
-import com.jkolacz.rentalapplication.domain.apartment.BookingAssertion;
-import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
+import com.jkolacz.rentalapplication.domain.booking.Booking;
+import com.jkolacz.rentalapplication.domain.booking.BookingAssertion;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
+import org.mockito.BDDMockito;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import static com.jkolacz.rentalapplication.domain.hotelroom.HotelRoom.Builder.hotelRoom;
 import static java.util.Arrays.asList;
-import static org.mockito.BDDMockito.then;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 
 class HotelRoomTest {
@@ -23,24 +24,29 @@ class HotelRoomTest {
     private static final String DESCRIPTION = "What a lovely place";
     private static final String TENANT_ID = "325426";
     private static final List<LocalDate> DAYS = asList(LocalDate.now(), LocalDate.now().plusDays(1));
-    private final HotelRoomFactory factory = new HotelRoomFactory();
-    private final EventChannel eventChannel = mock(EventChannel.class);
+    private final HotelRoomEventsPublisher hotelRoomEventsPublisher = mock(HotelRoomEventsPublisher.class);
 
     @Test
     void shouldCreateHotelRoomWithAllRequiredInformation() {
-        HotelRoom actual = createHotelRoom();
+        HotelRoom actual = hotelRoom()
+                .withHotelId(HOTEL_ID)
+                .withNumber(ROOM_NUMBER)
+                .withSpacesDefinition(SPACES_DEFINITION)
+                .withDescription(DESCRIPTION)
+                .build();
 
         HotelRoomAssertion.assertThat(actual)
-                .hasHotelIdEqualsTo(HOTEL_ID)
-                .hasNumberEqualsTo(ROOM_NUMBER)
+                .hasHotelIdEqualTo(HOTEL_ID)
+                .hasRoomNumberEqualTo(ROOM_NUMBER)
                 .hasSpacesDefinitionEqualTo(SPACES_DEFINITION)
-                .hasDescriptionEqualsTo(DESCRIPTION);
+                .hasDescriptionEqualTo(DESCRIPTION);
     }
 
     @Test
     void shouldCreateBookingOnceBooked() {
-        HotelRoom hotelRoom = createHotelRoom();
-        Booking actual = hotelRoom.book(TENANT_ID, DAYS, eventChannel);
+        HotelRoom hotelRoom = givenHotelRoom();
+
+        Booking actual = hotelRoom.book(TENANT_ID, DAYS, hotelRoomEventsPublisher);
 
         BookingAssertion.assertThat(actual)
                 .isHotelRoom()
@@ -50,21 +56,19 @@ class HotelRoomTest {
 
     @Test
     void shouldPublishHotelRoomBooked() {
-        ArgumentCaptor<HotelRoomBooked> captor= ArgumentCaptor.forClass(HotelRoomBooked.class);
-        HotelRoom hotelRoom = createHotelRoom();
-        hotelRoom.book(TENANT_ID, DAYS, eventChannel);
+        HotelRoom hotelRoom = givenHotelRoom();
 
-        then(eventChannel).should().publish(captor.capture());
-        HotelRoomBooked actual = captor.getValue();
+        hotelRoom.book(TENANT_ID, DAYS, hotelRoomEventsPublisher);
 
-        HotelRoomBookedAssertion.assertThat(actual)
-                .hasTenantIdEqualsTo(TENANT_ID)
-                .hasHotelIdEqualsTo(HOTEL_ID)
-                .containsExactlyElementsOf(DAYS);
-
+        BDDMockito.then(hotelRoomEventsPublisher).should().publishHotelRoomBooked(any(), eq(HOTEL_ID), eq(TENANT_ID), eq(DAYS));
     }
 
-    private HotelRoom createHotelRoom() {
-        return factory.create(HOTEL_ID, ROOM_NUMBER, DESCRIPTION,SPACES_DEFINITION);
+    private HotelRoom givenHotelRoom() {
+        return hotelRoom()
+                .withHotelId(HOTEL_ID)
+                .withNumber(ROOM_NUMBER)
+                .withSpacesDefinition(SPACES_DEFINITION)
+                .withDescription(DESCRIPTION)
+                .build();
     }
 }

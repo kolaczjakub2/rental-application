@@ -1,5 +1,6 @@
-package com.jkolacz.rentalapplication.domain.hotelRoom;
+package com.jkolacz.rentalapplication.domain.hotelroom;
 
+import com.jkolacz.rentalapplication.rentalapplication.domain.hotelroom.Space;
 import org.assertj.core.api.Assertions;
 
 import java.util.List;
@@ -7,9 +8,9 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 public class HotelRoomAssertion {
-    private HotelRoom actual;
+    private final HotelRoom actual;
 
-    public HotelRoomAssertion(HotelRoom actual) {
+    private HotelRoomAssertion(HotelRoom actual) {
         this.actual = actual;
     }
 
@@ -17,18 +18,13 @@ public class HotelRoomAssertion {
         return new HotelRoomAssertion(actual);
     }
 
-    public HotelRoomAssertion hasHotelIdEqualsTo(String hotelId) {
-        Assertions.assertThat(actual).hasFieldOrPropertyWithValue("hotelId", hotelId);
+    public HotelRoomAssertion hasHotelIdEqualTo(String expected) {
+        Assertions.assertThat(actual).hasFieldOrPropertyWithValue("hotelId", expected);
         return this;
     }
 
-    public HotelRoomAssertion hasNumberEqualsTo(Integer number) {
-        Assertions.assertThat(actual).hasFieldOrPropertyWithValue("number", number);
-        return this;
-    }
-
-    public HotelRoomAssertion hasDescriptionEqualsTo(String description) {
-        Assertions.assertThat(actual).hasFieldOrPropertyWithValue("description", description);
+    public HotelRoomAssertion hasRoomNumberEqualTo(int expected) {
+        Assertions.assertThat(actual).hasFieldOrPropertyWithValue("number", expected);
         return this;
     }
 
@@ -48,5 +44,10 @@ public class HotelRoomAssertion {
         return space -> Assertions.assertThat(space)
                 .hasFieldOrPropertyWithValue("name", name)
                 .hasFieldOrPropertyWithValue("squareMeter.value", squareMeter);
+    }
+
+    public HotelRoomAssertion hasDescriptionEqualTo(String expected) {
+        Assertions.assertThat(actual).hasFieldOrPropertyWithValue("description", expected);
+        return this;
     }
 }

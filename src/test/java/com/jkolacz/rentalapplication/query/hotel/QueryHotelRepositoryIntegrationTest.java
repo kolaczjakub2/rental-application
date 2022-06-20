@@ -29,14 +29,9 @@ class QueryHotelRepositoryIntegrationTest {
     private static final String CITY_2 = "Berlin";
     private static final String COUNTRY_2 = "Germany";
 
-
-    @Autowired
-    private QueryHotelRepository queryHotelRepository;
-    @Autowired
-    private HotelRepository hotelRepository;
+    @Autowired private QueryHotelRepository queryHotelRepository;
+    @Autowired private HotelRepository hotelRepository;
     @Autowired private SpringJpaHotelTestRepository springJpaHotelTestRepository;
-    @Autowired
-    private SpringQueryHotelRepository jpaRepository;
     private String hotelId1;
     private String hotelId2;
 
@@ -50,8 +45,8 @@ class QueryHotelRepositoryIntegrationTest {
         Hotel hotel1 = hotel()
                 .withName(NAME_1)
                 .withStreet(STREET_1)
-                .withPostalCode(BUILDING_NUMBER_1)
-                .withBuildingNumber(POSTAL_CODE_1)
+                .withPostalCode(POSTAL_CODE_1)
+                .withBuildingNumber(BUILDING_NUMBER_1)
                 .withCity(CITY_1)
                 .withCountry(COUNTRY_1)
                 .build();
@@ -59,8 +54,8 @@ class QueryHotelRepositoryIntegrationTest {
         Hotel hotel2 = hotel()
                 .withName(NAME_2)
                 .withStreet(STREET_2)
-                .withPostalCode(BUILDING_NUMBER_2)
-                .withBuildingNumber(POSTAL_CODE_2)
+                .withPostalCode(POSTAL_CODE_2)
+                .withBuildingNumber(BUILDING_NUMBER_2)
                 .withCity(CITY_2)
                 .withCountry(COUNTRY_2)
                 .build();
@@ -83,5 +78,4 @@ class QueryHotelRepositoryIntegrationTest {
                             .hasAddressEqualsTo(STREET_2, POSTAL_CODE_2, BUILDING_NUMBER_2, CITY_2, COUNTRY_2);
                 });
     }
-
 }

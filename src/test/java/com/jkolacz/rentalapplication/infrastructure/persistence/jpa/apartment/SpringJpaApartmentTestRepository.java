@@ -1,5 +1,7 @@
 package com.jkolacz.rentalapplication.infrastructure.persistence.jpa.apartment;
 
+import com.jkolacz.rentalapplication.infrastructure.persistence.jpa.apartment.SpringJpaApartmentRepository;
+import com.jkolacz.rentalapplication.rentalapplication.infrastructure.persistence.jpa.apartment.SpringJpaApartmentRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -7,9 +9,9 @@ import java.util.UUID;
 
 @Repository
 public class SpringJpaApartmentTestRepository {
-    private final SpringApartmentJpaRepository repository;
+    private final SpringJpaApartmentRepository repository;
 
-    SpringJpaApartmentTestRepository(SpringApartmentJpaRepository repository) {
+    SpringJpaApartmentTestRepository(SpringJpaApartmentRepository repository) {
         this.repository = repository;
     }
 

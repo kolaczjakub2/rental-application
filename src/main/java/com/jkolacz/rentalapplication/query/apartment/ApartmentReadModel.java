@@ -1,6 +1,7 @@
 package com.jkolacz.rentalapplication.query.apartment;
 
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,25 +14,28 @@ import java.util.UUID;
 @Entity
 @Table(name = "APARTMENT")
 public class ApartmentReadModel {
-
     @Id
     @GeneratedValue
     private UUID id;
-    private String ownerId;
 
+    private String ownerId;
     private String street;
     private String postalCode;
+    @Column(name = "house_number")
     private String houseNumber;
     private String apartmentNumber;
     private String city;
     private String country;
     private String description;
+
     @ElementCollection
     @CollectionTable(name = "APARTMENT_ROOM", joinColumns = @JoinColumn(name = "APARTMENT_ID"))
     private List<RoomReadModel> rooms;
 
-    public UUID getId() {
-        return id;
+    private ApartmentReadModel() {}
+
+    public String getId() {
+        return id.toString();
     }
 
     public String getOwnerId() {

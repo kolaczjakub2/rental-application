@@ -1,5 +1,7 @@
-package com.jkolacz.rentalapplication.infrastructure.persistence.jpa.hotelBookingHistory;
+package com.jkolacz.rentalapplication.infrastructure.persistence.jpa.hotelbookinghistory;
 
+import com.jkolacz.rentalapplication.infrastructure.persistence.jpa.hotelbookinghistory.SpringJpaHotelBookingHistoryRepository;
+import com.jkolacz.rentalapplication.rentalapplication.infrastructure.persistence.jpa.hotelbookinghistory.SpringJpaHotelBookingHistoryRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository

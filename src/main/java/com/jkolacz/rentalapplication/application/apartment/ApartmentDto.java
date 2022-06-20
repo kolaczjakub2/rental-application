@@ -8,7 +8,6 @@ import java.util.Map;
 @AllArgsConstructor
 @Getter
 public class ApartmentDto {
-
     private final String ownerId;
     private final String street;
     private final String postalCode;

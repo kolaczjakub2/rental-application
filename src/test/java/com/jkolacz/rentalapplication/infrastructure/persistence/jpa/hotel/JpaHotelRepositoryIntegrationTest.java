@@ -3,6 +3,7 @@ package com.jkolacz.rentalapplication.infrastructure.persistence.jpa.hotel;
 import com.jkolacz.rentalapplication.domain.hotel.Hotel;
 import com.jkolacz.rentalapplication.domain.hotel.HotelAssertion;
 import com.jkolacz.rentalapplication.domain.hotel.HotelRepository;
+import com.jkolacz.rentalapplication.rentalapplication.infrastructure.persistence.jpa.hotel.SpringJpaHotelRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -23,15 +24,14 @@ class JpaHotelRepositoryIntegrationTest {
     private static final String CITY = "Somewhere";
     private static final String COUNTRY = "Nowhere";
 
-    @Autowired
-    private HotelRepository repository;
-    @Autowired
-    private SpringHotelJpaRepository jpaRepository;
+    @Autowired private HotelRepository hotelRepository;
+    @Autowired private SpringJpaHotelRepository springJpaHotelRepository;
+
     private String hotelId;
 
     @AfterEach
-    void deleteHotel(){
-        jpaRepository.deleteById(UUID.fromString(hotelId));
+    void deleteHotel() {
+        springJpaHotelRepository.deleteById(UUID.fromString(hotelId));
     }
 
     @Test
@@ -45,14 +45,14 @@ class JpaHotelRepositoryIntegrationTest {
                 .withCountry(COUNTRY)
                 .build();
 
-        hotelId = repository.save(hotel);
+        hotelId = hotelRepository.save(hotel);
 
         HotelAssertion.assertThat(findBy(hotelId))
                 .hasNameEqualsTo(NAME)
-                .hasAddressEqualsTo(STREET, POSTAL_CODE,BUILDING_NUMBER, CITY, COUNTRY);
+                .hasAddressEqualsTo(STREET, POSTAL_CODE, BUILDING_NUMBER, CITY, COUNTRY);
     }
 
     private Hotel findBy(String hotelId) {
-        return jpaRepository.findById(UUID.fromString(hotelId)).get();
+        return springJpaHotelRepository.findById(UUID.fromString(hotelId)).get();
     }
 }

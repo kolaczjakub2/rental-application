@@ -9,21 +9,20 @@ import java.time.LocalDateTime;
 @Embeddable
 @SuppressWarnings("PMD.UnusedPrivateField")
 public class ApartmentBooking {
-
-    private LocalDateTime bookingDateTime;
     @Enumerated(EnumType.STRING)
-    private BookingStep step;
+    private BookingStep bookingStep;
+    private LocalDateTime bookingDateTime;
     private String ownerId;
     private String tenantId;
+
     @Embedded
     private BookingPeriod bookingPeriod;
 
-    public ApartmentBooking() {
-    }
+    private ApartmentBooking() {}
 
-    ApartmentBooking(BookingStep step, LocalDateTime bookingDateTime, String ownerId, String tenantId, BookingPeriod bookingPeriod) {
+    private ApartmentBooking(BookingStep bookingStep, LocalDateTime bookingDateTime, String ownerId, String tenantId, BookingPeriod bookingPeriod) {
+        this.bookingStep = bookingStep;
         this.bookingDateTime = bookingDateTime;
-        this.step = step;
         this.ownerId = ownerId;
         this.tenantId = tenantId;
         this.bookingPeriod = bookingPeriod;
@@ -31,45 +30,5 @@ public class ApartmentBooking {
 
     public static ApartmentBooking start(LocalDateTime bookingDateTime, String ownerId, String tenantId, BookingPeriod bookingPeriod) {
         return new ApartmentBooking(BookingStep.START, bookingDateTime, ownerId, tenantId, bookingPeriod);
-    }
-
-    public LocalDateTime getBookingDateTime() {
-        return bookingDateTime;
-    }
-
-    public void setBookingDateTime(LocalDateTime bookingDateTime) {
-        this.bookingDateTime = bookingDateTime;
-    }
-
-    public BookingStep getStep() {
-        return step;
-    }
-
-    public void setStep(BookingStep step) {
-        this.step = step;
-    }
-
-    public String getOwnerId() {
-        return ownerId;
-    }
-
-    public void setOwnerId(String ownerId) {
-        this.ownerId = ownerId;
-    }
-
-    public String getTenantId() {
-        return tenantId;
-    }
-
-    public void setTenantId(String tenantId) {
-        this.tenantId = tenantId;
-    }
-
-    public BookingPeriod getBookingPeriod() {
-        return bookingPeriod;
-    }
-
-    public void setBookingPeriod(BookingPeriod bookingPeriod) {
-        this.bookingPeriod = bookingPeriod;
     }
 }

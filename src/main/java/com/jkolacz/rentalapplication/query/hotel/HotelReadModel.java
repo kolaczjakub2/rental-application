@@ -1,8 +1,5 @@
 package com.jkolacz.rentalapplication.query.hotel;
 
-import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -13,22 +10,20 @@ import java.util.UUID;
 @Table(name = "HOTEL")
 public class HotelReadModel {
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(columnDefinition = "BINARY(16)")
+    @GeneratedValue
     private UUID id;
+
     private String name;
     private String street;
-    private String buildingNumber;
     private String postalCode;
+    private String buildingNumber;
     private String city;
     private String country;
 
-    public HotelReadModel() {
-    }
+    private HotelReadModel() {}
 
-    public UUID getId() {
-        return id;
+    public String getId() {
+        return id.toString();
     }
 
     public String getName() {
@@ -39,12 +34,12 @@ public class HotelReadModel {
         return street;
     }
 
-    public String getBuildingNumber() {
-        return buildingNumber;
-    }
-
     public String getPostalCode() {
         return postalCode;
+    }
+
+    public String getBuildingNumber() {
+        return buildingNumber;
     }
 
     public String getCity() {
@@ -53,33 +48,5 @@ public class HotelReadModel {
 
     public String getCountry() {
         return country;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public void setBuildingNumber(String buildingNumber) {
-        this.buildingNumber = buildingNumber;
-    }
-
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
     }
 }

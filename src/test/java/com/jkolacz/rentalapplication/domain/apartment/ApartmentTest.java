@@ -1,6 +1,8 @@
 package com.jkolacz.rentalapplication.domain.apartment;
 
 import com.google.common.collect.ImmutableMap;
+import com.jkolacz.rentalapplication.domain.booking.Booking;
+import com.jkolacz.rentalapplication.domain.booking.BookingAssertion;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
 import org.mockito.Mockito;
@@ -12,9 +14,7 @@ import static com.jkolacz.rentalapplication.domain.apartment.Apartment.Builder.a
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 
-/* a example */
 class ApartmentTest {
-
     private static final String OWNER_ID = "1234";
     private static final String STREET = "Florianska";
     private static final String POSTAL_CODE = "12-345";
@@ -23,49 +23,45 @@ class ApartmentTest {
     private static final String CITY = "Cracow";
     private static final String COUNTRY = "Poland";
     private static final String DESCRIPTION = "Nice place to stay";
-    private static final Map<String, Double> ROOM_DEFINITION = ImmutableMap.of(
-            "Toilet", 10.0, "Bedroom", 30.0
-    );
-    private static final String TENANT_ID = "123";
-    private static final LocalDate START = LocalDate.of(2022, 3, 4);
-    private static final LocalDate MIDDLE = LocalDate.of(2022, 3, 5);
-    private static final LocalDate END = LocalDate.of(2022, 3, 6);
+    private static final Map<String, Double> ROOMS_DEFINITION = ImmutableMap.of("Toilet", 10.0, "Bedroom", 30.0);
+    private static final String TENANT_ID = "137";
+    private static final LocalDate START = LocalDate.of(2020, 3, 4);
+    private static final LocalDate MIDDLE = LocalDate.of(2020, 3, 5);
+    private static final LocalDate END = LocalDate.of(2020, 3, 6);
     private static final Period PERIOD = new Period(START, END);
 
-
-    private final ApartmentEventsPublisher publisher = Mockito.mock(ApartmentEventsPublisher.class);
+    private final ApartmentEventsPublisher apartmentEventsPublisher = Mockito.mock(ApartmentEventsPublisher.class);
 
     @Test
-    void shouldCreateApartmentWithRequiredFields() {
+    void shouldCreateApartmentWithAllRequiredFields() {
         Apartment actual = createApartment();
 
         ApartmentAssertion.assertThat(actual)
                 .hasOwnerIdEqualsTo(OWNER_ID)
                 .hasDescriptionEqualsTo(DESCRIPTION)
                 .hasAddressEqualsTo(STREET, POSTAL_CODE, HOUSE_NUMBER, APARTMENT_NUMBER, CITY, COUNTRY)
-                .hasRoomsEqualsTo(ROOM_DEFINITION);
-
+                .hasRoomsEqualsTo(ROOMS_DEFINITION);
     }
 
     @Test
     void shouldCreateBookingOnceBooked() {
         Apartment apartment = createApartment();
 
-        Booking actual = apartment.book(TENANT_ID, PERIOD, publisher);
+        Booking actual = apartment.book(TENANT_ID, PERIOD, apartmentEventsPublisher);
+
         BookingAssertion.assertThat(actual)
                 .isApartment()
                 .hasTenantIdEqualTo(TENANT_ID)
                 .containsAllDays(START, MIDDLE, END);
     }
 
-
     @Test
     void shouldPublishApartmentBooked() {
         Apartment apartment = createApartment();
 
-        apartment.book(TENANT_ID, PERIOD, publisher);
-        BDDMockito.then(publisher).should().publishApartmentBooked(any(), eq(OWNER_ID), eq(TENANT_ID), eq(new Period(START, END)));
+        apartment.book(TENANT_ID, PERIOD, apartmentEventsPublisher);
 
+        BDDMockito.then(apartmentEventsPublisher).should().publishApartmentBooked(any(), eq(OWNER_ID), eq(TENANT_ID), eq(new Period(START, END)));
     }
 
     private Apartment createApartment() {
@@ -78,7 +74,7 @@ class ApartmentTest {
                 .withCity(CITY)
                 .withCountry(COUNTRY)
                 .withDescription(DESCRIPTION)
-                .withRoomsDefinition(ROOM_DEFINITION)
+                .withRoomsDefinition(ROOMS_DEFINITION)
                 .build();
     }
 }

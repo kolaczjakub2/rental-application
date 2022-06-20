@@ -1,6 +1,7 @@
 package com.jkolacz.rentalapplication.infrastructure.rest.api.apartment;
 
 import com.google.common.collect.ImmutableMap;
+import com.jkolacz.rentalapplication.application.apartment.ApartmentBookingDto;
 import com.jkolacz.rentalapplication.application.apartment.ApartmentDto;
 import com.jkolacz.rentalapplication.infrastructure.json.JsonFactory;
 import org.junit.jupiter.api.Tag;
@@ -18,7 +19,9 @@ import java.util.Map;
 import java.util.UUID;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -79,8 +82,9 @@ class ApartmentRestControllerSystemTest {
 
     @Test
     void shouldBookApartment() throws Exception {
-        ApartmentBookingDto apartmentBookingDto = new ApartmentBookingDto("1357", LocalDate.of(2020, 11, 12), LocalDate.of(2020, 12, 1));
         String url = save(givenApartment1()).getResponse().getRedirectedUrl();
+        String apartmentId = url.replace("/apartment/", "");
+        ApartmentBookingDto apartmentBookingDto = new ApartmentBookingDto(apartmentId, "1357", LocalDate.of(2020, 11, 12), LocalDate.of(2020, 12, 1));
 
         mockMvc.perform(put(url.replace("apartment/", "apartment/book/")).contentType(MediaType.APPLICATION_JSON).content(jsonFactory.create(apartmentBookingDto)))
                 .andExpect(status().isCreated())

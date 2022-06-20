@@ -1,10 +1,10 @@
-package com.jkolacz.rentalapplication.infrastructure.persistence.jpa.hotelRoom;
+package com.jkolacz.rentalapplication.infrastructure.persistence.jpa.hotelroom;
 
 import com.google.common.collect.ImmutableMap;
-import com.jkolacz.rentalapplication.domain.hotelRoom.HotelRoom;
-import com.jkolacz.rentalapplication.domain.hotelRoom.HotelRoomAssertion;
-import com.jkolacz.rentalapplication.domain.hotelRoom.HotelRoomFactory;
-import com.jkolacz.rentalapplication.domain.hotelRoom.HotelRoomRepository;
+import com.jkolacz.rentalapplication.domain.hotelroom.HotelRoom;
+import com.jkolacz.rentalapplication.rentalapplication.infrastructure.persistence.jpa.hotelroom.HotelRoomDoesNotExistException;
+import com.jkolacz.rentalapplication.domain.hotelroom.HotelRoomAssertion;
+import com.jkolacz.rentalapplication.domain.hotelroom.HotelRoomRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -14,38 +14,52 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.transaction.Transactional;
 import java.util.UUID;
 
+import static com.jkolacz.rentalapplication.domain.hotelroom.HotelRoom.Builder.hotelRoom;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @Tag("DomainRepositoryIntegrationTest")
 class JpaHotelRoomRepositoryIntegrationTest {
-
     private static final String HOTEL_ID = "5678";
     private static final int ROOM_NUMBER = 42;
     private static final ImmutableMap<String, Double> SPACES_DEFINITION = ImmutableMap.of("Room1", 30.0);
     private static final String DESCRIPTION = "This is very nice place";
 
-    @Autowired
-    private HotelRoomRepository repository;
-
-    @Autowired
-    private SpringJpaHotelRoomRepository jpaRepository;
-
-    private UUID hotelRoomId;
+    @Autowired private HotelRoomRepository hotelRoomRepository;
+    @Autowired private SpringJpaHotelRoomTestRepository springJpaHotelRoomTestRepository;
+    private String hotelRoomId;
 
     @AfterEach
     void deleteHotelRoom() {
         if (hotelRoomId != null) {
-            jpaRepository.deleteById(hotelRoomId);
+            springJpaHotelRoomTestRepository.deleteById(hotelRoomId);
         }
+    }
+
+    @Test
+    void shouldRecognizeHotelRoomDoesNotExist() {
+        String hotelRoomId = UUID.randomUUID().toString();
+
+        boolean actual = hotelRoomRepository.existById(hotelRoomId);
+
+        assertThat(actual).isFalse();
+    }
+
+    @Test
+    void shouldRecognizeHotelRoomExists() {
+        hotelRoomId = hotelRoomRepository.save(createHotelRoom());
+
+        boolean actual = hotelRoomRepository.existById(hotelRoomId);
+
+        assertThat(actual).isTrue();
     }
 
     @Test
     void shouldThrowExceptionWhenNoHotelRoomFound() {
         String id = UUID.randomUUID().toString();
 
-        HotelRoomDoesNotExistException actual = assertThrows(HotelRoomDoesNotExistException.class, () -> repository.findById(id));
+        HotelRoomDoesNotExistException actual = assertThrows(HotelRoomDoesNotExistException.class, () -> hotelRoomRepository.findById(id));
 
         assertThat(actual).hasMessage("Hotel Room with id " + id + " does not exist.");
     }
@@ -54,18 +68,23 @@ class JpaHotelRoomRepositoryIntegrationTest {
     @Transactional
     void shouldFindExistingHotelRoom() {
         HotelRoom hotelRoom = createHotelRoom();
-        hotelRoomId = UUID.fromString(repository.save(hotelRoom));
+        hotelRoomId = hotelRoomRepository.save(hotelRoom);
 
-        HotelRoom actual = repository.findById(hotelRoomId.toString());
+        HotelRoom actual = hotelRoomRepository.findById(hotelRoomId);
 
         HotelRoomAssertion.assertThat(actual)
-                .hasHotelIdEqualsTo(HOTEL_ID)
-                .hasNumberEqualsTo(ROOM_NUMBER)
+                .hasHotelIdEqualTo(HOTEL_ID)
+                .hasRoomNumberEqualTo(ROOM_NUMBER)
                 .hasSpacesDefinitionEqualTo(SPACES_DEFINITION)
-                .hasDescriptionEqualsTo(DESCRIPTION);
+                .hasDescriptionEqualTo(DESCRIPTION);
     }
 
     private HotelRoom createHotelRoom() {
-        return new HotelRoomFactory().create(HOTEL_ID, ROOM_NUMBER, DESCRIPTION, SPACES_DEFINITION);
+        return hotelRoom()
+                .withHotelId(HOTEL_ID)
+                .withNumber(ROOM_NUMBER)
+                .withSpacesDefinition(SPACES_DEFINITION)
+                .withDescription(DESCRIPTION)
+                .build();
     }
 }

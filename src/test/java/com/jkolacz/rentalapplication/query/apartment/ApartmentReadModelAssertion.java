@@ -3,7 +3,6 @@ package com.jkolacz.rentalapplication.query.apartment;
 import org.assertj.core.api.Assertions;
 
 import java.util.Map;
-import java.util.UUID;
 import java.util.function.Consumer;
 
 class ApartmentReadModelAssertion {
@@ -18,7 +17,7 @@ class ApartmentReadModelAssertion {
     }
 
     ApartmentReadModelAssertion hasIdEqualsTo(String expected) {
-        Assertions.assertThat(actual.getId()).isEqualTo(UUID.fromString(expected));
+        Assertions.assertThat(actual.getId()).isEqualTo(expected);
         return this;
     }
 
@@ -46,7 +45,7 @@ class ApartmentReadModelAssertion {
         Assertions.assertThat(actual.getRooms()).hasSize(expected.size());
 
         expected.forEach((name, squareMeter) -> {
-            Assertions.assertThat(actual.getRooms()).anySatisfy(hasRoomThat(name, squareMeter));
+                Assertions.assertThat(actual.getRooms()).anySatisfy(hasRoomThat(name, squareMeter));
         });
 
         return this;

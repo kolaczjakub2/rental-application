@@ -1,13 +1,13 @@
 package com.jkolacz.rentalapplication.infrastructure.persistence.jpa.booking;
 
-import com.jkolacz.rentalapplication.domain.apartment.Booking;
-import com.jkolacz.rentalapplication.domain.apartment.BookingRepository;
+import com.jkolacz.rentalapplication.domain.booking.Booking;
+import com.jkolacz.rentalapplication.domain.booking.BookingRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
 @Repository
-public class JpaBookingRepository implements BookingRepository {
+class JpaBookingRepository implements BookingRepository {
     private final SpringJpaBookingRepository springJpaBookingRepository;
 
     JpaBookingRepository(SpringJpaBookingRepository springJpaBookingRepository) {

@@ -6,9 +6,8 @@ import org.junit.jupiter.api.Test;
 
 @Tag("ArchitectureTest")
 class DependenciesTest {
-
     @Test
-    void shoudlHaveNoCycles() {
+    void shouldHaveNoCycles() {
         SlicesRuleDefinition.slices()
                 .matching("com.jkolacz.rentalapplication(*)..")
                 .should().beFreeOfCycles();

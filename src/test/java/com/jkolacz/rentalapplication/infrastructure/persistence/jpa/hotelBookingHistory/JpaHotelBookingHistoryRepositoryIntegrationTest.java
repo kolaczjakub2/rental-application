@@ -1,8 +1,9 @@
-package com.jkolacz.rentalapplication.infrastructure.persistence.jpa.hotelBookingHistory;
+package com.jkolacz.rentalapplication.infrastructure.persistence.jpa.hotelbookinghistory;
 
-import com.jkolacz.rentalapplication.domain.hotelBookingHistory.HotelBookingHistory;
-import com.jkolacz.rentalapplication.domain.hotelBookingHistory.HotelBookingHistoryAssertion;
-import com.jkolacz.rentalapplication.domain.hotelBookingHistory.HotelBookingHistoryRepository;
+import com.jkolacz.rentalapplication.domain.hotelbookinghistory.HotelBookingHistory;
+import com.jkolacz.rentalapplication.rentalapplication.infrastructure.persistence.jpa.hotelbookinghistory.SpringJpaHotelBookingHistoryRepository;
+import com.jkolacz.rentalapplication.domain.hotelbookinghistory.HotelBookingHistoryAssertion;
+import com.jkolacz.rentalapplication.domain.hotelbookinghistory.HotelBookingHistoryRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -23,8 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class JpaHotelBookingHistoryRepositoryIntegrationTest {
     @Autowired
     private HotelBookingHistoryRepository repository;
-    @Autowired
-    private SpringJpaHotelBookingHistoryRepository jpaRepository;
+    @Autowired private SpringJpaHotelBookingHistoryRepository jpaRepository;
     private String hotelId;
 
     @AfterEach

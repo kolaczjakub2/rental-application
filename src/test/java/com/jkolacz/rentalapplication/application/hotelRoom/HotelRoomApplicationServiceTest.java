@@ -1,17 +1,20 @@
-package com.jkolacz.rentalapplication.application.hotelRoom;
+package com.jkolacz.rentalapplication.application.hotelroom;
 
 import com.google.common.collect.ImmutableMap;
-import com.jkolacz.rentalapplication.domain.apartment.Booking;
-import com.jkolacz.rentalapplication.domain.apartment.BookingAssertion;
-import com.jkolacz.rentalapplication.domain.apartment.BookingRepository;
+import com.jkolacz.rentalapplication.domain.booking.Booking;
+import com.jkolacz.rentalapplication.domain.booking.BookingAssertion;
+import com.jkolacz.rentalapplication.domain.event.FakeEventIdFactory;
+import com.jkolacz.rentalapplication.infrastructure.clock.FakeClock;
+import com.jkolacz.rentalapplication.domain.booking.BookingRepository;
 import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
-import com.jkolacz.rentalapplication.domain.hotelRoom.HotelRoom;
-import com.jkolacz.rentalapplication.domain.hotelRoom.HotelRoomAssertion;
-import com.jkolacz.rentalapplication.domain.hotelRoom.HotelRoomFactory;
-import com.jkolacz.rentalapplication.domain.hotelRoom.HotelRoomRepository;
+import com.jkolacz.rentalapplication.domain.hotelroom.HotelRoom;
+import com.jkolacz.rentalapplication.domain.hotelroom.HotelRoomAssertion;
+import com.jkolacz.rentalapplication.domain.hotelroom.HotelRoomBooked;
+import com.jkolacz.rentalapplication.domain.hotelroom.HotelRoomRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.BDDMockito;
 import org.mockito.Mockito;
 
 import java.time.LocalDate;
@@ -19,13 +22,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import static com.jkolacz.rentalapplication.domain.hotelroom.HotelRoom.Builder.hotelRoom;
 import static java.util.Arrays.asList;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
 class HotelRoomApplicationServiceTest {
-
     private static final String HOTEL_ID = UUID.randomUUID().toString();
     private static final int ROOM_NUMBER = 13;
     private static final Map<String, Double> SPACES_DEFINITION = ImmutableMap.of("RoomOne", 20.0, "RoomTwo", 20.0);
@@ -37,43 +41,70 @@ class HotelRoomApplicationServiceTest {
     private final HotelRoomRepository hotelRoomRepository = Mockito.mock(HotelRoomRepository.class);
     private final BookingRepository bookingRepository = Mockito.mock(BookingRepository.class);
     private final EventChannel eventChannel = Mockito.mock(EventChannel.class);
-    private final HotelRoomApplicationService service = new HotelRoomApplicationService(hotelRoomRepository, bookingRepository, eventChannel);
-
-    @Test
-    void shouldCreateBookingWhenHotelRoomBooked() {
-        String hotelRoomId = "1234";
-        givenHotelRoom(hotelRoomId);
-        service.book(hotelRoomId, TENANT_ID, DAYS);
-
-        thenBookingShouldBeCreated();
-    }
+    private final HotelRoomApplicationService service = new HotelRoomApplicationServiceFactory().hotelRoomApplicationService(
+            hotelRoomRepository, bookingRepository, new FakeEventIdFactory(), new FakeClock(), eventChannel);
 
     @Test
     void shouldCreateHotelRoom() {
         ArgumentCaptor<HotelRoom> captor = ArgumentCaptor.forClass(HotelRoom.class);
 
-        service.add(HOTEL_ID, ROOM_NUMBER, DESCRIPTION,SPACES_DEFINITION);
+        service.add(givenHotelRoomDto());
 
         then(hotelRoomRepository).should().save(captor.capture());
         HotelRoomAssertion.assertThat(captor.getValue())
-                .hasHotelIdEqualsTo(HOTEL_ID)
-                .hasNumberEqualsTo(ROOM_NUMBER)
+                .hasHotelIdEqualTo(HOTEL_ID)
+                .hasRoomNumberEqualTo(ROOM_NUMBER)
                 .hasSpacesDefinitionEqualTo(SPACES_DEFINITION)
-                .hasDescriptionEqualsTo(DESCRIPTION);
+                .hasDescriptionEqualTo(DESCRIPTION);
     }
 
     @Test
     void shouldReturnIdOfNewHotelRoom() {
         given(hotelRoomRepository.save(any())).willReturn(HOTEL_ROOM_ID);
 
-        String actual = service.add(HOTEL_ID, ROOM_NUMBER, DESCRIPTION,SPACES_DEFINITION);
+        String actual = service.add(givenHotelRoomDto());
 
         Assertions.assertThat(actual).isEqualTo(HOTEL_ROOM_ID);
     }
 
+    private HotelRoomDto givenHotelRoomDto() {
+        return new HotelRoomDto(HOTEL_ID, ROOM_NUMBER, SPACES_DEFINITION, DESCRIPTION);
+    }
+
+    @Test
+    void shouldCreateBookingWhenHotelRoomBooked() {
+        String hotelRoomId = "1234";
+        givenHotelRoom(hotelRoomId);
+
+        service.book(givenHotelRoomBookingDto(hotelRoomId));
+
+        thenBookingShouldBeCreated();
+    }
+
+    @Test
+    void shouldPublishHotelRoomBookedEvent() {
+        ArgumentCaptor<HotelRoomBooked> captor = ArgumentCaptor.forClass(HotelRoomBooked.class);
+        String hotelRoomId = "1234";
+        givenHotelRoom(hotelRoomId);
+
+        service.book(givenHotelRoomBookingDto(hotelRoomId));
+
+        then(eventChannel).should().publish(captor.capture());
+        HotelRoomBooked actual = captor.getValue();
+        assertThat(actual.getEventId()).isEqualTo(FakeEventIdFactory.UUID);
+        assertThat(actual.getEventCreationDateTime()).isEqualTo(FakeClock.NOW);
+        assertThat(actual.getHotelId()).isEqualTo(HOTEL_ID);
+        assertThat(actual.getTenantId()).isEqualTo(TENANT_ID);
+        assertThat(actual.getDays()).containsExactlyElementsOf(DAYS);
+    }
+
+    private HotelRoomBookingDto givenHotelRoomBookingDto(String hotelRoomId) {
+        return new HotelRoomBookingDto(hotelRoomId, TENANT_ID, DAYS);
+    }
+
     private void thenBookingShouldBeCreated() {
         ArgumentCaptor<Booking> captor = ArgumentCaptor.forClass(Booking.class);
-        then(bookingRepository).should().save(captor.capture());
+        BDDMockito.then(bookingRepository).should().save(captor.capture());
 
         BookingAssertion.assertThat(captor.getValue())
                 .isHotelRoom()
@@ -83,11 +114,15 @@ class HotelRoomApplicationServiceTest {
 
     private void givenHotelRoom(String hotelRoomId) {
         HotelRoom hotelRoom = createHotelRoom();
-        given(hotelRoomRepository.findById(hotelRoomId)).willReturn(hotelRoom);
+        BDDMockito.given(hotelRoomRepository.findById(hotelRoomId)).willReturn(hotelRoom);
     }
 
     private HotelRoom createHotelRoom() {
-        return new HotelRoomFactory().create("5678", 42, "This is very nice place", ImmutableMap.of("Room1", 30.0));
+        return hotelRoom()
+                .withHotelId(HOTEL_ID)
+                .withNumber(ROOM_NUMBER)
+                .withSpacesDefinition(SPACES_DEFINITION)
+                .withDescription(DESCRIPTION)
+                .build();
     }
-
 }

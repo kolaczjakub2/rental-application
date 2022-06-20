@@ -1,12 +1,11 @@
 package com.jkolacz.rentalapplication.domain.hotel;
 
-
 import org.assertj.core.api.Assertions;
 
 public class HotelAssertion {
-    private Hotel actual;
+    private final Hotel actual;
 
-    public HotelAssertion(Hotel actual) {
+    private HotelAssertion(Hotel actual) {
         this.actual = actual;
     }
 
@@ -19,13 +18,13 @@ public class HotelAssertion {
         return this;
     }
 
-    public HotelAssertion hasAddressEqualsTo(String street, String buildingNumber, String postalCode, String city, String country) {
+    public HotelAssertion hasAddressEqualsTo(String street, String postalCode, String buildingNumber, String city, String country) {
         Assertions.assertThat(actual).extracting("address")
-                .hasFieldOrPropertyWithValue("street",street)
-                .hasFieldOrPropertyWithValue("buildingNumber",buildingNumber)
-                .hasFieldOrPropertyWithValue("postalCode",postalCode)
-                .hasFieldOrPropertyWithValue("city",city)
-                .hasFieldOrPropertyWithValue("country",country);
+                .hasFieldOrPropertyWithValue("street", street)
+                .hasFieldOrPropertyWithValue("postalCode", postalCode)
+                .hasFieldOrPropertyWithValue("buildingNumber", buildingNumber)
+                .hasFieldOrPropertyWithValue("city", city)
+                .hasFieldOrPropertyWithValue("country", country);
         return this;
     }
 }

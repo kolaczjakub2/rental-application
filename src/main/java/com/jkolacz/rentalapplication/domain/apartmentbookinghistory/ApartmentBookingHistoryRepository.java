@@ -1,10 +1,9 @@
 package com.jkolacz.rentalapplication.domain.apartmentbookinghistory;
 
 public interface ApartmentBookingHistoryRepository {
-    void save(ApartmentBookingHistory apartmentBookingHistory);
-
-    boolean existFor(String apartmentId);
+    boolean existsFor(String apartmentId);
 
     ApartmentBookingHistory findFor(String apartmentId);
 
+    void save(ApartmentBookingHistory apartmentBookingHistory);
 }

@@ -4,32 +4,31 @@ import javax.persistence.Embeddable;
 import java.time.LocalDate;
 
 @Embeddable
+@SuppressWarnings("PMD.UnusedPrivateMethod")
 public class BookingPeriod {
     private LocalDate periodStart;
     private LocalDate periodEnd;
 
-    public BookingPeriod(LocalDate periodStart, LocalDate periodEnd) {
+    private BookingPeriod() {}
 
+    public BookingPeriod(LocalDate periodStart, LocalDate periodEnd) {
         this.periodStart = periodStart;
         this.periodEnd = periodEnd;
     }
 
-    public BookingPeriod() {
-    }
-
-    public LocalDate getPeriodStart() {
+    private LocalDate getPeriodStart() {
         return periodStart;
     }
 
-    public void setPeriodStart(LocalDate periodStart) {
+    private void setPeriodStart(LocalDate periodStart) {
         this.periodStart = periodStart;
     }
 
-    public LocalDate getPeriodEnd() {
+    private LocalDate getPeriodEnd() {
         return periodEnd;
     }
 
-    public void setPeriodEnd(LocalDate periodEnd) {
+    private void setPeriodEnd(LocalDate periodEnd) {
         this.periodEnd = periodEnd;
     }
 }

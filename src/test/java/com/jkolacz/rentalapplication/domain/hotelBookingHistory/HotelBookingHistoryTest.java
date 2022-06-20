@@ -1,4 +1,4 @@
-package com.jkolacz.rentalapplication.domain.hotelBookingHistory;
+package com.jkolacz.rentalapplication.domain.hotelbookinghistory;
 
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +9,6 @@ import java.util.List;
 import static java.util.Arrays.asList;
 
 class HotelBookingHistoryTest {
-
     private static final String HOTEL_ID = "hotelId1";
     private static final String HOTEL_ROOM_ID = "hotelRoomId1";
     private static final LocalDateTime BOOKING_DATE_TIME = LocalDateTime.of(2020, 1, 2, 3, 4);
@@ -19,7 +18,7 @@ class HotelBookingHistoryTest {
     @Test
     void shouldAddFirstHotelRoomBookingHistoryForHotelRoom() {
         HotelBookingHistory hotelBookingHistory = new HotelBookingHistory(HOTEL_ID);
-
+        
         hotelBookingHistory.add(HOTEL_ROOM_ID, BOOKING_DATE_TIME, TENANT_ID, DAYS);
 
         HotelBookingHistoryAssertion.assertThat(hotelBookingHistory)
@@ -27,7 +26,7 @@ class HotelBookingHistoryTest {
                 .hasInformationAboutHistoryOfHotelRoom(HOTEL_ROOM_ID, 1)
                 .hasHotelRoomBookingHistoryFor(HOTEL_ROOM_ID, BOOKING_DATE_TIME, TENANT_ID, DAYS);
     }
-
+    
     @Test
     void shouldAddNextHotelRoomBookingHistoryForHotelRoom() {
         LocalDateTime bookingDateTime1 = LocalDateTime.of(2020, 10, 11, 20, 21);

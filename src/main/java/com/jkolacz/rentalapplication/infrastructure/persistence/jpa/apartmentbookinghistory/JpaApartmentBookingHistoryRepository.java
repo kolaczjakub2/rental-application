@@ -4,9 +4,8 @@ import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBoo
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingHistoryRepository;
 import org.springframework.stereotype.Repository;
 
-
 @Repository
-public class JpaApartmentBookingHistoryRepository implements ApartmentBookingHistoryRepository {
+class JpaApartmentBookingHistoryRepository implements ApartmentBookingHistoryRepository {
     private final SpringJpaApartmentBookingHistoryRepository springJpaApartmentBookingHistoryRepository;
 
     JpaApartmentBookingHistoryRepository(SpringJpaApartmentBookingHistoryRepository springJpaApartmentBookingHistoryRepository) {
@@ -14,7 +13,7 @@ public class JpaApartmentBookingHistoryRepository implements ApartmentBookingHis
     }
 
     @Override
-    public boolean existFor(String apartmentId) {
+    public boolean existsFor(String apartmentId) {
         return springJpaApartmentBookingHistoryRepository.existsById(apartmentId);
     }
 

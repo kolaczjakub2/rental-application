@@ -1,7 +1,8 @@
-package com.jkolacz.rentalapplication.infrastructure.rest.api.hotelRoom;
-
+package com.jkolacz.rentalapplication.infrastructure.rest.api.hotelroom;
 
 import com.google.common.collect.ImmutableMap;
+import com.jkolacz.rentalapplication.application.hotelroom.HotelRoomBookingDto;
+import com.jkolacz.rentalapplication.application.hotelroom.HotelRoomDto;
 import com.jkolacz.rentalapplication.infrastructure.json.JsonFactory;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,9 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.time.LocalDate;
 
 import static java.util.Arrays.asList;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -30,9 +33,9 @@ class HotelRoomRestControllerSystemTest {
     private static final int ROOM_NUMBER_2 = 13;
     private static final ImmutableMap<String, Double> SPACES_DEFINITION_2 = ImmutableMap.of("RoomOne", 10.0, "RoomTwo", 25.0);
     private static final String DESCRIPTION_2 = "This is even better place";
+
     private final JsonFactory jsonFactory = new JsonFactory();
-    @Autowired
-    private MockMvc mockMvc;
+    @Autowired private MockMvc mockMvc;
 
     @Test
     void shouldReturnAllHotelRooms() throws Exception {
@@ -47,19 +50,20 @@ class HotelRoomRestControllerSystemTest {
 
     @Test
     void shouldBookHotelRoom() throws Exception {
-        HotelBookingDto hotelBookingDto = new HotelBookingDto("1357", asList(LocalDate.of(2020, 11, 12), LocalDate.of(2020, 12, 1)));
         String url = save(givenHotelRoom1()).getResponse().getRedirectedUrl();
+        String hotelRoomId = url.replace("/hotelroom/", "");
+        HotelRoomBookingDto hotelRoomBookingDto = new HotelRoomBookingDto(hotelRoomId, "1357", asList(LocalDate.of(2020, 11, 12), LocalDate.of(2020, 12, 1)));
 
-        mockMvc.perform(put(url.replace("hotelroom/", "hotelroom/book/")).contentType(MediaType.APPLICATION_JSON).content(jsonFactory.create(hotelBookingDto)))
+        mockMvc.perform(put(url.replace("hotelroom/", "hotelroom/book/")).contentType(MediaType.APPLICATION_JSON).content(jsonFactory.create(hotelRoomBookingDto)))
                 .andExpect(status().isCreated());
     }
 
     private HotelRoomDto givenHotelRoom1() {
-        return new HotelRoomDto(HOTEL_ID, ROOM_NUMBER_1, DESCRIPTION_1, SPACES_DEFINITION_1);
+        return new HotelRoomDto(HOTEL_ID, ROOM_NUMBER_1, SPACES_DEFINITION_1, DESCRIPTION_1);
     }
 
     private HotelRoomDto givenHotelRoom2() {
-        return new HotelRoomDto(HOTEL_ID, ROOM_NUMBER_2, DESCRIPTION_2, SPACES_DEFINITION_2);
+        return new HotelRoomDto(HOTEL_ID, ROOM_NUMBER_2, SPACES_DEFINITION_2, DESCRIPTION_2);
     }
 
     private MvcResult save(HotelRoomDto hotelRoomDto) throws Exception {

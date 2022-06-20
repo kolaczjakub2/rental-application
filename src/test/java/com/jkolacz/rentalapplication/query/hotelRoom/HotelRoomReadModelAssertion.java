@@ -1,9 +1,10 @@
-package com.jkolacz.rentalapplication.query.hotelRoom;
+package com.jkolacz.rentalapplication.query.hotelroom;
 
 import com.google.common.collect.ImmutableMap;
 import org.assertj.core.api.Assertions;
 
 import java.util.function.Consumer;
+
 class HotelRoomReadModelAssertion {
     private final HotelRoomReadModel actual;
 

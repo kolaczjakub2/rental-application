@@ -1,7 +1,6 @@
 package com.jkolacz.rentalapplication.query.apartment;
 
 public class ApartmentDetails {
-
     private static final ApartmentReadModel NO_APARTMENT = null;
     private static final ApartmentBookingHistoryReadModel NO_HISTORY = null;
 
@@ -13,16 +12,16 @@ public class ApartmentDetails {
         this.bookingHistory = bookingHistory;
     }
 
-    public static ApartmentDetails notExisting() {
+    static ApartmentDetails notExisting() {
         return new ApartmentDetails(NO_APARTMENT, NO_HISTORY);
     }
 
-    public static ApartmentDetails withHistory(ApartmentReadModel apartmentReadModel, ApartmentBookingHistoryReadModel apartmentBookingHistoryReadModel) {
-        return new ApartmentDetails(apartmentReadModel, apartmentBookingHistoryReadModel);
+    static ApartmentDetails withoutHistory(ApartmentReadModel apartmentReadModel) {
+        return new ApartmentDetails(apartmentReadModel, NO_HISTORY);
     }
 
-    public static ApartmentDetails withoutHistory(ApartmentReadModel apartmentReadModel) {
-        return new ApartmentDetails(apartmentReadModel, NO_HISTORY);
+    static ApartmentDetails withHistory(ApartmentReadModel apartmentReadModel, ApartmentBookingHistoryReadModel apartmentBookingHistoryReadModel) {
+        return new ApartmentDetails(apartmentReadModel, apartmentBookingHistoryReadModel);
     }
 
     public ApartmentReadModel getApartment() {

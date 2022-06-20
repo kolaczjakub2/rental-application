@@ -1,9 +1,9 @@
 package com.jkolacz.rentalapplication.infrastructure.rest.api.booking;
 
 import com.google.common.collect.ImmutableMap;
-import com.jkolacz.rentalapplication.infrastructure.json.JsonFactory;
-import com.jkolacz.rentalapplication.infrastructure.rest.api.apartment.ApartmentBookingDto;
+import com.jkolacz.rentalapplication.application.apartment.ApartmentBookingDto;
 import com.jkolacz.rentalapplication.application.apartment.ApartmentDto;
+import com.jkolacz.rentalapplication.infrastructure.json.JsonFactory;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,12 +33,12 @@ class BookingRestControllerSystemTest {
     private static final String COUNTRY = "Poland";
     private static final String DESCRIPTION = "Nice place to stay";
     private static final Map<String, Double> ROOMS_DEFINITION = ImmutableMap.of("Toilet", 10.0, "Bedroom", 30.0);
-
+    
     private final JsonFactory jsonFactory = new JsonFactory();
-
+    
     @Autowired
     private MockMvc mockMvc;
-
+    
     @Test
     void shouldRejectBooking() throws Exception {
         String url = getUrlToExistingBooking().replace("booking/", "booking/reject/");
@@ -54,8 +54,9 @@ class BookingRestControllerSystemTest {
     }
 
     private String getUrlToExistingBooking() throws Exception {
-        ApartmentBookingDto apartmentBookingDto = new ApartmentBookingDto("1357", LocalDate.of(2020, 11, 12), LocalDate.of(2020, 12, 1));
         String url = save(givenApartment()).getResponse().getRedirectedUrl();
+        String apartmentId = url.replace("/apartment/", "");
+        ApartmentBookingDto apartmentBookingDto = new ApartmentBookingDto(apartmentId, "1357", LocalDate.of(2020, 11, 12), LocalDate.of(2020, 12, 1));
 
         MvcResult mvcResult = mockMvc.perform(put(url.replace("apartment/", "apartment/book/")).contentType(MediaType.APPLICATION_JSON).content(jsonFactory.create(apartmentBookingDto)))
                 .andExpect(status().isCreated())

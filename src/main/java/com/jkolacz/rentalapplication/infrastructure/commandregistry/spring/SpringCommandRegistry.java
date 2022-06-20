@@ -7,21 +7,20 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SpringCommandRegistry implements CommandRegistry {
+class SpringCommandRegistry implements CommandRegistry {
+    private final ApplicationEventPublisher publisher;
 
-    private final ApplicationEventPublisher applicationEventPublisher;
-
-    public SpringCommandRegistry(ApplicationEventPublisher applicationEventPublisher) {
-        this.applicationEventPublisher = applicationEventPublisher;
+    SpringCommandRegistry(ApplicationEventPublisher publisher) {
+        this.publisher = publisher;
     }
 
     @Override
     public void register(BookingReject bookingReject) {
-        applicationEventPublisher.publishEvent(bookingReject);
+        publisher.publishEvent(bookingReject);
     }
 
     @Override
     public void register(BookingAccept bookingAccept) {
-        applicationEventPublisher.publishEvent(bookingAccept);
+        publisher.publishEvent(bookingAccept);
     }
 }

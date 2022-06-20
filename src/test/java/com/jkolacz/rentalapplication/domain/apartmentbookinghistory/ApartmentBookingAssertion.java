@@ -1,15 +1,15 @@
 package com.jkolacz.rentalapplication.domain.apartmentbookinghistory;
 
+import com.jkolacz.rentalapplication.rentalapplication.domain.apartmentbookinghistory.BookingStep;
 import org.assertj.core.api.Assertions;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-
 public class ApartmentBookingAssertion {
     private final ApartmentBooking actual;
 
-    public ApartmentBookingAssertion(ApartmentBooking actual) {
+    private ApartmentBookingAssertion(ApartmentBooking actual) {
         this.actual = actual;
     }
 
@@ -17,14 +17,13 @@ public class ApartmentBookingAssertion {
         return new ApartmentBookingAssertion(actual);
     }
 
-    public ApartmentBookingAssertion hasBookingDateTimeEqualTo(LocalDateTime expected) {
+    ApartmentBookingAssertion hasBookingDateTimeEqualTo(LocalDateTime expected) {
         Assertions.assertThat(actual).hasFieldOrPropertyWithValue("bookingDateTime", expected);
         return this;
     }
 
     public ApartmentBookingAssertion hasOwnerIdEqualTo(String expected) {
         Assertions.assertThat(actual).hasFieldOrPropertyWithValue("ownerId", expected);
-
         return this;
     }
 
@@ -41,7 +40,7 @@ public class ApartmentBookingAssertion {
     }
 
     public ApartmentBookingAssertion isStart() {
-        Assertions.assertThat(actual).hasFieldOrPropertyWithValue("step", BookingStep.START);
+        Assertions.assertThat(actual).hasFieldOrPropertyWithValue("bookingStep", BookingStep.START);
         return this;
     }
 }

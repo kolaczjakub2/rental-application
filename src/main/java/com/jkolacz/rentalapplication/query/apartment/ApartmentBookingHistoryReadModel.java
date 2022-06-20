@@ -1,5 +1,6 @@
 package com.jkolacz.rentalapplication.query.apartment;
 
+
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;

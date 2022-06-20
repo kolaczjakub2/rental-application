@@ -1,19 +1,22 @@
 package com.jkolacz.rentalapplication.domain.apartment;
 
-import com.jkolacz.rentalapplication.domain.event.EventIdFactory;
 import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
+import com.jkolacz.rentalapplication.domain.clock.Clock;
+import com.jkolacz.rentalapplication.domain.event.EventIdFactory;
 
 public class ApartmentEventsPublisher {
-    private EventIdFactory eventIdFactory;
-    private EventChannel eventChannel;
+    private final EventIdFactory eventIdFactory;
+    private final EventChannel eventChannel;
+    private final Clock clock;
 
-    public ApartmentEventsPublisher(EventIdFactory eventIdFactory, EventChannel eventChannel) {
+    public ApartmentEventsPublisher(EventIdFactory eventIdFactory, Clock clock, EventChannel eventChannel) {
         this.eventIdFactory = eventIdFactory;
         this.eventChannel = eventChannel;
+        this.clock = clock;
     }
 
-    public void publishApartmentBooked(String id, String ownerId, String tenantId, Period period) {
-        ApartmentBooked apartmentBooked = ApartmentBooked.create(eventIdFactory.create(), id, ownerId, tenantId, period);
+    void publishApartmentBooked(String apartmentId, String ownerId, String tenantId, Period period) {
+        ApartmentBooked apartmentBooked = new ApartmentBooked(eventIdFactory.create(), clock.now(), apartmentId, ownerId, tenantId, period);
         eventChannel.publish(apartmentBooked);
     }
 }

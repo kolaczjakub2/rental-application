@@ -3,13 +3,17 @@ package com.jkolacz.rentalapplication.infrastructure.persistence.jpa.apartment;
 import com.google.common.collect.ImmutableMap;
 import com.jkolacz.rentalapplication.domain.apartment.Apartment;
 import com.jkolacz.rentalapplication.domain.apartment.ApartmentAssertion;
+import com.jkolacz.rentalapplication.rentalapplication.infrastructure.persistence.jpa.apartment.ApartmentDoesNotExistException;
 import com.jkolacz.rentalapplication.domain.apartment.ApartmentRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -20,7 +24,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @SpringBootTest
 @Tag("DomainRepositoryIntegrationTest")
 class JpaApartmentRepositoryIntegrationTest {
-
     private static final String OWNER_ID = "1234";
     private static final String STREET = "Florianska";
     private static final String POSTAL_CODE = "12-345";
@@ -29,30 +32,51 @@ class JpaApartmentRepositoryIntegrationTest {
     private static final String CITY = "Cracow";
     private static final String COUNTRY = "Poland";
     private static final String DESCRIPTION = "Nice place to stay";
-    private static final Map<String, Double> ROOM_DEFINITION = ImmutableMap.of(
-            "Toilet", 10.0, "Bedroom", 30.0
-    );
+    private static final Map<String, Double> ROOMS_DEFINITION = ImmutableMap.of("Toilet", 10.0, "Bedroom", 30.0);
 
+    @Autowired private ApartmentRepository apartmentRepository;
+    @Autowired private SpringJpaApartmentTestRepository springJpaApartmentTestRepository;
 
-    @Autowired
-    private ApartmentRepository apartmentRepository;
+    private final List<String> apartmentIds = new ArrayList<>();
+
+    @AfterEach
+    void deleteApartments() {
+        springJpaApartmentTestRepository.deleteAll(apartmentIds);
+    }
+
+    @Test
+    void shouldRecognizeWhenApartmentDoesNotExist() {
+        String nonExistingApartmentId = UUID.randomUUID().toString();
+
+        boolean actual = apartmentRepository.existById(nonExistingApartmentId);
+
+        assertThat(actual).isFalse();
+    }
+
+    @Test
+    void shouldRecognizeWhenApartmentExists() {
+        String existingId = givenExistingApartment(createApartment());
+
+        boolean actual = apartmentRepository.existById(existingId);
+
+        assertThat(actual).isTrue();
+    }
 
     @Test
     void shouldThrowExceptionWhenApartmentDoesNotExist() {
-        String id = UUID.randomUUID().toString();
+        String nonExistingApartmentId = UUID.randomUUID().toString();
 
-        ApartmentNotFoundException actual = assertThrows(ApartmentNotFoundException.class, () -> {
-            apartmentRepository.findById(id);
+        ApartmentDoesNotExistException actual = assertThrows(ApartmentDoesNotExistException.class, () -> {
+            apartmentRepository.findById(nonExistingApartmentId);
         });
 
-        assertThat(actual).hasMessage("Apartment with id " + id + " does not exist");
+        assertThat(actual).hasMessage("Apartment with id " + nonExistingApartmentId + " does not exist");
     }
 
     @Test
     @Transactional
     void shouldReturnExistingApartment() {
-        Apartment apartment = createApartment();
-        String existingId = apartmentRepository.save(apartment);
+        String existingId = givenExistingApartment(createApartment());
 
         Apartment actual = apartmentRepository.findById(existingId);
 
@@ -60,7 +84,7 @@ class JpaApartmentRepositoryIntegrationTest {
                 .hasOwnerIdEqualsTo(OWNER_ID)
                 .hasDescriptionEqualsTo(DESCRIPTION)
                 .hasAddressEqualsTo(STREET, POSTAL_CODE, HOUSE_NUMBER, APARTMENT_NUMBER, CITY, COUNTRY)
-                .hasRoomsEqualsTo(ROOM_DEFINITION);
+                .hasRoomsEqualsTo(ROOMS_DEFINITION);
     }
 
     @Test
@@ -74,36 +98,35 @@ class JpaApartmentRepositoryIntegrationTest {
                 .withApartmentNumber("34")
                 .withCity("Krakow")
                 .withCountry("Poland")
-                .withDescription("The Greatest")
+                .withDescription("The greatest apartment")
                 .withRoomsDefinition(ImmutableMap.of("Room1", 50.0))
                 .build();
-        apartmentRepository.save(apartment1);
+        givenExistingApartment(apartment1);
+        String existingId = givenExistingApartment(createApartment());
         Apartment apartment2 = apartment()
-                .withOwnerId("1234")
+                .withOwnerId("5692")
                 .withStreet("Florianska")
-                .withPostalCode("98-765")
-                .withHouseNumber("12")
-                .withApartmentNumber("34")
+                .withPostalCode("98-999")
+                .withHouseNumber("10")
+                .withApartmentNumber("42")
                 .withCity("Krakow")
                 .withCountry("Poland")
-                .withDescription("The Greatest")
-                .withRoomsDefinition(ImmutableMap.of("Room1", 50.0))
+                .withDescription("Great apartment")
+                .withRoomsDefinition(ImmutableMap.of("Room42", 100.0))
                 .build();
-        apartmentRepository.save(apartment2);
+        givenExistingApartment(apartment2);
         Apartment apartment3 = apartment()
-                .withOwnerId("1234")
+                .withOwnerId("2083")
                 .withStreet("Florianska")
-                .withPostalCode("98-765")
-                .withHouseNumber("12")
-                .withApartmentNumber("34")
+                .withPostalCode("98-123")
+                .withHouseNumber("11")
+                .withApartmentNumber("13")
                 .withCity("Krakow")
                 .withCountry("Poland")
-                .withDescription("The Greatest")
-                .withRoomsDefinition(ImmutableMap.of("Room1", 50.0))
+                .withDescription("Not so bad apartment")
+                .withRoomsDefinition(ImmutableMap.of("Room13", 30.0))
                 .build();
-        apartmentRepository.save(apartment3);
-        Apartment apartment = createApartment();
-        String existingId = apartmentRepository.save(apartment);
+        givenExistingApartment(apartment3);
 
         Apartment actual = apartmentRepository.findById(existingId);
 
@@ -111,9 +134,15 @@ class JpaApartmentRepositoryIntegrationTest {
                 .hasOwnerIdEqualsTo(OWNER_ID)
                 .hasDescriptionEqualsTo(DESCRIPTION)
                 .hasAddressEqualsTo(STREET, POSTAL_CODE, HOUSE_NUMBER, APARTMENT_NUMBER, CITY, COUNTRY)
-                .hasRoomsEqualsTo(ROOM_DEFINITION);
+                .hasRoomsEqualsTo(ROOMS_DEFINITION);
     }
 
+    private String givenExistingApartment(Apartment apartment3) {
+        String apartmentId = apartmentRepository.save(apartment3);
+        apartmentIds.add(apartmentId);
+
+        return apartmentId;
+    }
 
     private Apartment createApartment() {
         return apartment()
@@ -125,7 +154,7 @@ class JpaApartmentRepositoryIntegrationTest {
                 .withCity(CITY)
                 .withCountry(COUNTRY)
                 .withDescription(DESCRIPTION)
-                .withRoomsDefinition(ROOM_DEFINITION)
+                .withRoomsDefinition(ROOMS_DEFINITION)
                 .build();
     }
 }

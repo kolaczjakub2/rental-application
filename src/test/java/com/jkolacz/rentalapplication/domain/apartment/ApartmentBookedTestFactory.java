@@ -1,8 +1,12 @@
 package com.jkolacz.rentalapplication.domain.apartment;
 
-public class ApartmentBookedTestFactory {
+import com.jkolacz.rentalapplication.domain.apartment.ApartmentBooked;
+import com.jkolacz.rentalapplication.domain.apartment.Period;
 
-    public static ApartmentBooked create(String eventId,String apartmentId, String ownerId, String tenantId, Period period) {
-        return ApartmentBooked.create(eventId,apartmentId, ownerId, tenantId, period);
+import java.time.LocalDateTime;
+
+public class ApartmentBookedTestFactory {
+    public static ApartmentBooked create(String eventId, LocalDateTime eventCreationDateTime, String apartmentId, String ownerId, String tenantId, Period period) {
+        return new ApartmentBooked(eventId, eventCreationDateTime, apartmentId, ownerId, tenantId, period);
     }
 }

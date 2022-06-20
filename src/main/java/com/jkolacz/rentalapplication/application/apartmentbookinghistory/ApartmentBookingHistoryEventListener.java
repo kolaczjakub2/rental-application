@@ -1,8 +1,8 @@
 package com.jkolacz.rentalapplication.application.apartmentbookinghistory;
 
+import com.jkolacz.rentalapplication.domain.apartment.ApartmentBooked;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBooking;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingHistory;
-import com.jkolacz.rentalapplication.domain.apartment.ApartmentBooked;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingHistoryRepository;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.BookingPeriod;
 import org.springframework.context.event.EventListener;
@@ -21,14 +21,14 @@ public class ApartmentBookingHistoryEventListener {
         ApartmentBookingHistory apartmentBookingHistory = getApartmentBookingHistoryFor(apartmentBooked.getApartmentId());
         BookingPeriod bookingPeriod = new BookingPeriod(apartmentBooked.getPeriodStart(), apartmentBooked.getPeriodEnd());
 
-        apartmentBookingHistory.add(ApartmentBooking.start(apartmentBooked.getEventCreationDateTime(), apartmentBooked.getOwnerId(),
-                apartmentBooked.getTenantId(), bookingPeriod));
+        apartmentBookingHistory.add(ApartmentBooking.start(
+                apartmentBooked.getEventCreationDateTime(), apartmentBooked.getOwnerId(), apartmentBooked.getTenantId(), bookingPeriod));
 
         apartmentBookingHistoryRepository.save(apartmentBookingHistory);
     }
 
     private ApartmentBookingHistory getApartmentBookingHistoryFor(String apartmentId) {
-        if (apartmentBookingHistoryRepository.existFor(apartmentId)) {
+        if (apartmentBookingHistoryRepository.existsFor(apartmentId)) {
             return apartmentBookingHistoryRepository.findFor(apartmentId);
         } else {
             return new ApartmentBookingHistory(apartmentId);

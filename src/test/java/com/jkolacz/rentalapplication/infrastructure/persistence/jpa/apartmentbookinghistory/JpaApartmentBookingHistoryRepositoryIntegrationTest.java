@@ -1,6 +1,7 @@
 package com.jkolacz.rentalapplication.infrastructure.persistence.jpa.apartmentbookinghistory;
 
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBooking;
+import com.jkolacz.rentalapplication.rentalapplication.infrastructure.persistence.jpa.apartmentbookinghistory.SpringJpaApartmentBookingHistoryRepository;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingAssertion;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingHistory;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingHistoryAssertion;
@@ -22,34 +23,30 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @Tag("DomainRepositoryIntegrationTest")
 class JpaApartmentBookingHistoryRepositoryIntegrationTest {
-    @Autowired
-    private ApartmentBookingHistoryRepository repository;
-    @Autowired
-    private SpringJpaApartmentBookingHistoryRepository jpaRepository;
-
+    @Autowired private ApartmentBookingHistoryRepository repository;
+    @Autowired private SpringJpaApartmentBookingHistoryRepository jpaRepository;
     private String apartmentId;
 
-
     @AfterEach
-    void deleteApartmentBookingHistory(){
-        if(apartmentId!=null){
+    void deleteApartmentBookingHistory() {
+        if (apartmentId != null) {
             jpaRepository.deleteById(apartmentId);
         }
     }
 
     @Test
-    void shouldRecognizeApartmentBookingHistoryDoesNotExist(){
+    void shouldRecognizeApartmentBookingHistoryDoesNotExist() {
         String id = randomId();
 
-        assertThat(repository.existFor(id)).isFalse();
+        assertThat(repository.existsFor(id)).isFalse();
     }
 
     @Test
-    void shouldRecognizeApartmentBookingHistoryExist(){
+    void shouldRecognizeApartmentBookingHistoryExists() {
         String id = randomId();
         repository.save(new ApartmentBookingHistory(id));
 
-        assertThat(repository.existFor(id)).isTrue();
+        assertThat(repository.existsFor(id)).isTrue();
     }
 
     @Test
@@ -65,19 +62,17 @@ class JpaApartmentBookingHistoryRepositoryIntegrationTest {
         apartmentBookingHistory.add(ApartmentBooking.start(eventCreationDate, ownerId, tenantId, new BookingPeriod(start, end)));
         repository.save(apartmentBookingHistory);
 
-
         ApartmentBookingHistory actual = repository.findFor(apartmentId);
 
         ApartmentBookingHistoryAssertion.assertThat(actual)
-                .hasApartmentBookingsAmount(1)
-                .hasApartmentBookingSatisfies(actualBooking -> {
+                .hasOneApartmentBooking()
+                .hasApartmentBookingThatSatisfies(actualBooking -> {
                     ApartmentBookingAssertion.assertThat(actualBooking)
                             .hasOwnerIdEqualTo(ownerId)
                             .hasTenantIdEqualTo(tenantId)
                             .hasBookingPeriodThatHas(start, end);
                 });
     }
-
 
     private String randomId() {
         return UUID.randomUUID().toString();

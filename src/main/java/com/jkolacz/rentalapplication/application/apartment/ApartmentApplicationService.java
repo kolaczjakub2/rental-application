@@ -3,28 +3,23 @@ package com.jkolacz.rentalapplication.application.apartment;
 import com.jkolacz.rentalapplication.domain.apartment.Apartment;
 import com.jkolacz.rentalapplication.domain.apartment.ApartmentEventsPublisher;
 import com.jkolacz.rentalapplication.domain.apartment.ApartmentRepository;
-import com.jkolacz.rentalapplication.domain.apartment.Booking;
-import com.jkolacz.rentalapplication.domain.apartment.BookingRepository;
 import com.jkolacz.rentalapplication.domain.apartment.Period;
-
-import java.time.LocalDate;
-
-import static com.jkolacz.rentalapplication.domain.apartment.Apartment.Builder.apartment;
+import com.jkolacz.rentalapplication.domain.booking.Booking;
+import com.jkolacz.rentalapplication.domain.booking.BookingRepository;
 
 public class ApartmentApplicationService {
-
     private final ApartmentRepository apartmentRepository;
     private final BookingRepository bookingRepository;
-    private final ApartmentEventsPublisher publisher;
+    private final ApartmentEventsPublisher apartmentEventsPublisher;
 
-    ApartmentApplicationService(ApartmentRepository apartmentRepository, BookingRepository bookingRepository, ApartmentEventsPublisher publisher) {
+    ApartmentApplicationService(ApartmentRepository apartmentRepository, BookingRepository bookingRepository, ApartmentEventsPublisher apartmentEventsPublisher) {
         this.apartmentRepository = apartmentRepository;
         this.bookingRepository = bookingRepository;
-        this.publisher = publisher;
+        this.apartmentEventsPublisher = apartmentEventsPublisher;
     }
 
     public String add(ApartmentDto apartmentDto) {
-        Apartment apartment = apartment()
+        Apartment apartment = Apartment.Builder.apartment()
                 .withOwnerId(apartmentDto.getOwnerId())
                 .withStreet(apartmentDto.getStreet())
                 .withPostalCode(apartmentDto.getPostalCode())
@@ -39,11 +34,11 @@ public class ApartmentApplicationService {
         return apartmentRepository.save(apartment);
     }
 
-    public String book(String id, String tenantId, LocalDate start, LocalDate end) {
-        Apartment apartment = apartmentRepository.findById(id);
-        Period period = new Period(start, end);
+    public String book(ApartmentBookingDto apartmentBookingDto) {
+        Apartment apartment = apartmentRepository.findById(apartmentBookingDto.getApartmentId());
+        Period period = new Period(apartmentBookingDto.getStart(), apartmentBookingDto.getEnd());
 
-        Booking booking = apartment.book(tenantId, period, publisher);
+        Booking booking = apartment.book(apartmentBookingDto.getTenantId(), period, apartmentEventsPublisher);
 
         return bookingRepository.save(booking);
     }

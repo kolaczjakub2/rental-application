@@ -3,22 +3,21 @@ package com.jkolacz.rentalapplication.domain.apartment;
 import javax.persistence.Embeddable;
 
 @Embeddable
-@SuppressWarnings("PMD.UnusedPrivateField")
+@SuppressWarnings("PMD.UnusedPrivateMethod")
 class SquareMeter {
     private Double size;
 
-    private SquareMeter() {
-    }
+    private SquareMeter() {}
 
     SquareMeter(Double size) {
         this.size = size;
     }
 
-    public Double getSize() {
+    private Double getSize() {
         return size;
     }
 
-    public void setSize(Double size) {
+    private void setSize(Double size) {
         this.size = size;
     }
 }

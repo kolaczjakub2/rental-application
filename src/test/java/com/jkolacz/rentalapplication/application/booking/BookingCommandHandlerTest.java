@@ -1,9 +1,12 @@
 package com.jkolacz.rentalapplication.application.booking;
 
-import com.jkolacz.rentalapplication.domain.apartment.Booking;
-import com.jkolacz.rentalapplication.domain.apartment.BookingAccepted;
-import com.jkolacz.rentalapplication.domain.apartment.BookingAssertion;
-import com.jkolacz.rentalapplication.domain.apartment.BookingRepository;
+import com.jkolacz.rentalapplication.domain.booking.BookingAssertion;
+import com.jkolacz.rentalapplication.domain.event.FakeEventIdFactory;
+import com.jkolacz.rentalapplication.infrastructure.clock.FakeClock;
+import com.jkolacz.rentalapplication.rentalapplication.application.booking.BookingCommandHandlerFactory;
+import com.jkolacz.rentalapplication.domain.booking.Booking;
+import com.jkolacz.rentalapplication.domain.booking.BookingAccepted;
+import com.jkolacz.rentalapplication.domain.booking.BookingRepository;
 import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -28,7 +31,8 @@ class BookingCommandHandlerTest {
 
     private final BookingRepository bookingRepository = mock(BookingRepository.class);
     private final EventChannel eventChannel = mock(EventChannel.class);
-    private final BookingCommandHandler commandHandler = new BookingCommandHandler(bookingRepository, eventChannel);
+    private final BookingCommandHandler commandHandler = new BookingCommandHandlerFactory().bookingCommandHandler(
+            bookingRepository, new FakeEventIdFactory(), new FakeClock(), eventChannel);
 
     @Test
     void shouldAcceptBooking() {

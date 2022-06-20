@@ -1,37 +1,34 @@
 package com.jkolacz.rentalapplication.application.booking;
 
-import com.jkolacz.rentalapplication.domain.apartment.Booking;
-import com.jkolacz.rentalapplication.domain.apartment.BookingRepository;
-import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
+import com.jkolacz.rentalapplication.domain.booking.Booking;
+import com.jkolacz.rentalapplication.domain.booking.BookingEventsPublisher;
+import com.jkolacz.rentalapplication.domain.booking.BookingRepository;
 import org.springframework.context.event.EventListener;
-import org.springframework.stereotype.Component;
 
-@Component
 public class BookingCommandHandler {
-
     private final BookingRepository bookingRepository;
-    private final EventChannel eventChannel;
+    private final BookingEventsPublisher bookingEventsPublisher;
 
-    public BookingCommandHandler(BookingRepository bookingRepository, EventChannel eventChannel) {
+    BookingCommandHandler(BookingRepository bookingRepository, BookingEventsPublisher bookingEventsPublisher) {
         this.bookingRepository = bookingRepository;
-        this.eventChannel = eventChannel;
+        this.bookingEventsPublisher = bookingEventsPublisher;
     }
 
     @EventListener
     public void reject(BookingReject bookingReject) {
         Booking booking = bookingRepository.findById(bookingReject.getBookingId());
+
         booking.reject();
 
         bookingRepository.save(booking);
     }
 
-
     @EventListener
     public void accept(BookingAccept bookingAccept) {
-        Booking booking = bookingRepository.findById(bookingAccept.getBookingId());
-        booking.accept(eventChannel);
+        Booking booking = bookingRepository.findById(bookingAccept.getId());
+
+        booking.accept(bookingEventsPublisher);
 
         bookingRepository.save(booking);
-
     }
 }

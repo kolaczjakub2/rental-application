@@ -20,8 +20,7 @@ public class ApartmentBookingHistory {
     @CollectionTable(name = "APARTMENT_BOOKING", joinColumns = @JoinColumn(name = "APARTMENT_ID"))
     private List<ApartmentBooking> bookings = new ArrayList<>();
 
-    private ApartmentBookingHistory() {
-    }
+    private ApartmentBookingHistory() {}
 
     public ApartmentBookingHistory(String apartmentId) {
         this.apartmentId = apartmentId;
@@ -29,21 +28,5 @@ public class ApartmentBookingHistory {
 
     public void add(ApartmentBooking apartmentBooking) {
         bookings.add(apartmentBooking);
-    }
-
-    public String getApartmentId() {
-        return apartmentId;
-    }
-
-    public void setApartmentId(String apartmentId) {
-        this.apartmentId = apartmentId;
-    }
-
-    public List<ApartmentBooking> getBookings() {
-        return bookings;
-    }
-
-    public void setBookings(List<ApartmentBooking> bookings) {
-        this.bookings = bookings;
     }
 }

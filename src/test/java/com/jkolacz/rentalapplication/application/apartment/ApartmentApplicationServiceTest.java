@@ -1,26 +1,31 @@
 package com.jkolacz.rentalapplication.application.apartment;
 
 import com.google.common.collect.ImmutableMap;
-import com.jkolacz.rentalapplication.domain.apartment.*;
+import com.jkolacz.rentalapplication.domain.apartment.Apartment;
+import com.jkolacz.rentalapplication.domain.apartment.ApartmentAssertion;
+import com.jkolacz.rentalapplication.domain.booking.BookingAssertion;
+import com.jkolacz.rentalapplication.domain.event.FakeEventIdFactory;
+import com.jkolacz.rentalapplication.infrastructure.clock.FakeClock;
+import com.jkolacz.rentalapplication.domain.apartment.ApartmentBooked;
+import com.jkolacz.rentalapplication.domain.apartment.ApartmentRepository;
+import com.jkolacz.rentalapplication.domain.booking.Booking;
+import com.jkolacz.rentalapplication.domain.booking.BookingRepository;
 import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Mockito;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import static com.jkolacz.rentalapplication.domain.apartment.Apartment.Builder.apartment;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.mock;
 
 class ApartmentApplicationServiceTest {
-
     private static final String APARTMENT_ID = "2178231";
     private static final String OWNER_ID = "1234";
     private static final String STREET = "Florianska";
@@ -37,23 +42,20 @@ class ApartmentApplicationServiceTest {
     private static final LocalDate END = LocalDate.of(2020, 3, 6);
     private static final String BOOKING_ID = "8394234";
 
-    private final ApartmentRepository apartmentRepository = Mockito.mock(ApartmentRepository.class);
-    private final BookingRepository bookingRepository = Mockito.mock(BookingRepository.class);
-    private final EventChannel eventChannel = Mockito.mock(EventChannel.class);
-    ApartmentApplicationService service = new ApartmentApplicationServiceFactory().create(apartmentRepository, eventChannel, bookingRepository);
+    private final ApartmentRepository apartmentRepository = mock(ApartmentRepository.class);
+    private final EventChannel eventChannel = mock(EventChannel.class);
+    private final BookingRepository bookingRepository = mock(BookingRepository.class);
+    private final ApartmentApplicationService service = new ApartmentApplicationServiceFactory()
+            .apartmentApplicationService(apartmentRepository, bookingRepository, new FakeEventIdFactory(), new FakeClock(), eventChannel);
 
     @Test
     void shouldAddNewApartment() {
         ArgumentCaptor<Apartment> captor = ArgumentCaptor.forClass(Apartment.class);
 
-        ApartmentDto apartmentDto = getApartmentDto();
-        service.add(apartmentDto);
+        service.add(givenApartmentDto());
 
         then(apartmentRepository).should().save(captor.capture());
-
-        Apartment actual = captor.getValue();
-
-        ApartmentAssertion.assertThat(actual)
+        ApartmentAssertion.assertThat(captor.getValue())
                 .hasOwnerIdEqualsTo(OWNER_ID)
                 .hasDescriptionEqualsTo(DESCRIPTION)
                 .hasAddressEqualsTo(STREET, POSTAL_CODE, HOUSE_NUMBER, APARTMENT_NUMBER, CITY, COUNTRY)
@@ -64,10 +66,13 @@ class ApartmentApplicationServiceTest {
     void shouldReturnIdOfNewApartment() {
         given(apartmentRepository.save(any())).willReturn(APARTMENT_ID);
 
-        ApartmentDto apartmentDto = getApartmentDto();
-        String actual = service.add(apartmentDto);
+        String actual = service.add(givenApartmentDto());
 
         Assertions.assertThat(actual).isEqualTo(APARTMENT_ID);
+    }
+
+    private ApartmentDto givenApartmentDto() {
+        return new ApartmentDto(OWNER_ID, STREET, POSTAL_CODE, HOUSE_NUMBER, APARTMENT_NUMBER, CITY, COUNTRY, DESCRIPTION, ROOMS_DEFINITION);
     }
 
     @Test
@@ -75,48 +80,44 @@ class ApartmentApplicationServiceTest {
         givenApartment();
         ArgumentCaptor<Booking> captor = ArgumentCaptor.forClass(Booking.class);
 
-        service.book(APARTMENT_ID, TENANT_ID, START, END);
+        service.book(givenBookApartmentDto());
 
         then(bookingRepository).should().save(captor.capture());
-        Booking actual = captor.getValue();
-
-        BookingAssertion.assertThat(actual)
+        BookingAssertion.assertThat(captor.getValue())
                 .isApartment()
                 .hasTenantIdEqualTo(TENANT_ID)
                 .containsAllDays(START, MIDDLE, END);
     }
 
     @Test
-    void shouldReturnIdOfBookingForApartment() {
+    void shouldReturnIdOfBooking() {
         givenApartment();
         given(bookingRepository.save(any())).willReturn(BOOKING_ID);
-        String actual = service.book(APARTMENT_ID, TENANT_ID, START, END);
+
+        String actual = service.book(givenBookApartmentDto());
 
         Assertions.assertThat(actual).isEqualTo(BOOKING_ID);
-
     }
 
     @Test
     void shouldPublishApartmentBookedEvent() {
         givenApartment();
-
         ArgumentCaptor<ApartmentBooked> captor = ArgumentCaptor.forClass(ApartmentBooked.class);
 
-        service.book(APARTMENT_ID, TENANT_ID, START, END);
+        service.book(givenBookApartmentDto());
+
         then(eventChannel).should().publish(captor.capture());
         ApartmentBooked actual = captor.getValue();
-        LocalDateTime beforeNow = LocalDateTime.now().minusSeconds(1);
-
-        assertThat(actual.getEventId()).matches(Pattern.compile("[0-9a-z\\-]{36}"));
-
-        assertThat(actual.getEventCreationDateTime())
-                .isBefore(LocalDateTime.now().plusNanos(1))
-                .isAfter(beforeNow);
-//        assertThat(actual.getApartmentId()).isEqualTo(APARTMENT_ID);
+        assertThat(actual.getEventId()).isEqualTo(FakeEventIdFactory.UUID);
+        assertThat(actual.getEventCreationDateTime()).isEqualTo(FakeClock.NOW);
         assertThat(actual.getOwnerId()).isEqualTo(OWNER_ID);
         assertThat(actual.getTenantId()).isEqualTo(TENANT_ID);
         assertThat(actual.getPeriodStart()).isEqualTo(START);
         assertThat(actual.getPeriodEnd()).isEqualTo(END);
+    }
+
+    private ApartmentBookingDto givenBookApartmentDto() {
+        return new ApartmentBookingDto(APARTMENT_ID, TENANT_ID, START, END);
     }
 
     private void givenApartment() {
@@ -131,10 +132,7 @@ class ApartmentApplicationServiceTest {
                 .withDescription(DESCRIPTION)
                 .withRoomsDefinition(ROOMS_DEFINITION)
                 .build();
-        given(apartmentRepository.findById(APARTMENT_ID)).willReturn(apartment);
-    }
 
-    private ApartmentDto getApartmentDto() {
-        return new ApartmentDto(OWNER_ID, STREET, POSTAL_CODE, HOUSE_NUMBER, APARTMENT_NUMBER, CITY, COUNTRY, DESCRIPTION, ROOMS_DEFINITION);
+        given(apartmentRepository.findById(APARTMENT_ID)).willReturn(apartment);
     }
 }
