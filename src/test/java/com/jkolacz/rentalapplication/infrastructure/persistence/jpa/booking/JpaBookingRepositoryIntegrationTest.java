@@ -1,9 +1,6 @@
 package com.jkolacz.rentalapplication.infrastructure.persistence.jpa.booking;
 
 import com.jkolacz.rentalapplication.domain.booking.Booking;
-import com.jkolacz.rentalapplication.domain.booking.BookingAssertion;
-import com.jkolacz.rentalapplication.rentalapplication.infrastructure.persistence.jpa.booking.JpaBookingRepository;
-import com.jkolacz.rentalapplication.rentalapplication.infrastructure.persistence.jpa.booking.SpringJpaBookingRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -15,6 +12,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+import static com.jkolacz.rentalapplication.domain.booking.BookingAssertion.assertThat;
 import static java.util.Arrays.asList;
 
 @SpringBootTest
@@ -40,7 +38,7 @@ class JpaBookingRepositoryIntegrationTest {
 
         Booking actual = repository.findById(bookingId);
 
-        BookingAssertion.assertThat(actual)
+        assertThat(actual)
                 .isOpen()
                 .isHotelRoom()
                 .hasRentalPlaceIdEqualTo(rentalPlaceId)

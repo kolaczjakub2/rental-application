@@ -7,6 +7,8 @@ import com.jkolacz.rentalapplication.domain.apartment.Period;
 import com.jkolacz.rentalapplication.domain.booking.Booking;
 import com.jkolacz.rentalapplication.domain.booking.BookingRepository;
 
+import static com.jkolacz.rentalapplication.domain.apartment.Apartment.Builder.apartment;
+
 public class ApartmentApplicationService {
     private final ApartmentRepository apartmentRepository;
     private final BookingRepository bookingRepository;
@@ -19,7 +21,7 @@ public class ApartmentApplicationService {
     }
 
     public String add(ApartmentDto apartmentDto) {
-        Apartment apartment = Apartment.Builder.apartment()
+        Apartment apartment = apartment()
                 .withOwnerId(apartmentDto.getOwnerId())
                 .withStreet(apartmentDto.getStreet())
                 .withPostalCode(apartmentDto.getPostalCode())
@@ -28,7 +30,7 @@ public class ApartmentApplicationService {
                 .withCity(apartmentDto.getCity())
                 .withCountry(apartmentDto.getCountry())
                 .withDescription(apartmentDto.getDescription())
-                .withRoomsDefinition(apartmentDto.getRoomsDefinition())
+                .withSpacesDefinition(apartmentDto.getSpacesDefinition())
                 .build();
 
         return apartmentRepository.save(apartment);

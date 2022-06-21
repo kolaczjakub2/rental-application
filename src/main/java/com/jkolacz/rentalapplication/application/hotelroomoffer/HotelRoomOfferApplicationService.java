@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
+import static com.jkolacz.rentalapplication.domain.hotelroomoffer.HotelRoomOffer.Builder.hotelRoomOffer;
+
 @Service
 public class HotelRoomOfferApplicationService {
     private final HotelRoomOfferRepository hotelRoomOfferRepository;
@@ -20,7 +22,7 @@ public class HotelRoomOfferApplicationService {
 
     public UUID add(HotelRoomOfferDto dto) {
         if (hotelRoomRepository.existById(dto.getHotelRoomId())) {
-            HotelRoomOffer hotelRoomOffer = HotelRoomOffer.Builder.hotelRoomOffer()
+            HotelRoomOffer hotelRoomOffer = hotelRoomOffer()
                     .withHotelRoomId(dto.getHotelRoomId())
                     .withPrice(dto.getPrice())
                     .withAvailability(dto.getStart(), dto.getEnd())

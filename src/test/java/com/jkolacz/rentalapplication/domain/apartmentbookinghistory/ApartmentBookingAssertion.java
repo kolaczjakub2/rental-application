@@ -1,6 +1,5 @@
 package com.jkolacz.rentalapplication.domain.apartmentbookinghistory;
 
-import com.jkolacz.rentalapplication.rentalapplication.domain.apartmentbookinghistory.BookingStep;
 import org.assertj.core.api.Assertions;
 
 import java.time.LocalDate;

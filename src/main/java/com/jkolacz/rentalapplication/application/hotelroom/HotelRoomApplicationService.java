@@ -6,6 +6,8 @@ import com.jkolacz.rentalapplication.domain.hotelroom.HotelRoom;
 import com.jkolacz.rentalapplication.domain.hotelroom.HotelRoomEventsPublisher;
 import com.jkolacz.rentalapplication.domain.hotelroom.HotelRoomRepository;
 
+import static com.jkolacz.rentalapplication.domain.hotelroom.HotelRoom.Builder.hotelRoom;
+
 public class HotelRoomApplicationService {
     private final HotelRoomRepository hotelRoomRepository;
     private final BookingRepository bookingRepository;
@@ -19,7 +21,7 @@ public class HotelRoomApplicationService {
     }
 
     public String add(HotelRoomDto hotelRoomDto) {
-        HotelRoom hotelRoom = HotelRoom.Builder.hotelRoom()
+        HotelRoom hotelRoom = hotelRoom()
                 .withHotelId(hotelRoomDto.getHotelId())
                 .withNumber(hotelRoomDto.getNumber())
                 .withSpacesDefinition(hotelRoomDto.getSpacesDefinition())

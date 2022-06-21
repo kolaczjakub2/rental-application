@@ -3,7 +3,6 @@ package com.jkolacz.rentalapplication.infrastructure.persistence.jpa.apartment;
 import com.google.common.collect.ImmutableMap;
 import com.jkolacz.rentalapplication.domain.apartment.Apartment;
 import com.jkolacz.rentalapplication.domain.apartment.ApartmentAssertion;
-import com.jkolacz.rentalapplication.rentalapplication.infrastructure.persistence.jpa.apartment.ApartmentDoesNotExistException;
 import com.jkolacz.rentalapplication.domain.apartment.ApartmentRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Tag;
@@ -32,7 +31,7 @@ class JpaApartmentRepositoryIntegrationTest {
     private static final String CITY = "Cracow";
     private static final String COUNTRY = "Poland";
     private static final String DESCRIPTION = "Nice place to stay";
-    private static final Map<String, Double> ROOMS_DEFINITION = ImmutableMap.of("Toilet", 10.0, "Bedroom", 30.0);
+    private static final Map<String, Double> SPACES_DEFINITION = ImmutableMap.of("Toilet", 10.0, "Bedroom", 30.0);
 
     @Autowired private ApartmentRepository apartmentRepository;
     @Autowired private SpringJpaApartmentTestRepository springJpaApartmentTestRepository;
@@ -84,7 +83,7 @@ class JpaApartmentRepositoryIntegrationTest {
                 .hasOwnerIdEqualsTo(OWNER_ID)
                 .hasDescriptionEqualsTo(DESCRIPTION)
                 .hasAddressEqualsTo(STREET, POSTAL_CODE, HOUSE_NUMBER, APARTMENT_NUMBER, CITY, COUNTRY)
-                .hasRoomsEqualsTo(ROOMS_DEFINITION);
+                .hasSpacesEqualsTo(SPACES_DEFINITION);
     }
 
     @Test
@@ -99,7 +98,7 @@ class JpaApartmentRepositoryIntegrationTest {
                 .withCity("Krakow")
                 .withCountry("Poland")
                 .withDescription("The greatest apartment")
-                .withRoomsDefinition(ImmutableMap.of("Room1", 50.0))
+                .withSpacesDefinition(ImmutableMap.of("Room1", 50.0))
                 .build();
         givenExistingApartment(apartment1);
         String existingId = givenExistingApartment(createApartment());
@@ -112,7 +111,7 @@ class JpaApartmentRepositoryIntegrationTest {
                 .withCity("Krakow")
                 .withCountry("Poland")
                 .withDescription("Great apartment")
-                .withRoomsDefinition(ImmutableMap.of("Room42", 100.0))
+                .withSpacesDefinition(ImmutableMap.of("Room42", 100.0))
                 .build();
         givenExistingApartment(apartment2);
         Apartment apartment3 = apartment()
@@ -124,7 +123,7 @@ class JpaApartmentRepositoryIntegrationTest {
                 .withCity("Krakow")
                 .withCountry("Poland")
                 .withDescription("Not so bad apartment")
-                .withRoomsDefinition(ImmutableMap.of("Room13", 30.0))
+                .withSpacesDefinition(ImmutableMap.of("Room13", 30.0))
                 .build();
         givenExistingApartment(apartment3);
 
@@ -134,7 +133,7 @@ class JpaApartmentRepositoryIntegrationTest {
                 .hasOwnerIdEqualsTo(OWNER_ID)
                 .hasDescriptionEqualsTo(DESCRIPTION)
                 .hasAddressEqualsTo(STREET, POSTAL_CODE, HOUSE_NUMBER, APARTMENT_NUMBER, CITY, COUNTRY)
-                .hasRoomsEqualsTo(ROOMS_DEFINITION);
+                .hasSpacesEqualsTo(SPACES_DEFINITION);
     }
 
     private String givenExistingApartment(Apartment apartment3) {
@@ -154,7 +153,7 @@ class JpaApartmentRepositoryIntegrationTest {
                 .withCity(CITY)
                 .withCountry(COUNTRY)
                 .withDescription(DESCRIPTION)
-                .withRoomsDefinition(ROOMS_DEFINITION)
+                .withSpacesDefinition(SPACES_DEFINITION)
                 .build();
     }
 }

@@ -1,6 +1,5 @@
 package com.jkolacz.rentalapplication.application.apartment;
 
-import com.jkolacz.rentalapplication.application.apartment.ApartmentApplicationService;
 import com.jkolacz.rentalapplication.domain.apartment.ApartmentEventsPublisher;
 import com.jkolacz.rentalapplication.domain.apartment.ApartmentRepository;
 import com.jkolacz.rentalapplication.domain.booking.BookingRepository;

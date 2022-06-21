@@ -1,9 +1,9 @@
 package com.jkolacz.rentalapplication.infrastructure.rest.api.hotel;
 
-import com.jkolacz.rentalapplication.query.hotel.HotelReadModel;
-import com.jkolacz.rentalapplication.query.hotel.QueryHotelRepository;
 import com.jkolacz.rentalapplication.application.hotel.HotelApplicationService;
 import com.jkolacz.rentalapplication.application.hotel.HotelDto;
+import com.jkolacz.rentalapplication.query.hotel.HotelReadModel;
+import com.jkolacz.rentalapplication.query.hotel.QueryHotelRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

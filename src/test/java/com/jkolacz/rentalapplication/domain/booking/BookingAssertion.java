@@ -1,7 +1,5 @@
 package com.jkolacz.rentalapplication.domain.booking;
 
-import com.jkolacz.rentalapplication.rentalapplication.domain.booking.BookingStatus;
-import com.jkolacz.rentalapplication.rentalapplication.domain.booking.RentalType;
 import org.assertj.core.api.Assertions;
 
 import java.time.LocalDate;

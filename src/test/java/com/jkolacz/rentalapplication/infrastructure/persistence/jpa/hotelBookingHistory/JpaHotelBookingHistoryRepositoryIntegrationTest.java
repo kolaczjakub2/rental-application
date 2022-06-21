@@ -1,7 +1,6 @@
 package com.jkolacz.rentalapplication.infrastructure.persistence.jpa.hotelbookinghistory;
 
 import com.jkolacz.rentalapplication.domain.hotelbookinghistory.HotelBookingHistory;
-import com.jkolacz.rentalapplication.rentalapplication.infrastructure.persistence.jpa.hotelbookinghistory.SpringJpaHotelBookingHistoryRepository;
 import com.jkolacz.rentalapplication.domain.hotelbookinghistory.HotelBookingHistoryAssertion;
 import com.jkolacz.rentalapplication.domain.hotelbookinghistory.HotelBookingHistoryRepository;
 import org.junit.jupiter.api.AfterEach;

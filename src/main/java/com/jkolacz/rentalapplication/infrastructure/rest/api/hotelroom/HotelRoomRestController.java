@@ -1,10 +1,10 @@
 package com.jkolacz.rentalapplication.infrastructure.rest.api.hotelroom;
 
-import com.jkolacz.rentalapplication.query.hotelroom.HotelRoomReadModel;
-import com.jkolacz.rentalapplication.query.hotelroom.QueryHotelRoomRepository;
 import com.jkolacz.rentalapplication.application.hotelroom.HotelRoomBookingDto;
 import com.jkolacz.rentalapplication.application.hotelroom.HotelRoomApplicationService;
 import com.jkolacz.rentalapplication.application.hotelroom.HotelRoomDto;
+import com.jkolacz.rentalapplication.query.hotelroom.HotelRoomReadModel;
+import com.jkolacz.rentalapplication.query.hotelroom.QueryHotelRoomRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

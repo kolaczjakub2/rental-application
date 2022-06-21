@@ -1,7 +1,5 @@
 package com.jkolacz.rentalapplication.infrastructure.persistence.jpa.booking;
 
-import com.jkolacz.rentalapplication.infrastructure.persistence.jpa.booking.SpringJpaBookingRepository;
-import com.jkolacz.rentalapplication.rentalapplication.infrastructure.persistence.jpa.booking.SpringJpaBookingRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.UUID;

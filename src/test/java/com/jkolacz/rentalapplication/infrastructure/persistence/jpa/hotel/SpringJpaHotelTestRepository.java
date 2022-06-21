@@ -1,7 +1,5 @@
 package com.jkolacz.rentalapplication.infrastructure.persistence.jpa.hotel;
 
-import com.jkolacz.rentalapplication.infrastructure.persistence.jpa.hotel.SpringJpaHotelRepository;
-import com.jkolacz.rentalapplication.rentalapplication.infrastructure.persistence.jpa.hotel.SpringJpaHotelRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

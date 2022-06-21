@@ -1,6 +1,5 @@
 package com.jkolacz.rentalapplication.domain.hotelbookinghistory;
 
-import com.jkolacz.rentalapplication.rentalapplication.domain.hotelbookinghistory.HotelRoomBookingHistory;
 import org.assertj.core.api.AbstractObjectAssert;
 import org.assertj.core.api.Assertions;
 

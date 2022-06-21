@@ -2,7 +2,6 @@ package com.jkolacz.rentalapplication.infrastructure.persistence.jpa.hotelroom;
 
 import com.google.common.collect.ImmutableMap;
 import com.jkolacz.rentalapplication.domain.hotelroom.HotelRoom;
-import com.jkolacz.rentalapplication.rentalapplication.infrastructure.persistence.jpa.hotelroom.HotelRoomDoesNotExistException;
 import com.jkolacz.rentalapplication.domain.hotelroom.HotelRoomAssertion;
 import com.jkolacz.rentalapplication.domain.hotelroom.HotelRoomRepository;
 import org.junit.jupiter.api.AfterEach;

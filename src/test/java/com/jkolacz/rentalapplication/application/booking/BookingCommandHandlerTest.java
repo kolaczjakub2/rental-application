@@ -1,13 +1,12 @@
 package com.jkolacz.rentalapplication.application.booking;
 
-import com.jkolacz.rentalapplication.domain.booking.BookingAssertion;
-import com.jkolacz.rentalapplication.domain.event.FakeEventIdFactory;
-import com.jkolacz.rentalapplication.infrastructure.clock.FakeClock;
-import com.jkolacz.rentalapplication.rentalapplication.application.booking.BookingCommandHandlerFactory;
 import com.jkolacz.rentalapplication.domain.booking.Booking;
 import com.jkolacz.rentalapplication.domain.booking.BookingAccepted;
+import com.jkolacz.rentalapplication.domain.booking.BookingAssertion;
 import com.jkolacz.rentalapplication.domain.booking.BookingRepository;
+import com.jkolacz.rentalapplication.domain.event.FakeEventIdFactory;
 import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
+import com.jkolacz.rentalapplication.infrastructure.clock.FakeClock;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;

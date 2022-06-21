@@ -1,8 +1,6 @@
 package com.jkolacz.rentalapplication.infrastructure.event;
 
 import com.jkolacz.rentalapplication.domain.event.EventIdFactory;
-import com.jkolacz.rentalapplication.infrastructure.event.UuidEventIdFactory;
-import com.jkolacz.rentalapplication.rentalapplication.infrastructure.event.UuidEventIdFactory;
 import org.junit.jupiter.api.Test;
 
 import java.util.regex.Pattern;

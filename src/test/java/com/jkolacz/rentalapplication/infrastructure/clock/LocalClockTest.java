@@ -1,8 +1,6 @@
 package com.jkolacz.rentalapplication.infrastructure.clock;
 
 import com.jkolacz.rentalapplication.domain.clock.Clock;
-import com.jkolacz.rentalapplication.infrastructure.clock.LocalClock;
-import com.jkolacz.rentalapplication.rentalapplication.infrastructure.clock.LocalClock;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;

@@ -1,9 +1,7 @@
 package com.jkolacz.rentalapplication.infrastructure.persistence.jpa.hotel;
 
 import com.jkolacz.rentalapplication.domain.hotel.Hotel;
-import com.jkolacz.rentalapplication.domain.hotel.HotelAssertion;
 import com.jkolacz.rentalapplication.domain.hotel.HotelRepository;
-import com.jkolacz.rentalapplication.rentalapplication.infrastructure.persistence.jpa.hotel.SpringJpaHotelRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -13,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.UUID;
 
 import static com.jkolacz.rentalapplication.domain.hotel.Hotel.Builder.hotel;
+import static com.jkolacz.rentalapplication.domain.hotel.HotelAssertion.assertThat;
 
 @SpringBootTest
 @Tag("DomainRepositoryIntegrationTest")
@@ -47,7 +46,7 @@ class JpaHotelRepositoryIntegrationTest {
 
         hotelId = hotelRepository.save(hotel);
 
-        HotelAssertion.assertThat(findBy(hotelId))
+        assertThat(findBy(hotelId))
                 .hasNameEqualsTo(NAME)
                 .hasAddressEqualsTo(STREET, POSTAL_CODE, BUILDING_NUMBER, CITY, COUNTRY);
     }

@@ -1,11 +1,11 @@
 package com.jkolacz.rentalapplication.infrastructure.rest.api.apartment;
 
-import com.jkolacz.rentalapplication.query.apartment.ApartmentDetails;
-import com.jkolacz.rentalapplication.query.apartment.ApartmentReadModel;
-import com.jkolacz.rentalapplication.query.apartment.QueryApartmentRepository;
 import com.jkolacz.rentalapplication.application.apartment.ApartmentApplicationService;
 import com.jkolacz.rentalapplication.application.apartment.ApartmentDto;
 import com.jkolacz.rentalapplication.application.apartment.ApartmentBookingDto;
+import com.jkolacz.rentalapplication.query.apartment.ApartmentDetails;
+import com.jkolacz.rentalapplication.query.apartment.ApartmentReadModel;
+import com.jkolacz.rentalapplication.query.apartment.QueryApartmentRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

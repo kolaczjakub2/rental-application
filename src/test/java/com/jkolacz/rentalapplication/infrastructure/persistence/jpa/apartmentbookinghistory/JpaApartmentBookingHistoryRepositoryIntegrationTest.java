@@ -1,7 +1,6 @@
 package com.jkolacz.rentalapplication.infrastructure.persistence.jpa.apartmentbookinghistory;
 
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBooking;
-import com.jkolacz.rentalapplication.rentalapplication.infrastructure.persistence.jpa.apartmentbookinghistory.SpringJpaApartmentBookingHistoryRepository;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingAssertion;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingHistory;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingHistoryAssertion;

@@ -5,12 +5,12 @@ import com.jkolacz.rentalapplication.application.apartment.ApartmentApplicationS
 import com.jkolacz.rentalapplication.application.apartment.ApartmentBookingDto;
 import com.jkolacz.rentalapplication.domain.apartment.Apartment;
 import com.jkolacz.rentalapplication.domain.apartment.ApartmentRepository;
-import com.jkolacz.rentalapplication.infrastructure.persistence.jpa.apartment.SpringJpaApartmentTestRepository;
-import com.jkolacz.rentalapplication.infrastructure.persistence.jpa.apartmentbookinghistory.SpringJpaApartmentBookingHistoryTestRepository;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingAssertion;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingHistory;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingHistoryAssertion;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingHistoryRepository;
+import com.jkolacz.rentalapplication.infrastructure.persistence.jpa.apartment.SpringJpaApartmentTestRepository;
+import com.jkolacz.rentalapplication.infrastructure.persistence.jpa.apartmentbookinghistory.SpringJpaApartmentBookingHistoryTestRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -34,7 +34,7 @@ class ApartmentBookingHistoryEventListenerIntegrationTest {
     private static final String CITY = "Cracow";
     private static final String COUNTRY = "Poland";
     private static final String DESCRIPTION = "Nice place to stay";
-    private static final Map<String, Double> ROOMS_DEFINITION = ImmutableMap.of("Toilet", 10.0, "Bedroom", 30.0);
+    private static final Map<String, Double> SPACES_DEFINITION = ImmutableMap.of("Toilet", 10.0, "Bedroom", 30.0);
 
     @Autowired private ApartmentApplicationService apartmentApplicationService;
     @Autowired private ApartmentBookingHistoryRepository apartmentBookingHistoryRepository;
@@ -87,7 +87,7 @@ class ApartmentBookingHistoryEventListenerIntegrationTest {
                 .withCity(CITY)
                 .withCountry(COUNTRY)
                 .withDescription(DESCRIPTION)
-                .withRoomsDefinition(ROOMS_DEFINITION)
+                .withSpacesDefinition(SPACES_DEFINITION)
                 .build();
     }
 }

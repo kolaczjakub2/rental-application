@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
+import static com.jkolacz.rentalapplication.domain.apartmentoffer.ApartmentOffer.Builder.apartmentOffer;
+
 @Service
 public class ApartmentOfferApplicationService {
     private final ApartmentOfferRepository apartmentOfferRepository;
@@ -20,7 +22,7 @@ public class ApartmentOfferApplicationService {
 
     public UUID add(ApartmentOfferDto dto) {
         if (apartmentRepository.existById(dto.getApartmentId())) {
-            ApartmentOffer apartmentOffer = ApartmentOffer.Builder.apartmentOffer()
+            ApartmentOffer apartmentOffer = apartmentOffer()
                     .withApartmentId(dto.getApartmentId())
                     .withPrice(dto.getPrice())
                     .withAvailability(dto.getStart(), dto.getEnd())

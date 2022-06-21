@@ -1,8 +1,6 @@
 package com.jkolacz.rentalapplication.infrastructure.persistence.jpa.apartmentoffer;
 
 import com.jkolacz.rentalapplication.domain.apartmentoffer.ApartmentOffer;
-import com.jkolacz.rentalapplication.rentalapplication.infrastructure.persistence.jpa.apartmentoffer.JpaApartmentOfferRepository;
-import com.jkolacz.rentalapplication.rentalapplication.infrastructure.persistence.jpa.apartmentoffer.SpringJpaApartmentOfferRepository;
 import com.jkolacz.rentalapplication.domain.apartmentoffer.ApartmentOfferAssertion;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Tag;

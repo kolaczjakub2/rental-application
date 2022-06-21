@@ -1,8 +1,6 @@
 package com.jkolacz.rentalapplication.infrastructure.persistence.jpa.hotelroomoffer;
 
 import com.jkolacz.rentalapplication.domain.hotelroomoffer.HotelRoomOffer;
-import com.jkolacz.rentalapplication.rentalapplication.infrastructure.persistence.jpa.hotelroomoffer.JpaHotelRoomOfferRepository;
-import com.jkolacz.rentalapplication.rentalapplication.infrastructure.persistence.jpa.hotelroomoffer.SpringJpaHotelRoomOfferRepository;
 import com.jkolacz.rentalapplication.domain.hotelroomoffer.HotelRoomOfferAssertion;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Tag;

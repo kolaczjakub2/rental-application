@@ -1,8 +1,8 @@
 package com.jkolacz.rentalapplication.domain.booking;
 
-import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
 import com.jkolacz.rentalapplication.domain.clock.Clock;
 import com.jkolacz.rentalapplication.domain.event.EventIdFactory;
+import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
 
 import java.time.LocalDate;
 import java.util.List;

@@ -1,7 +1,5 @@
 package com.jkolacz.rentalapplication.infrastructure.persistence.jpa.apartment;
 
-import com.jkolacz.rentalapplication.infrastructure.persistence.jpa.apartment.SpringJpaApartmentRepository;
-import com.jkolacz.rentalapplication.rentalapplication.infrastructure.persistence.jpa.apartment.SpringJpaApartmentRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

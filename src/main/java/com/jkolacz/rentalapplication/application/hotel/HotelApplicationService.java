@@ -4,6 +4,8 @@ import com.jkolacz.rentalapplication.domain.hotel.Hotel;
 import com.jkolacz.rentalapplication.domain.hotel.HotelRepository;
 import org.springframework.stereotype.Service;
 
+import static com.jkolacz.rentalapplication.domain.hotel.Hotel.Builder.hotel;
+
 @Service
 public class HotelApplicationService {
     private final HotelRepository hotelRepository;
@@ -13,7 +15,7 @@ public class HotelApplicationService {
     }
 
     public void add(HotelDto hotelDto) {
-        Hotel hotel = Hotel.Builder.hotel()
+        Hotel hotel = hotel()
                 .withName(hotelDto.getName())
                 .withStreet(hotelDto.getStreet())
                 .withPostalCode(hotelDto.getPostalCode())

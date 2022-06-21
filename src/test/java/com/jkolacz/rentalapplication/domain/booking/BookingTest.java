@@ -1,12 +1,12 @@
 package com.jkolacz.rentalapplication.domain.booking;
 
 import com.jkolacz.rentalapplication.domain.apartment.Period;
-import com.jkolacz.rentalapplication.rentalapplication.domain.booking.RentalType;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.List;
 
+import static com.jkolacz.rentalapplication.domain.booking.BookingAssertion.assertThat;
 import static java.util.Arrays.asList;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.mock;
@@ -24,7 +24,7 @@ class BookingTest {
 
         Booking actual = Booking.apartment(RENTAL_PLACE_ID, TENANT_ID, period);
 
-        BookingAssertion.assertThat(actual)
+        assertThat(actual)
                 .isOpen()
                 .isApartment()
                 .hasRentalPlaceIdEqualTo(RENTAL_PLACE_ID)
@@ -38,7 +38,7 @@ class BookingTest {
 
         Booking actual = Booking.hotelRoom(RENTAL_PLACE_ID, TENANT_ID, days);
 
-        BookingAssertion.assertThat(actual)
+        assertThat(actual)
                 .isOpen()
                 .isHotelRoom()
                 .hasRentalPlaceIdEqualTo(RENTAL_PLACE_ID)
@@ -52,7 +52,7 @@ class BookingTest {
 
         booking.accept(bookingEventsPublisher);
 
-        BookingAssertion.assertThat(booking).isAccepted();
+        assertThat(booking).isAccepted();
     }
 
     @Test
@@ -70,6 +70,6 @@ class BookingTest {
 
         booking.reject();
 
-        BookingAssertion.assertThat(booking).isRejected();
+        assertThat(booking).isRejected();
     }
 }

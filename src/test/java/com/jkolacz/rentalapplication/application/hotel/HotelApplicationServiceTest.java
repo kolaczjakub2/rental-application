@@ -1,11 +1,11 @@
 package com.jkolacz.rentalapplication.application.hotel;
 
 import com.jkolacz.rentalapplication.domain.hotel.Hotel;
-import com.jkolacz.rentalapplication.domain.hotel.HotelAssertion;
 import com.jkolacz.rentalapplication.domain.hotel.HotelRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
+import static com.jkolacz.rentalapplication.domain.hotel.HotelAssertion.assertThat;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.mock;
 
@@ -28,7 +28,7 @@ class HotelApplicationServiceTest {
         service.add(hotelDto);
 
         then(repository).should().save(captor.capture());
-        HotelAssertion.assertThat(captor.getValue())
+        assertThat(captor.getValue())
                 .hasNameEqualsTo(NAME)
                 .hasAddressEqualsTo(STREET, POSTAL_CODE, BUILDING_NUMBER, CITY, COUNTRY);
     }

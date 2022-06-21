@@ -10,7 +10,7 @@ import org.mockito.ArgumentCaptor;
 import java.time.LocalDate;
 import java.util.List;
 
-import static com.jkolacz.rentalapplication.rentalapplication.domain.booking.RentalType.APARTMENT;
+import static com.jkolacz.rentalapplication.domain.booking.RentalType.APARTMENT;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.mock;

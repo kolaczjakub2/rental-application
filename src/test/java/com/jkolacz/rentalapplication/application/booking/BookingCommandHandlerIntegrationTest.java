@@ -2,8 +2,8 @@ package com.jkolacz.rentalapplication.application.booking;
 
 import com.jkolacz.rentalapplication.domain.booking.Booking;
 import com.jkolacz.rentalapplication.domain.booking.BookingAssertion;
-import com.jkolacz.rentalapplication.infrastructure.persistence.jpa.booking.SpringJpaBookingTestRepository;
 import com.jkolacz.rentalapplication.domain.booking.BookingRepository;
+import com.jkolacz.rentalapplication.infrastructure.persistence.jpa.booking.SpringJpaBookingTestRepository;
 import com.jkolacz.rentalapplication.infrastructure.rest.api.booking.BookingRestController;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Tag;
