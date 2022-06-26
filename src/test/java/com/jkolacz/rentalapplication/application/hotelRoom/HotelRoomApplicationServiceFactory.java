@@ -1,6 +1,5 @@
 package com.jkolacz.rentalapplication.application.hotelroom;
 
-import com.jkolacz.rentalapplication.application.hotelroom.HotelRoomApplicationService;
 import com.jkolacz.rentalapplication.domain.booking.BookingRepository;
 import com.jkolacz.rentalapplication.domain.clock.Clock;
 import com.jkolacz.rentalapplication.domain.event.EventIdFactory;

@@ -1,7 +1,5 @@
 package com.jkolacz.rentalapplication.domain.hotelroom;
 
-import com.jkolacz.rentalapplication.domain.hotelroom.HotelRoomBooked;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;

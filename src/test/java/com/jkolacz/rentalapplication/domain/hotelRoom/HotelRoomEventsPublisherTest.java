@@ -1,8 +1,8 @@
 package com.jkolacz.rentalapplication.domain.hotelroom;
 
 import com.jkolacz.rentalapplication.domain.event.FakeEventIdFactory;
-import com.jkolacz.rentalapplication.infrastructure.clock.FakeClock;
 import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
+import com.jkolacz.rentalapplication.infrastructure.clock.FakeClock;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
