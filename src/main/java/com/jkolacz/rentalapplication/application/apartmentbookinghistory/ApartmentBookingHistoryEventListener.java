@@ -1,7 +1,6 @@
 package com.jkolacz.rentalapplication.application.apartmentbookinghistory;
 
 import com.jkolacz.rentalapplication.domain.apartment.ApartmentBooked;
-import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBooking;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingHistory;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingHistoryRepository;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.BookingPeriod;
@@ -21,8 +20,7 @@ public class ApartmentBookingHistoryEventListener {
         ApartmentBookingHistory apartmentBookingHistory = getApartmentBookingHistoryFor(apartmentBooked.getApartmentId());
         BookingPeriod bookingPeriod = new BookingPeriod(apartmentBooked.getPeriodStart(), apartmentBooked.getPeriodEnd());
 
-        apartmentBookingHistory.add(ApartmentBooking.start(
-                apartmentBooked.getEventCreationDateTime(), apartmentBooked.getOwnerId(), apartmentBooked.getTenantId(), bookingPeriod));
+        apartmentBookingHistory.addBookingStart(apartmentBooked.getEventCreationDateTime(), apartmentBooked.getOwnerId(), apartmentBooked.getTenantId(), bookingPeriod);
 
         apartmentBookingHistoryRepository.save(apartmentBookingHistory);
     }
