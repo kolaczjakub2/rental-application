@@ -2,6 +2,8 @@ package com.jkolacz.rentalapplication.query.hotelroom;
 
 import org.springframework.stereotype.Repository;
 
+import java.util.UUID;
+
 @Repository
 public class QueryHotelRoomRepository {
     private final SpringJpaQueryHotelRoomRepository repository;
@@ -10,7 +12,7 @@ public class QueryHotelRoomRepository {
         this.repository = repository;
     }
 
-    public Iterable<HotelRoomReadModel> findAll(String hotelId) {
+    public Iterable<HotelRoomReadModel> findAll(UUID hotelId) {
         return repository.findAllByHotelId(hotelId);
     }
 }

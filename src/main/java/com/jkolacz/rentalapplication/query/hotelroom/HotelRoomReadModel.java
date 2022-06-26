@@ -1,6 +1,7 @@
 package com.jkolacz.rentalapplication.query.hotelroom;
 
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,7 +16,9 @@ import java.util.UUID;
 public class HotelRoomReadModel {
     @Id
     @GeneratedValue
+    @Column(name = "ID")
     private UUID id;
+    @Column(name = "HOTEL_ID")
     private String hotelId;
     private int number;
 

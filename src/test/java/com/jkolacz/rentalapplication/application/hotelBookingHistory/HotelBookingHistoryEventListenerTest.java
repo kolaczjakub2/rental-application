@@ -3,7 +3,7 @@ package com.jkolacz.rentalapplication.application.hotelbookinghistory;
 import com.jkolacz.rentalapplication.domain.hotelbookinghistory.HotelBookingHistory;
 import com.jkolacz.rentalapplication.domain.hotelbookinghistory.HotelBookingHistoryAssertion;
 import com.jkolacz.rentalapplication.domain.hotelbookinghistory.HotelBookingHistoryRepository;
-import com.jkolacz.rentalapplication.domain.hotelroom.HotelRoomBookedTestFactory;
+import com.jkolacz.rentalapplication.domain.hotel.HotelRoomBookedTestFactory;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 

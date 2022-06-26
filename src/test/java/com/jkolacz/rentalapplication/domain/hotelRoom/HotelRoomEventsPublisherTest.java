@@ -1,4 +1,4 @@
-package com.jkolacz.rentalapplication.domain.hotelroom;
+package com.jkolacz.rentalapplication.domain.hotel;
 
 import com.jkolacz.rentalapplication.domain.event.FakeEventIdFactory;
 import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;

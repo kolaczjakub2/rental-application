@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/hotelroom")
@@ -44,6 +45,6 @@ public class HotelRoomRestController {
 
     @GetMapping("/hotel/{hotelId}")
     public Iterable<HotelRoomReadModel> findAll(@PathVariable String hotelId) {
-        return queryHotelRoomRepository.findAll(hotelId);
+        return queryHotelRoomRepository.findAll(UUID.fromString(hotelId));
     }
 }

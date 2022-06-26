@@ -2,33 +2,34 @@ package com.jkolacz.rentalapplication.application.hotelroom;
 
 import com.jkolacz.rentalapplication.domain.booking.Booking;
 import com.jkolacz.rentalapplication.domain.booking.BookingRepository;
+import com.jkolacz.rentalapplication.domain.hotel.Hotel;
+import com.jkolacz.rentalapplication.domain.hotel.HotelRepository;
 import com.jkolacz.rentalapplication.domain.hotel.HotelRoom;
 import com.jkolacz.rentalapplication.domain.hotel.HotelRoomEventsPublisher;
 import com.jkolacz.rentalapplication.domain.hotel.HotelRoomRepository;
 
-import static com.jkolacz.rentalapplication.domain.hotel.HotelRoom.Builder.hotelRoom;
-
 public class HotelRoomApplicationService {
+    private final HotelRepository hotelRepository;
     private final HotelRoomRepository hotelRoomRepository;
     private final BookingRepository bookingRepository;
     private final HotelRoomEventsPublisher hotelRoomEventsPublisher;
 
     HotelRoomApplicationService(
-            HotelRoomRepository hotelRoomRepository, BookingRepository bookingRepository, HotelRoomEventsPublisher hotelRoomEventsPublisher) {
+            HotelRepository hotelRepository, HotelRoomRepository hotelRoomRepository, BookingRepository bookingRepository, HotelRoomEventsPublisher hotelRoomEventsPublisher) {
+        this.hotelRepository = hotelRepository;
         this.hotelRoomRepository = hotelRoomRepository;
         this.bookingRepository = bookingRepository;
         this.hotelRoomEventsPublisher = hotelRoomEventsPublisher;
     }
 
     public String add(HotelRoomDto hotelRoomDto) {
-        HotelRoom hotelRoom = hotelRoom()
-                .withHotelId(hotelRoomDto.getHotelId())
-                .withNumber(hotelRoomDto.getNumber())
-                .withSpacesDefinition(hotelRoomDto.getSpacesDefinition())
-                .withDescription(hotelRoomDto.getDescription())
-                .build();
+        Hotel hotel = hotelRepository.findById(hotelRoomDto.getHotelId());
 
-        return hotelRoomRepository.save(hotelRoom);
+        hotel.addRoom(hotelRoomDto.getNumber(), hotelRoomDto.getSpacesDefinition(), hotelRoomDto.getDescription());
+
+        hotelRepository.save(hotel);
+
+       return hotel.getIdOfRoom(hotelRoomDto.getNumber());
     }
 
     public String book(HotelRoomBookingDto hotelRoomBookingDto) {

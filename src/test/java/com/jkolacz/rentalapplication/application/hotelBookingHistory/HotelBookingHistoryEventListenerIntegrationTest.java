@@ -6,8 +6,8 @@ import com.jkolacz.rentalapplication.application.hotelroom.HotelRoomBookingDto;
 import com.jkolacz.rentalapplication.domain.hotelbookinghistory.HotelBookingHistory;
 import com.jkolacz.rentalapplication.domain.hotelbookinghistory.HotelBookingHistoryAssertion;
 import com.jkolacz.rentalapplication.domain.hotelbookinghistory.HotelBookingHistoryRepository;
-import com.jkolacz.rentalapplication.domain.hotelroom.HotelRoom;
-import com.jkolacz.rentalapplication.domain.hotelroom.HotelRoomRepository;
+import com.jkolacz.rentalapplication.domain.hotel.HotelRoom;
+import com.jkolacz.rentalapplication.domain.hotel.HotelRoomRepository;
 import com.jkolacz.rentalapplication.infrastructure.persistence.jpa.hotelbookinghistory.SpringJpaHotelBookingHistoryTestRepository;
 import com.jkolacz.rentalapplication.infrastructure.persistence.jpa.hotelroom.SpringJpaHotelRoomTestRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import static com.jkolacz.rentalapplication.domain.hotelroom.HotelRoom.Builder.hotelRoom;
+import static com.jkolacz.rentalapplication.domain.hotel.HotelRoom.Builder.hotelRoom;
 import static java.util.Arrays.asList;
 
 @SpringBootTest

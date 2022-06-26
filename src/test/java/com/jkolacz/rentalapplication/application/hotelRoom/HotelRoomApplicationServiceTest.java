@@ -6,10 +6,11 @@ import com.jkolacz.rentalapplication.domain.booking.BookingAssertion;
 import com.jkolacz.rentalapplication.domain.booking.BookingRepository;
 import com.jkolacz.rentalapplication.domain.event.FakeEventIdFactory;
 import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
-import com.jkolacz.rentalapplication.domain.hotelroom.HotelRoom;
-import com.jkolacz.rentalapplication.domain.hotelroom.HotelRoomAssertion;
-import com.jkolacz.rentalapplication.domain.hotelroom.HotelRoomBooked;
-import com.jkolacz.rentalapplication.domain.hotelroom.HotelRoomRepository;
+import com.jkolacz.rentalapplication.domain.hotel.HotelRepository;
+import com.jkolacz.rentalapplication.domain.hotel.HotelRoom;
+import com.jkolacz.rentalapplication.domain.hotel.HotelRoomAssertion;
+import com.jkolacz.rentalapplication.domain.hotel.HotelRoomBooked;
+import com.jkolacz.rentalapplication.domain.hotel.HotelRoomRepository;
 import com.jkolacz.rentalapplication.infrastructure.clock.FakeClock;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -22,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import static com.jkolacz.rentalapplication.domain.hotelroom.HotelRoom.Builder.hotelRoom;
+import static com.jkolacz.rentalapplication.domain.hotel.HotelRoom.Builder.hotelRoom;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -41,8 +42,9 @@ class HotelRoomApplicationServiceTest {
     private final HotelRoomRepository hotelRoomRepository = Mockito.mock(HotelRoomRepository.class);
     private final BookingRepository bookingRepository = Mockito.mock(BookingRepository.class);
     private final EventChannel eventChannel = Mockito.mock(EventChannel.class);
+    private final HotelRepository hotelRepository = Mockito.mock(HotelRepository.class);
     private final HotelRoomApplicationService service = new HotelRoomApplicationServiceFactory().hotelRoomApplicationService(
-            hotelRoomRepository, bookingRepository, new FakeEventIdFactory(), new FakeClock(), eventChannel);
+            hotelRepository, hotelRoomRepository, bookingRepository, new FakeEventIdFactory(), new FakeClock(), eventChannel);
 
     @Test
     void shouldCreateHotelRoom() {
