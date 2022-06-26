@@ -1,16 +1,19 @@
 package com.jkolacz.rentalapplication.application.hotelbookinghistory;
 
 import com.google.common.collect.ImmutableMap;
-import com.jkolacz.rentalapplication.application.hotelroom.HotelRoomApplicationService;
-import com.jkolacz.rentalapplication.application.hotelroom.HotelRoomBookingDto;
+import com.jkolacz.rentalapplication.application.hotel.HotelRoomApplicationService;
+import com.jkolacz.rentalapplication.application.hotel.HotelRoomBookingDto;
+import com.jkolacz.rentalapplication.domain.hotel.Hotel;
+import com.jkolacz.rentalapplication.domain.hotel.HotelRepository;
+import com.jkolacz.rentalapplication.domain.hotel.HotelRoom;
+import com.jkolacz.rentalapplication.domain.hotel.HotelRoomRepository;
 import com.jkolacz.rentalapplication.domain.hotelbookinghistory.HotelBookingHistory;
 import com.jkolacz.rentalapplication.domain.hotelbookinghistory.HotelBookingHistoryAssertion;
 import com.jkolacz.rentalapplication.domain.hotelbookinghistory.HotelBookingHistoryRepository;
-import com.jkolacz.rentalapplication.domain.hotel.HotelRoom;
-import com.jkolacz.rentalapplication.domain.hotel.HotelRoomRepository;
 import com.jkolacz.rentalapplication.infrastructure.persistence.jpa.hotelbookinghistory.SpringJpaHotelBookingHistoryTestRepository;
 import com.jkolacz.rentalapplication.infrastructure.persistence.jpa.hotelroom.SpringJpaHotelRoomTestRepository;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import static com.jkolacz.rentalapplication.domain.hotel.Hotel.Builder.hotel;
 import static com.jkolacz.rentalapplication.domain.hotel.HotelRoom.Builder.hotelRoom;
 import static java.util.Arrays.asList;
 
@@ -38,8 +42,19 @@ class HotelBookingHistoryEventListenerIntegrationTest {
     @Autowired private SpringJpaHotelBookingHistoryTestRepository springJpaHotelBookingHistoryTestRepository;
     @Autowired private HotelRoomRepository hotelRoomRepository;
     @Autowired private SpringJpaHotelRoomTestRepository springJpaHotelRoomTestRepository;
+    @Autowired private HotelRepository hotelRepository;
 
     private String hotelRoomId;
+    private String hotelId;
+
+    @BeforeEach
+    void givenExistingHotelRoom() {
+        Hotel hotel = hotel().withName("Great hotel").build();
+        hotelId = hotelRepository.save(hotel);
+
+        hotel.addRoom(HOTEL_NUMBER, SPACES_DEFINITION, DESCRIPTION);
+        hotelRepository.save(hotel);
+    }
 
     @AfterEach
     void removeHotelRoom() {
@@ -52,8 +67,7 @@ class HotelBookingHistoryEventListenerIntegrationTest {
     void shouldUpdateHotelBookingHistory() {
         String tenantId = "11223344";
         List<LocalDate> days = asList(LocalDate.of(2020, 1, 13), LocalDate.of(2020, 1, 14));
-        hotelRoomId = givenExistingHotelRoom();
-        HotelRoomBookingDto hotelRoomBookingDto = new HotelRoomBookingDto(hotelRoomId, tenantId, days);
+        HotelRoomBookingDto hotelRoomBookingDto = new HotelRoomBookingDto(hotelId, HOTEL_NUMBER, tenantId, days);
 
         hotelRoomApplicationService.book(hotelRoomBookingDto);
         HotelBookingHistory actual = hotelBookingHistoryRepository.findFor(HOTEL_ID);
@@ -61,9 +75,6 @@ class HotelBookingHistoryEventListenerIntegrationTest {
         HotelBookingHistoryAssertion.assertThat(actual).hasHotelRoomBookingHistoryFor(hotelRoomId, tenantId, days);
     }
 
-    private String givenExistingHotelRoom() {
-        return hotelRoomRepository.save(createHotelRoom());
-    }
 
     private HotelRoom createHotelRoom() {
         return hotelRoom()

@@ -1,5 +1,6 @@
 package com.jkolacz.rentalapplication.application.hotelroom;
 
+import com.jkolacz.rentalapplication.application.hotel.HotelRoomApplicationService;
 import com.jkolacz.rentalapplication.domain.booking.BookingRepository;
 import com.jkolacz.rentalapplication.domain.clock.Clock;
 import com.jkolacz.rentalapplication.domain.event.EventIdFactory;
@@ -14,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 class HotelRoomApplicationServiceFactory {
     @Bean
     HotelRoomApplicationService hotelRoomApplicationService(HotelRepository hotelRepository,
-            HotelRoomRepository hotelRoomRepository, BookingRepository bookingRepository, EventIdFactory eventIdFactory, Clock clock, EventChannel eventChannel) {
+                                                            HotelRoomRepository hotelRoomRepository, BookingRepository bookingRepository, EventIdFactory eventIdFactory, Clock clock, EventChannel eventChannel) {
         HotelRoomEventsPublisher hotelRoomEventsPublisher = new HotelRoomEventsPublisher(eventIdFactory, clock, eventChannel);
 
         return new HotelRoomApplicationService(hotelRepository, hotelRoomRepository, bookingRepository, hotelRoomEventsPublisher);

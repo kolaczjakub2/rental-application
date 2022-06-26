@@ -1,4 +1,4 @@
-package com.jkolacz.rentalapplication.application.hotelroom;
+package com.jkolacz.rentalapplication.application.hotel;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

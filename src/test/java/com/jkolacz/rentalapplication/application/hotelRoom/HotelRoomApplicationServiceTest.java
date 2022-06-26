@@ -1,6 +1,9 @@
 package com.jkolacz.rentalapplication.application.hotelroom;
 
 import com.google.common.collect.ImmutableMap;
+import com.jkolacz.rentalapplication.application.hotel.HotelRoomApplicationService;
+import com.jkolacz.rentalapplication.application.hotel.HotelRoomBookingDto;
+import com.jkolacz.rentalapplication.application.hotel.HotelRoomDto;
 import com.jkolacz.rentalapplication.domain.booking.Booking;
 import com.jkolacz.rentalapplication.domain.booking.BookingAssertion;
 import com.jkolacz.rentalapplication.domain.booking.BookingRepository;

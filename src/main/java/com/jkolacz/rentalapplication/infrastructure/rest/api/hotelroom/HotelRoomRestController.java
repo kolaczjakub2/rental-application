@@ -1,8 +1,8 @@
 package com.jkolacz.rentalapplication.infrastructure.rest.api.hotelroom;
 
-import com.jkolacz.rentalapplication.application.hotelroom.HotelRoomBookingDto;
-import com.jkolacz.rentalapplication.application.hotelroom.HotelRoomApplicationService;
-import com.jkolacz.rentalapplication.application.hotelroom.HotelRoomDto;
+import com.jkolacz.rentalapplication.application.hotel.HotelRoomBookingDto;
+import com.jkolacz.rentalapplication.application.hotel.HotelRoomApplicationService;
+import com.jkolacz.rentalapplication.application.hotel.HotelRoomDto;
 import com.jkolacz.rentalapplication.query.hotelroom.HotelRoomReadModel;
 import com.jkolacz.rentalapplication.query.hotelroom.QueryHotelRoomRepository;
 import org.springframework.http.ResponseEntity;

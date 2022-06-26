@@ -1,6 +1,7 @@
 package com.jkolacz.rentalapplication.domain.hotel;
 
 import com.jkolacz.rentalapplication.domain.address.Address;
+import com.jkolacz.rentalapplication.domain.booking.Booking;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
@@ -10,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -64,6 +66,10 @@ public class Hotel {
 
     private HotelRoom getHotelRoom(int number) {
         return hotelRooms.stream().filter(hotelRoom -> hotelRoom.hasNumberEqualTo(number)).findFirst().get();
+    }
+
+    public Booking bookRoom(int number, String tenantId, List<LocalDate> days, HotelEventsPublisher hotelEventsPublisher) {
+        return null;
     }
 
     public static class Builder {

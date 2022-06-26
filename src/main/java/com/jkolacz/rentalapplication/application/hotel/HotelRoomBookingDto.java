@@ -1,4 +1,4 @@
-package com.jkolacz.rentalapplication.application.hotelroom;
+package com.jkolacz.rentalapplication.application.hotel;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,8 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 public class HotelRoomBookingDto {
-    private final String hotelRoomId;
+    private final String hotelId;
+    private final int number;
     private final String tenantId;
     private final List<LocalDate> days;
 }

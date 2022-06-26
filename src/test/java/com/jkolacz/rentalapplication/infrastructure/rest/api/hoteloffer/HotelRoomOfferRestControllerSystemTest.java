@@ -1,7 +1,7 @@
 package com.jkolacz.rentalapplication.infrastructure.rest.api.hoteloffer;
 
 import com.google.common.collect.ImmutableMap;
-import com.jkolacz.rentalapplication.application.hotelroom.HotelRoomDto;
+import com.jkolacz.rentalapplication.application.hotel.HotelRoomDto;
 import com.jkolacz.rentalapplication.application.hotelroomoffer.HotelRoomOfferDto;
 import com.jkolacz.rentalapplication.infrastructure.json.JsonFactory;
 import org.junit.jupiter.api.Tag;

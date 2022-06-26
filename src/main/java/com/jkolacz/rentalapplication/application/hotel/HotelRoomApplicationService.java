@@ -1,4 +1,4 @@
-package com.jkolacz.rentalapplication.application.hotelroom;
+package com.jkolacz.rentalapplication.application.hotel;
 
 import com.jkolacz.rentalapplication.domain.booking.Booking;
 import com.jkolacz.rentalapplication.domain.booking.BookingRepository;
@@ -10,14 +10,12 @@ import com.jkolacz.rentalapplication.domain.hotel.HotelRoomRepository;
 
 public class HotelRoomApplicationService {
     private final HotelRepository hotelRepository;
-    private final HotelRoomRepository hotelRoomRepository;
     private final BookingRepository bookingRepository;
-    private final HotelRoomEventsPublisher hotelRoomEventsPublisher;
+    private final HotelEventsPublisher hotelEventsPublisher;
 
     HotelRoomApplicationService(
             HotelRepository hotelRepository, HotelRoomRepository hotelRoomRepository, BookingRepository bookingRepository, HotelRoomEventsPublisher hotelRoomEventsPublisher) {
         this.hotelRepository = hotelRepository;
-        this.hotelRoomRepository = hotelRoomRepository;
         this.bookingRepository = bookingRepository;
         this.hotelRoomEventsPublisher = hotelRoomEventsPublisher;
     }
@@ -33,9 +31,10 @@ public class HotelRoomApplicationService {
     }
 
     public String book(HotelRoomBookingDto hotelRoomBookingDto) {
-        HotelRoom hotelRoom = hotelRoomRepository.findById(hotelRoomBookingDto.getHotelRoomId());
+        Hotel hotel = hotelRepository.findById(hotelRoomBookingDto.getHotelId());
 
-        Booking booking = hotelRoom.book(hotelRoomBookingDto.getTenantId(), hotelRoomBookingDto.getDays(), hotelRoomEventsPublisher);
+        Booking booking = hotel.bookRoom(
+                hotelRoomBookingDto.getNumber(), hotelRoomBookingDto.getTenantId(), hotelRoomBookingDto.getDays(), hotelEventsPublisher);
 
         return bookingRepository.save(booking);
     }
