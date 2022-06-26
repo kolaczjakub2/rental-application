@@ -1,4 +1,4 @@
-package com.jkolacz.rentalapplication.domain.hotelroom;
+package com.jkolacz.rentalapplication.domain.hotel;
 
 public interface HotelRoomRepository {
     String save(HotelRoom hotelRoom);

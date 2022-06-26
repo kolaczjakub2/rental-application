@@ -3,7 +3,7 @@ package com.jkolacz.rentalapplication.infrastructure.eventchannel.spring;
 import com.jkolacz.rentalapplication.domain.apartment.ApartmentBooked;
 import com.jkolacz.rentalapplication.domain.booking.BookingAccepted;
 import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
-import com.jkolacz.rentalapplication.domain.hotelroom.HotelRoomBooked;
+import com.jkolacz.rentalapplication.domain.hotel.HotelRoomBooked;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 

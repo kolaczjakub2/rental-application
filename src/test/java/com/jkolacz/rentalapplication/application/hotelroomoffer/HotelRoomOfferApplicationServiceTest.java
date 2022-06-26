@@ -1,7 +1,7 @@
 package com.jkolacz.rentalapplication.application.hotelroomoffer;
 
-import com.jkolacz.rentalapplication.domain.hotelroom.HotelRoomNotFoundException;
-import com.jkolacz.rentalapplication.domain.hotelroom.HotelRoomRepository;
+import com.jkolacz.rentalapplication.domain.hotel.HotelRoomNotFoundException;
+import com.jkolacz.rentalapplication.domain.hotel.HotelRoomRepository;
 import com.jkolacz.rentalapplication.domain.hotelroomoffer.HotelRoomAvailabilityException;
 import com.jkolacz.rentalapplication.domain.hotelroomoffer.HotelRoomOffer;
 import com.jkolacz.rentalapplication.domain.hotelroomoffer.HotelRoomOfferAssertion;

@@ -1,8 +1,8 @@
 package com.jkolacz.rentalapplication.application.hotelbookinghistory;
 
+import com.jkolacz.rentalapplication.domain.hotel.HotelRoomBooked;
 import com.jkolacz.rentalapplication.domain.hotelbookinghistory.HotelBookingHistory;
 import com.jkolacz.rentalapplication.domain.hotelbookinghistory.HotelBookingHistoryRepository;
-import com.jkolacz.rentalapplication.domain.hotelroom.HotelRoomBooked;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 

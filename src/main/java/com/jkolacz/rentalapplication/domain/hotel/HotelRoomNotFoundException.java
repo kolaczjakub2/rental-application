@@ -1,4 +1,4 @@
-package com.jkolacz.rentalapplication.domain.hotelroom;
+package com.jkolacz.rentalapplication.domain.hotel;
 
 public class HotelRoomNotFoundException extends RuntimeException {
     public HotelRoomNotFoundException(String hotelRoomId) {

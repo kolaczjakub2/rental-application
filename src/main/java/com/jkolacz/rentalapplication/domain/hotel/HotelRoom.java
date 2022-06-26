@@ -1,4 +1,4 @@
-package com.jkolacz.rentalapplication.domain.hotelroom;
+package com.jkolacz.rentalapplication.domain.hotel;
 
 import com.jkolacz.rentalapplication.domain.booking.Booking;
 import com.jkolacz.rentalapplication.domain.space.Space;

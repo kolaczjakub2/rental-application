@@ -1,7 +1,7 @@
 package com.jkolacz.rentalapplication.infrastructure.persistence.jpa.hotelroom;
 
-import com.jkolacz.rentalapplication.domain.hotelroom.HotelRoom;
-import com.jkolacz.rentalapplication.domain.hotelroom.HotelRoomRepository;
+import com.jkolacz.rentalapplication.domain.hotel.HotelRoom;
+import com.jkolacz.rentalapplication.domain.hotel.HotelRoomRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
