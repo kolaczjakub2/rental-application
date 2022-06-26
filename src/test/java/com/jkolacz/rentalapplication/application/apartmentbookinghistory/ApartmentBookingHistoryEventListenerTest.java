@@ -3,7 +3,6 @@ package com.jkolacz.rentalapplication.application.apartmentbookinghistory;
 import com.jkolacz.rentalapplication.domain.apartment.ApartmentBooked;
 import com.jkolacz.rentalapplication.domain.apartment.ApartmentBookedTestFactory;
 import com.jkolacz.rentalapplication.domain.apartment.Period;
-import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBooking;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingAssertion;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingHistory;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingHistoryAssertion;
@@ -77,9 +76,7 @@ class ApartmentBookingHistoryEventListenerTest {
 
     private ApartmentBookingHistory getApartmentBookingHistory() {
         ApartmentBookingHistory apartmentBookingHistory = new ApartmentBookingHistory(APARTMENT_ID);
-        ApartmentBooking apartmentBooking = ApartmentBooking.start(
-                LocalDateTime.now(), OWNER_ID, "9807", new BookingPeriod(LocalDate.now(), LocalDate.now().plusDays(1)));
-        apartmentBookingHistory.add(apartmentBooking);
+        apartmentBookingHistory.addBookingStart( LocalDateTime.now(), OWNER_ID, "9807", new BookingPeriod(LocalDate.now(), LocalDate.now().plusDays(1)));
         return apartmentBookingHistory;
     }
 

@@ -1,6 +1,5 @@
 package com.jkolacz.rentalapplication.infrastructure.persistence.jpa.apartmentbookinghistory;
 
-import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBooking;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingAssertion;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingHistory;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingHistoryAssertion;
@@ -58,7 +57,7 @@ class JpaApartmentBookingHistoryRepositoryIntegrationTest {
         String ownerId = randomId();
         String tenantId = randomId();
         ApartmentBookingHistory apartmentBookingHistory = new ApartmentBookingHistory(apartmentId);
-        apartmentBookingHistory.add(ApartmentBooking.start(eventCreationDate, ownerId, tenantId, new BookingPeriod(start, end)));
+        apartmentBookingHistory.addBookingStart(eventCreationDate, ownerId, tenantId, new BookingPeriod(start, end));
         repository.save(apartmentBookingHistory);
 
         ApartmentBookingHistory actual = repository.findFor(apartmentId);

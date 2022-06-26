@@ -20,7 +20,7 @@ class ApartmentBookingHistoryTest {
     @Test
     void shouldAddFirstApartmentBookingIntoHistory() {
         ApartmentBookingHistory actual = new ApartmentBookingHistory(APARTMENT_ID);
-        actual.add(ApartmentBooking.start(BOOKING_DATE_TIME_1, OWNER_ID, TENANT_ID_1, new BookingPeriod(START_1, END_1)));
+        actual.addBookingStart(BOOKING_DATE_TIME_1, OWNER_ID, TENANT_ID_1, new BookingPeriod(START_1, END_1));
 
         ApartmentBookingHistoryAssertion.assertThat(actual)
                 .hasApartmentIdEqualsTo(APARTMENT_ID)
@@ -39,8 +39,9 @@ class ApartmentBookingHistoryTest {
     void shouldAddNextApartmentBookingIntoHistory() {
         ApartmentBookingHistory actual = new ApartmentBookingHistory(APARTMENT_ID);
 
-        actual.add(ApartmentBooking.start(BOOKING_DATE_TIME_1, OWNER_ID, TENANT_ID_1, new BookingPeriod(START_1, END_1)));
-        actual.add(ApartmentBooking.start(BOOKING_DATE_TIME_2, OWNER_ID, TENANT_ID_2, new BookingPeriod(START_2, END_2)));
+
+        actual.addBookingStart(BOOKING_DATE_TIME_1, OWNER_ID, TENANT_ID_1, new BookingPeriod(START_1, END_1));
+        actual.addBookingStart(BOOKING_DATE_TIME_2, OWNER_ID, TENANT_ID_2, new BookingPeriod(START_2, END_2));
 
         ApartmentBookingHistoryAssertion.assertThat(actual)
                 .hasApartmentIdEqualsTo(APARTMENT_ID)

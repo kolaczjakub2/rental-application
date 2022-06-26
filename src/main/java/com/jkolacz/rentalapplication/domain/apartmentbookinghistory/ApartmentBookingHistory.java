@@ -28,7 +28,7 @@ public class ApartmentBookingHistory {
         this.apartmentId = apartmentId;
     }
 
-    public void add(ApartmentBooking apartmentBooking) {
+    private void add(ApartmentBooking apartmentBooking) {
         bookings.add(apartmentBooking);
     }
 
