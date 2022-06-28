@@ -2,6 +2,7 @@ package com.jkolacz.rentalapplication.infrastructure.persistence.jpa.hotelroomof
 
 import com.jkolacz.rentalapplication.domain.hotelroomoffer.HotelRoomOffer;
 import com.jkolacz.rentalapplication.domain.hotelroomoffer.HotelRoomOfferAssertion;
+import com.jkolacz.rentalapplication.domain.hotelroomoffer.HotelRoomOfferTestFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -11,8 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
-
-import static com.jkolacz.rentalapplication.domain.hotelroomoffer.HotelRoomOffer.Builder.hotelRoomOffer;
 
 @SpringBootTest
 @Tag("DomainRepositoryIntegrationTest")
@@ -34,11 +33,7 @@ class JpaHotelRoomOfferRepositoryIntegrationTest {
 
     @Test
     void shouldSaveHotelRoomOffer() {
-        HotelRoomOffer hotelRoomOffer = hotelRoomOffer()
-                .withHotelRoomId(HOTEL_ROOM_ID)
-                .withPrice(PRICE)
-                .withAvailability(START, END)
-                .build();
+        HotelRoomOffer hotelRoomOffer = HotelRoomOfferTestFactory.create(HOTEL_ROOM_ID, PRICE, START, END);
 
         hotelRoomOfferId = jpaHotelRoomOfferRepository.save(hotelRoomOffer);
 

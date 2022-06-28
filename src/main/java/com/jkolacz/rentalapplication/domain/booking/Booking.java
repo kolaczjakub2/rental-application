@@ -12,6 +12,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+import static com.jkolacz.rentalapplication.domain.booking.BookingStatus.ACCEPTED;
+import static com.jkolacz.rentalapplication.domain.booking.BookingStatus.REJECTED;
+
 @Entity
 @SuppressWarnings("PMD.UnusedPrivateField")
 public class Booking {
@@ -47,17 +50,31 @@ public class Booking {
         return new Booking(RentalType.HOTEL_ROOM, rentalPlaceId, tenantId, days);
     }
 
-    public void reject() {
-        bookingStatus = BookingStatus.REJECTED;
+    public void reject(BookingEventsPublisher bookingEventsPublisher) {
+        bookingStatus = bookingStatus.moveTo(REJECTED);
+
+        bookingEventsPublisher.bookingRejected(rentalType, rentalPlaceId, tenantId, days);
     }
 
     public void accept(BookingEventsPublisher bookingEventsPublisher) {
-        bookingStatus = BookingStatus.ACCEPTED;
+        bookingStatus = bookingStatus.moveTo(ACCEPTED);
 
         bookingEventsPublisher.bookingAccepted(rentalType, rentalPlaceId, tenantId, days);
     }
 
     public String id() {
         return id.toString();
+    }
+
+    boolean hasCollisionWith(Booking booking) {
+        return bookingStatus.equals(ACCEPTED) && hasDaysCollisionWith(booking);
+    }
+
+    private boolean hasDaysCollisionWith(Booking booking) {
+        return days.stream().anyMatch(day -> booking.days.contains(day));
+    }
+
+    public RentalPlaceIdentifier rentalPlaceIdentifier() {
+        return new RentalPlaceIdentifier(rentalType, rentalPlaceId);
     }
 }

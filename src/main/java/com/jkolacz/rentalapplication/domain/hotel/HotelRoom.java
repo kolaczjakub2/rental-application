@@ -3,6 +3,8 @@ package com.jkolacz.rentalapplication.domain.hotel;
 import com.jkolacz.rentalapplication.domain.booking.Booking;
 import com.jkolacz.rentalapplication.domain.space.Space;
 import com.jkolacz.rentalapplication.domain.space.SpacesFactory;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -13,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -69,10 +72,31 @@ public class HotelRoom {
         return this.number == number;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        HotelRoom hotelRoom = (HotelRoom) o;
+
+        return new EqualsBuilder().append(number, hotelRoom.number).append(hotelId, hotelRoom.hotelId).isEquals();
+    }
+
+    @Override
+    @SuppressWarnings("checkstyle:MagicNumber")
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37).append(hotelId).append(number).toHashCode();
+    }
+
     public static class Builder {
         private UUID hotelId;
         private int number;
-        private Map<String, Double> spacesDefinition;
+        private Map<String, Double> spacesDefinition = new HashMap<>();
         private String description;
 
         private Builder() {}

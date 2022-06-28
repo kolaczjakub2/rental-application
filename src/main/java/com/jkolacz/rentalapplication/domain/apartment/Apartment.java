@@ -5,6 +5,8 @@ import com.jkolacz.rentalapplication.domain.booking.Booking;
 import com.jkolacz.rentalapplication.domain.period.Period;
 import com.jkolacz.rentalapplication.domain.space.Space;
 import com.jkolacz.rentalapplication.domain.space.SpacesFactory;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -17,6 +19,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -72,6 +75,35 @@ public class Apartment {
         return id.toString();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Apartment apartment = (Apartment) o;
+
+        return new EqualsBuilder()
+                .append(ownerId, apartment.ownerId)
+                .append(address, apartment.address)
+                .append(apartmentNumber, apartment.apartmentNumber)
+                .isEquals();
+    }
+
+    @Override
+    @SuppressWarnings("checkstyle:MagicNumber")
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(ownerId)
+                .append(address)
+                .append(apartmentNumber)
+                .toHashCode();
+    }
+
     public static class Builder {
         private String ownerId;
         private String street;
@@ -81,7 +113,7 @@ public class Apartment {
         private String city;
         private String country;
         private String description;
-        private Map<String, Double> spacesDefinition;
+        private Map<String, Double> spacesDefinition = new HashMap<>();
 
         private Builder() {}
 

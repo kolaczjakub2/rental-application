@@ -2,6 +2,7 @@ package com.jkolacz.rentalapplication.infrastructure.eventchannel.spring;
 
 import com.jkolacz.rentalapplication.domain.apartment.ApartmentBooked;
 import com.jkolacz.rentalapplication.domain.booking.BookingAccepted;
+import com.jkolacz.rentalapplication.domain.booking.BookingRejected;
 import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
 import com.jkolacz.rentalapplication.domain.hotel.HotelRoomBooked;
 import org.springframework.context.ApplicationEventPublisher;
@@ -28,5 +29,10 @@ class SpringEventChannel implements EventChannel {
     @Override
     public void publish(BookingAccepted bookingAccepted) {
         publisher.publishEvent(bookingAccepted);
+    }
+
+    @Override
+    public void publish(BookingRejected bookingRejected) {
+        publisher.publishEvent(bookingRejected);
     }
 }

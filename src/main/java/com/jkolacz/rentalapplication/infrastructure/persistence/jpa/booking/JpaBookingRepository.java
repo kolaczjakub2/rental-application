@@ -2,8 +2,10 @@ package com.jkolacz.rentalapplication.infrastructure.persistence.jpa.booking;
 
 import com.jkolacz.rentalapplication.domain.booking.Booking;
 import com.jkolacz.rentalapplication.domain.booking.BookingRepository;
+import com.jkolacz.rentalapplication.domain.booking.RentalPlaceIdentifier;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.UUID;
 
 @Repository
@@ -22,5 +24,10 @@ class JpaBookingRepository implements BookingRepository {
     @Override
     public Booking findById(String bookingId) {
         return springJpaBookingRepository.findById(UUID.fromString(bookingId)).get();
+    }
+
+    @Override
+    public List<Booking> findAllBy(RentalPlaceIdentifier identifier) {
+        return springJpaBookingRepository.findAllByRentalTypeAndRentalPlaceId(identifier.getRentalType(), identifier.getRentalPlaceId());
     }
 }

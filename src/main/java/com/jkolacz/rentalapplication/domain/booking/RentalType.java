@@ -1,5 +1,5 @@
 package com.jkolacz.rentalapplication.domain.booking;
 
-enum RentalType {
+public enum RentalType {
     HOTEL_ROOM, APARTMENT
 }
