@@ -3,9 +3,9 @@ package com.jkolacz.rentalapplication.application.apartment;
 import com.jkolacz.rentalapplication.domain.apartment.Apartment;
 import com.jkolacz.rentalapplication.domain.apartment.ApartmentEventsPublisher;
 import com.jkolacz.rentalapplication.domain.apartment.ApartmentRepository;
-import com.jkolacz.rentalapplication.domain.apartment.Period;
 import com.jkolacz.rentalapplication.domain.booking.Booking;
 import com.jkolacz.rentalapplication.domain.booking.BookingRepository;
+import com.jkolacz.rentalapplication.domain.period.Period;
 
 import static com.jkolacz.rentalapplication.domain.apartment.Apartment.Builder.apartment;
 

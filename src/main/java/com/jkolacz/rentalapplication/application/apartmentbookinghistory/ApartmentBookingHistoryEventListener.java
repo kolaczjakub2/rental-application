@@ -3,7 +3,7 @@ package com.jkolacz.rentalapplication.application.apartmentbookinghistory;
 import com.jkolacz.rentalapplication.domain.apartment.ApartmentBooked;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingHistory;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingHistoryRepository;
-import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.BookingPeriod;
+import com.jkolacz.rentalapplication.domain.period.Period;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
@@ -18,9 +18,10 @@ public class ApartmentBookingHistoryEventListener {
     @EventListener
     public void consume(ApartmentBooked apartmentBooked) {
         ApartmentBookingHistory apartmentBookingHistory = getApartmentBookingHistoryFor(apartmentBooked.getApartmentId());
-        BookingPeriod bookingPeriod = new BookingPeriod(apartmentBooked.getPeriodStart(), apartmentBooked.getPeriodEnd());
+        Period period = new Period(apartmentBooked.getPeriodStart(), apartmentBooked.getPeriodEnd());
 
-        apartmentBookingHistory.addBookingStart(apartmentBooked.getEventCreationDateTime(), apartmentBooked.getOwnerId(), apartmentBooked.getTenantId(), bookingPeriod);
+        apartmentBookingHistory.addBookingStart(
+                apartmentBooked.getEventCreationDateTime(), apartmentBooked.getOwnerId(), apartmentBooked.getTenantId(), period);
 
         apartmentBookingHistoryRepository.save(apartmentBookingHistory);
     }

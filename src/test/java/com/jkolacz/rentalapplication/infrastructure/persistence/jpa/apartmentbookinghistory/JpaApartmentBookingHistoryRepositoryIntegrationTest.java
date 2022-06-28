@@ -4,7 +4,7 @@ import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBoo
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingHistory;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingHistoryAssertion;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingHistoryRepository;
-import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.BookingPeriod;
+import com.jkolacz.rentalapplication.domain.period.Period;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -57,7 +57,7 @@ class JpaApartmentBookingHistoryRepositoryIntegrationTest {
         String ownerId = randomId();
         String tenantId = randomId();
         ApartmentBookingHistory apartmentBookingHistory = new ApartmentBookingHistory(apartmentId);
-        apartmentBookingHistory.addBookingStart(eventCreationDate, ownerId, tenantId, new BookingPeriod(start, end));
+        apartmentBookingHistory.addBookingStart(eventCreationDate, ownerId, tenantId, new Period(start, end));
         repository.save(apartmentBookingHistory);
 
         ApartmentBookingHistory actual = repository.findFor(apartmentId);
@@ -68,7 +68,7 @@ class JpaApartmentBookingHistoryRepositoryIntegrationTest {
                     ApartmentBookingAssertion.assertThat(actualBooking)
                             .hasOwnerIdEqualTo(ownerId)
                             .hasTenantIdEqualTo(tenantId)
-                            .hasBookingPeriodThatHas(start, end);
+                            .hasPeriodThatHas(start, end);
                 });
     }
 

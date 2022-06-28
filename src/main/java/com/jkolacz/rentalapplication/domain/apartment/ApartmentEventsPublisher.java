@@ -3,6 +3,7 @@ package com.jkolacz.rentalapplication.domain.apartment;
 import com.jkolacz.rentalapplication.domain.clock.Clock;
 import com.jkolacz.rentalapplication.domain.event.EventIdFactory;
 import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
+import com.jkolacz.rentalapplication.domain.period.Period;
 
 public class ApartmentEventsPublisher {
     private final EventIdFactory eventIdFactory;

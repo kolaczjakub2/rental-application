@@ -1,4 +1,4 @@
-package com.jkolacz.rentalapplication.domain.apartment;
+package com.jkolacz.rentalapplication.domain.period;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

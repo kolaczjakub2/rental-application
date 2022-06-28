@@ -16,10 +16,9 @@ import java.util.UUID;
 public class HotelRoomReadModel {
     @Id
     @GeneratedValue
-    @Column(name = "ID")
     private UUID id;
     @Column(name = "HOTEL_ID")
-    private String hotelId;
+    private UUID hotelId;
     private int number;
 
     @ElementCollection
@@ -35,7 +34,7 @@ public class HotelRoomReadModel {
     }
 
     public String getHotelId() {
-        return hotelId;
+        return hotelId.toString();
     }
 
     public int getNumber() {

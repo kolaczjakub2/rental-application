@@ -7,6 +7,6 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-interface SpringJpaQueryHotelRoomRepository extends CrudRepository<HotelRoomReadModel, UUID> {
+interface SpringJpaQueryHotelRoomRepository extends CrudRepository<HotelRoomReadModel, String> {
     List<HotelRoomReadModel> findAllByHotelId(UUID hotelId);
 }

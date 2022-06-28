@@ -3,6 +3,7 @@ package com.jkolacz.rentalapplication.domain.apartment;
 import com.google.common.collect.ImmutableMap;
 import com.jkolacz.rentalapplication.domain.booking.Booking;
 import com.jkolacz.rentalapplication.domain.booking.BookingAssertion;
+import com.jkolacz.rentalapplication.domain.period.Period;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
 import org.mockito.Mockito;

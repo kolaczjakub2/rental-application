@@ -16,7 +16,7 @@ import static org.mockito.Mockito.mock;
 
 class HotelRoomEventsPublisherTest {
     private final EventChannel eventChannel = mock(EventChannel.class);
-    private final HotelRoomEventsPublisher publisher = new HotelRoomEventsPublisher(new FakeEventIdFactory(), new FakeClock(), eventChannel);
+    private final HotelEventsPublisher publisher = new HotelEventsPublisher(new FakeEventIdFactory(), new FakeClock(), eventChannel);
 
     @Test
     void shouldPublishHotelRoomBookedEvent() {

@@ -2,12 +2,11 @@ package com.jkolacz.rentalapplication.application.apartmentbookinghistory;
 
 import com.jkolacz.rentalapplication.domain.apartment.ApartmentBooked;
 import com.jkolacz.rentalapplication.domain.apartment.ApartmentBookedTestFactory;
-import com.jkolacz.rentalapplication.domain.apartment.Period;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingAssertion;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingHistory;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingHistoryAssertion;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingHistoryRepository;
-import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.BookingPeriod;
+import com.jkolacz.rentalapplication.domain.period.Period;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.BDDMockito;
@@ -64,7 +63,7 @@ class ApartmentBookingHistoryEventListenerTest {
                         ApartmentBookingAssertion.assertThat(actualBooking)
                                 .hasOwnerIdEqualTo(OWNER_ID)
                                 .hasTenantIdEqualTo(TENANT_ID)
-                                .hasBookingPeriodThatHas(START, END);
+                                .hasPeriodThatHas(START, END);
                 });
     }
 
@@ -76,7 +75,8 @@ class ApartmentBookingHistoryEventListenerTest {
 
     private ApartmentBookingHistory getApartmentBookingHistory() {
         ApartmentBookingHistory apartmentBookingHistory = new ApartmentBookingHistory(APARTMENT_ID);
-        apartmentBookingHistory.addBookingStart( LocalDateTime.now(), OWNER_ID, "9807", new BookingPeriod(LocalDate.now(), LocalDate.now().plusDays(1)));
+        apartmentBookingHistory.addBookingStart(
+                LocalDateTime.now(), OWNER_ID, "9807", new Period(LocalDate.now(), LocalDate.now().plusDays(1)));
         return apartmentBookingHistory;
     }
 

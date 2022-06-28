@@ -5,7 +5,7 @@ import com.jkolacz.rentalapplication.domain.apartment.Apartment;
 import com.jkolacz.rentalapplication.domain.apartment.ApartmentRepository;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingHistory;
 import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.ApartmentBookingHistoryRepository;
-import com.jkolacz.rentalapplication.domain.apartmentbookinghistory.BookingPeriod;
+import com.jkolacz.rentalapplication.domain.period.Period;
 import com.jkolacz.rentalapplication.infrastructure.persistence.jpa.apartment.SpringJpaApartmentTestRepository;
 import com.jkolacz.rentalapplication.infrastructure.persistence.jpa.apartmentbookinghistory.SpringJpaApartmentBookingHistoryTestRepository;
 import org.assertj.core.api.Assertions;
@@ -76,7 +76,7 @@ class QueryApartmentRepositoryIntegrationTest {
                 .build();
         apartmentId1 = apartmentRepository.save(apartment1);
         ApartmentBookingHistory apartmentBookingHistory = new ApartmentBookingHistory(apartmentId1);
-        apartmentBookingHistory.addBookingStart(BOOKING_DATE_TIME_1, OWNER_ID_1, TENANT_ID_1, new BookingPeriod(BOOKING_START_1, BOOKING_END_1));
+        apartmentBookingHistory.addBookingStart(BOOKING_DATE_TIME_1, OWNER_ID_1, TENANT_ID_1, new Period(BOOKING_START_1, BOOKING_END_1));
         apartmentBookingHistoryRepository.save(apartmentBookingHistory);
 
         Apartment apartment2 = apartment()
@@ -114,7 +114,7 @@ class QueryApartmentRepositoryIntegrationTest {
                             .hasOwnerIdEqualsTo(OWNER_ID_1)
                             .hasDescriptionEqualsTo(DESCRIPTION_1)
                             .hasAddressEqualsTo(STREET_1, POSTAL_CODE_1, HOUSE_NUMBER_1, APARTMENT_NUMBER_1, CITY_1, COUNTRY_1)
-                            .hasRoomsEqualsTo(SPACES_DEFINITION_1);
+                            .hasSpacesEqualsTo(SPACES_DEFINITION_1);
                 })
                 .anySatisfy(apartmentReadModel -> {
                     ApartmentReadModelAssertion.assertThat(apartmentReadModel)
@@ -122,7 +122,7 @@ class QueryApartmentRepositoryIntegrationTest {
                             .hasOwnerIdEqualsTo(OWNER_ID_2)
                             .hasDescriptionEqualsTo(DESCRIPTION_2)
                             .hasAddressEqualsTo(STREET_2, POSTAL_CODE_2, HOUSE_NUMBER_2, APARTMENT_NUMBER_2, CITY_2, COUNTRY_2)
-                            .hasRoomsEqualsTo(SPACES_DEFINITION_2);
+                            .hasSpacesEqualsTo(SPACES_DEFINITION_2);
                 });
     }
 
@@ -144,7 +144,7 @@ class QueryApartmentRepositoryIntegrationTest {
                 .hasOwnerIdEqualsTo(OWNER_ID_2)
                 .hasDescriptionEqualsTo(DESCRIPTION_2)
                 .hasAddressEqualsTo(STREET_2, POSTAL_CODE_2, HOUSE_NUMBER_2, APARTMENT_NUMBER_2, CITY_2, COUNTRY_2)
-                .hasRoomsEqualsTo(SPACES_DEFINITION_2);
+                .hasSpacesEqualsTo(SPACES_DEFINITION_2);
         Assertions.assertThat(actual.getBookingHistory()).isNull();
     }
 
@@ -158,7 +158,7 @@ class QueryApartmentRepositoryIntegrationTest {
                 .hasOwnerIdEqualsTo(OWNER_ID_1)
                 .hasDescriptionEqualsTo(DESCRIPTION_1)
                 .hasAddressEqualsTo(STREET_1, POSTAL_CODE_1, HOUSE_NUMBER_1, APARTMENT_NUMBER_1, CITY_1, COUNTRY_1)
-                .hasRoomsEqualsTo(SPACES_DEFINITION_1);
+                .hasSpacesEqualsTo(SPACES_DEFINITION_1);
         ApartmentBookingHistoryReadModelAssertion.assertThat(actual.getBookingHistory())
                 .hasApartmentIdEqualsTo(apartmentId1)
                 .hasOneApartmentBooking()

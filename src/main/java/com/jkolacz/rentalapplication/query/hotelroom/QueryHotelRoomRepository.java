@@ -12,7 +12,7 @@ public class QueryHotelRoomRepository {
         this.repository = repository;
     }
 
-    public Iterable<HotelRoomReadModel> findAll(UUID hotelId) {
-        return repository.findAllByHotelId(hotelId);
+    public Iterable<HotelRoomReadModel> findAll(String hotelId) {
+        return repository.findAllByHotelId(UUID.fromString(hotelId));
     }
 }

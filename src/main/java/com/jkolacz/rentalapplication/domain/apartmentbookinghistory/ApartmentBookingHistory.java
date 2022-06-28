@@ -1,5 +1,7 @@
 package com.jkolacz.rentalapplication.domain.apartmentbookinghistory;
 
+import com.jkolacz.rentalapplication.domain.period.Period;
+
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -21,18 +23,17 @@ public class ApartmentBookingHistory {
     @CollectionTable(name = "APARTMENT_BOOKING", joinColumns = @JoinColumn(name = "APARTMENT_ID"))
     private List<ApartmentBooking> bookings = new ArrayList<>();
 
-    private ApartmentBookingHistory() {
-    }
+    private ApartmentBookingHistory() {}
 
     public ApartmentBookingHistory(String apartmentId) {
         this.apartmentId = apartmentId;
     }
 
-    private void add(ApartmentBooking apartmentBooking) {
-        bookings.add(apartmentBooking);
+    public void addBookingStart(LocalDateTime bookingDateTime, String ownerId, String tenantId, Period period) {
+        add(ApartmentBooking.start(bookingDateTime, ownerId, tenantId, period));
     }
 
-    public void addBookingStart(LocalDateTime bookingDateTIme, String ownerId, String tenantId, BookingPeriod bookingPeriod) {
-        add(ApartmentBooking.start(bookingDateTIme, ownerId, tenantId, bookingPeriod));
+    private void add(ApartmentBooking apartmentBooking) {
+        bookings.add(apartmentBooking);
     }
 }

@@ -23,7 +23,6 @@ import java.util.UUID;
 public class HotelRoom {
     @Id
     @GeneratedValue
-    @Column(name = "ID")
     private UUID id;
     @Column(name = "HOTEL_ID")
     private UUID hotelId;
@@ -35,8 +34,7 @@ public class HotelRoom {
 
     private String description;
 
-    private HotelRoom() {
-    }
+    private HotelRoom() {}
 
     private HotelRoom(UUID hotelId, int number, List<Space> spaces, String description) {
         this.hotelId = hotelId;
@@ -45,13 +43,21 @@ public class HotelRoom {
         this.description = description;
     }
 
-    public Booking book(String tenantId, List<LocalDate> days, HotelRoomEventsPublisher hotelRoomEventsPublisher) {
-        hotelRoomEventsPublisher.publishHotelRoomBooked(id(), hotelId.toString(), tenantId, days);
+    Booking book(String tenantId, List<LocalDate> days, HotelEventsPublisher hotelEventsPublisher) {
+        hotelEventsPublisher.publishHotelRoomBooked(id(), hotelId(), tenantId, days);
 
         return Booking.hotelRoom(id(), tenantId, days);
     }
 
+    private String hotelId() {
+        return getNullable(hotelId);
+    }
+
     public String id() {
+        return getNullable(id);
+    }
+
+    private String getNullable(UUID id) {
         if (id == null) {
             return null;
         }
@@ -69,20 +75,19 @@ public class HotelRoom {
         private Map<String, Double> spacesDefinition;
         private String description;
 
-        private Builder() {
-        }
+        private Builder() {}
 
         public static Builder hotelRoom() {
             return new Builder();
         }
 
-        public Builder withHotelId(String hotelId) {
-            return withHotelId(UUID.fromString(hotelId));
-        }
-
-        public Builder withHotelId(UUID hotelId) {
+        Builder withHotelId(UUID hotelId) {
             this.hotelId = hotelId;
             return this;
+        }
+
+        public Builder withHotelId(String hotelId) {
+            return withHotelId(UUID.fromString(hotelId));
         }
 
         public Builder withNumber(int number) {
@@ -107,7 +112,5 @@ public class HotelRoom {
         private List<Space> spaces() {
             return SpacesFactory.create(spacesDefinition);
         }
-
-
     }
 }

@@ -4,6 +4,7 @@ import com.jkolacz.rentalapplication.domain.address.Address;
 import com.jkolacz.rentalapplication.domain.booking.Booking;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,6 +26,7 @@ import static com.jkolacz.rentalapplication.domain.hotel.HotelRoom.Builder.hotel
 public class Hotel {
     @Id
     @GeneratedValue
+    @Column(name = "ID")
     private UUID id;
 
     private String name;
@@ -36,8 +38,7 @@ public class Hotel {
     @JoinColumn(name = "HOTEL_ID", referencedColumnName = "ID")
     private List<HotelRoom> hotelRooms = new ArrayList<>();
 
-    private Hotel() {
-    }
+    private Hotel() {}
 
     private Hotel(String name, Address address) {
         this.name = name;
@@ -57,19 +58,25 @@ public class Hotel {
                 .build();
 
         hotelRooms.add(hotelRoom);
-
     }
 
     public String getIdOfRoom(int number) {
         return getHotelRoom(number).id();
     }
 
-    private HotelRoom getHotelRoom(int number) {
-        return hotelRooms.stream().filter(hotelRoom -> hotelRoom.hasNumberEqualTo(number)).findFirst().get();
+    public Booking bookRoom(int number, String tenantId, List<LocalDate> days, HotelEventsPublisher hotelEventsPublisher) {
+        return getHotelRoom(number).book(tenantId, days, hotelEventsPublisher);
     }
 
-    public Booking bookRoom(int number, String tenantId, List<LocalDate> days, HotelEventsPublisher hotelEventsPublisher) {
-        return null;
+    private HotelRoom getHotelRoom(int number) {
+        return hotelRooms.stream()
+                .filter(hotelRoom -> hotelRoom.hasNumberEqualTo(number))
+                .findFirst()
+                .get();
+    }
+
+    public boolean hasRoomWithNumber(int number) {
+        return hotelRooms.stream().anyMatch(hotelRoom -> hotelRoom.hasNumberEqualTo(number));
     }
 
     public static class Builder {
@@ -80,9 +87,8 @@ public class Hotel {
         private String city;
         private String country;
 
-        private Builder() {
-        }
-
+        private Builder() {}
+        
         public static Builder hotel() {
             return new Builder();
         }

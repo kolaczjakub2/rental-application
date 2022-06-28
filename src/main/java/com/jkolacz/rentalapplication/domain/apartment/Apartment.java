@@ -2,6 +2,7 @@ package com.jkolacz.rentalapplication.domain.apartment;
 
 import com.jkolacz.rentalapplication.domain.address.Address;
 import com.jkolacz.rentalapplication.domain.booking.Booking;
+import com.jkolacz.rentalapplication.domain.period.Period;
 import com.jkolacz.rentalapplication.domain.space.Space;
 import com.jkolacz.rentalapplication.domain.space.SpacesFactory;
 

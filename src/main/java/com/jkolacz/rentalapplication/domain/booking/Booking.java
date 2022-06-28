@@ -1,6 +1,6 @@
 package com.jkolacz.rentalapplication.domain.booking;
 
-import com.jkolacz.rentalapplication.domain.apartment.Period;
+import com.jkolacz.rentalapplication.domain.period.Period;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;

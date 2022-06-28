@@ -24,18 +24,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Arrays.asList;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @Tag("SystemTest")
 class HotelRoomRestControllerSystemTest {
-    private String hotelId;
     private static final int ROOM_NUMBER_1 = 42;
     private static final ImmutableMap<String, Double> SPACES_DEFINITION_1 = ImmutableMap.of("Room1", 30.0);
     private static final String DESCRIPTION_1 = "This is very nice place";
@@ -45,6 +43,8 @@ class HotelRoomRestControllerSystemTest {
 
     private final JsonFactory jsonFactory = new JsonFactory();
     private final List<String> bookingIds = new ArrayList<>();
+    private String hotelId;
+
     @Autowired private MockMvc mockMvc;
     @Autowired private SpringJpaHotelTestRepository hotelRepository;
     @Autowired private SpringJpaHotelBookingHistoryTestRepository hotelBookingHistoryRepository;
@@ -70,7 +70,6 @@ class HotelRoomRestControllerSystemTest {
         }
     }
 
-
     @Test
     void shouldReturnAllHotelRooms() throws Exception {
         save(givenHotelRoom1());
@@ -85,11 +84,17 @@ class HotelRoomRestControllerSystemTest {
     @Test
     void shouldBookHotelRoom() throws Exception {
         String url = save(givenHotelRoom1()).getResponse().getRedirectedUrl();
-        String hotelRoomId = url.replace("/hotelroom/", "");
-        HotelRoomBookingDto hotelRoomBookingDto = new HotelRoomBookingDto(hotelId, ROOM_NUMBER_1, hotelRoomId, "1357", asList(LocalDate.of(2020, 11, 12), LocalDate.of(2020, 12, 1)));
+        HotelRoomBookingDto hotelRoomBookingDto = new HotelRoomBookingDto(
+                hotelId, ROOM_NUMBER_1, "1357", asList(LocalDate.of(2020, 11, 12), LocalDate.of(2020, 12, 1)));
 
-        mockMvc.perform(put(url.replace("hotelroom/", "hotelroom/book/")).contentType(MediaType.APPLICATION_JSON).content(jsonFactory.create(hotelRoomBookingDto)))
-                .andExpect(status().isCreated());
+        MvcResult result = mockMvc.perform(put(url.replace("hotelroom/", "hotelroom/book/")).contentType(MediaType.APPLICATION_JSON).content(jsonFactory.create(hotelRoomBookingDto)))
+                .andExpect(status().isCreated())
+                .andReturn();
+        storeBookingId(result);
+    }
+
+    private void storeBookingId(MvcResult result) {
+        bookingIds.add(result.getResponse().getRedirectedUrl().replace("/booking/", ""));
     }
 
     private HotelRoomDto givenHotelRoom1() {
