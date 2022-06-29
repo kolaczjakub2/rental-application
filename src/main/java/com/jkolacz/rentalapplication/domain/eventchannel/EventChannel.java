@@ -1,5 +1,6 @@
 package com.jkolacz.rentalapplication.domain.eventchannel;
 
+import com.jkolacz.rentalapplication.domain.agreement.AgreementAccepted;
 import com.jkolacz.rentalapplication.domain.apartment.ApartmentBooked;
 import com.jkolacz.rentalapplication.domain.booking.BookingAccepted;
 import com.jkolacz.rentalapplication.domain.booking.BookingRejected;
@@ -13,4 +14,6 @@ public interface EventChannel {
     void publish(BookingAccepted bookingAccepted);
 
     void publish(BookingRejected bookingRejected);
+
+    void publish(AgreementAccepted agreementAccepted);
 }

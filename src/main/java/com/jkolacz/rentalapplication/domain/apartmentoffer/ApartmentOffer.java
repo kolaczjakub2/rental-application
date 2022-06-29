@@ -1,5 +1,11 @@
 package com.jkolacz.rentalapplication.domain.apartmentoffer;
 
+import com.jkolacz.rentalapplication.domain.money.Money;
+import com.jkolacz.rentalapplication.domain.offeravailability.OfferAvailability;
+import com.jkolacz.rentalapplication.domain.period.Period;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,11 +24,11 @@ public class ApartmentOffer {
     @Embedded
     private Money money;
     @Embedded
-    private ApartmentAvailability availability;
+    private OfferAvailability availability;
 
     private ApartmentOffer() {}
 
-    private ApartmentOffer(String apartmentId, Money money, ApartmentAvailability availability) {
+    private ApartmentOffer(String apartmentId, Money money, OfferAvailability availability) {
         this.apartmentId = apartmentId;
         this.money = money;
         this.availability = availability;
@@ -30,6 +36,35 @@ public class ApartmentOffer {
 
     public UUID id() {
         return id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        ApartmentOffer that = (ApartmentOffer) o;
+
+        return new EqualsBuilder().append(apartmentId, that.apartmentId).isEquals();
+    }
+
+    @Override
+    @SuppressWarnings("checkstyle:MagicNumber")
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37).append(apartmentId).toHashCode();
+    }
+
+    public Money getMoney() {
+        return money;
+    }
+
+    public boolean hasAvailabilityWithin(Period period) {
+        return availability.coversAllDaysWithin(period);
     }
 
     public static class Builder {
@@ -64,8 +99,8 @@ public class ApartmentOffer {
             return new ApartmentOffer(apartmentId, money(), availability());
         }
 
-        private ApartmentAvailability availability() {
-            return ApartmentAvailability.of(start, end);
+        private OfferAvailability availability() {
+            return OfferAvailability.from(start, end);
         }
 
         private Money money() {

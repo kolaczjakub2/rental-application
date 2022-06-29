@@ -1,5 +1,7 @@
 package com.jkolacz.rentalapplication.infrastructure.eventchannel.spring;
 
+import com.jkolacz.rentalapplication.domain.agreement.AgreementAccepted;
+import com.jkolacz.rentalapplication.domain.agreement.AgreementAcceptedTestFactory;
 import com.jkolacz.rentalapplication.domain.apartment.ApartmentBooked;
 import com.jkolacz.rentalapplication.domain.apartment.ApartmentBookedTestFactory;
 import com.jkolacz.rentalapplication.domain.booking.BookingAccepted;
@@ -10,9 +12,11 @@ import com.jkolacz.rentalapplication.domain.eventchannel.EventChannel;
 import com.jkolacz.rentalapplication.domain.hotel.HotelRoomBooked;
 import com.jkolacz.rentalapplication.domain.hotel.HotelRoomBookedTestFactory;
 import com.jkolacz.rentalapplication.domain.period.Period;
+import org.apache.commons.lang3.RandomUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationEventPublisher;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,12 +32,13 @@ class SpringEventChannelTest {
     private static final String APARTMENT_ID = UUID.randomUUID().toString();
     private static final String OWNER_ID = UUID.randomUUID().toString();
     private static final String TENANT_ID = UUID.randomUUID().toString();
-    private static final String HOTEL_ROOM_ID = UUID.randomUUID().toString();
+    private static final int HOTEL_ROOM_NUMBER = RandomUtils.nextInt();
     private static final String HOTEL_ID = UUID.randomUUID().toString();
     private static final Period PERIOD = new Period(LocalDate.now(), LocalDate.now().plusDays(10));
     private static final List<LocalDate> DAYS = asList(LocalDate.now(), LocalDate.now().plusDays(1));
     private static final String RENTAL_TYPE = "HOTEL_ROOM";
     private static final String RENTAL_PLACE_ID = UUID.randomUUID().toString();
+    private static final BigDecimal PRICE = BigDecimal.valueOf(42.13);
 
     private final ApplicationEventPublisher applicationEventPublisher = mock(ApplicationEventPublisher.class);
     private final EventChannel channel = new SpringEventChannel(applicationEventPublisher);
@@ -49,7 +54,7 @@ class SpringEventChannelTest {
 
     @Test
     void shouldPublishHotelRoomBooked() {
-        HotelRoomBooked event = HotelRoomBookedTestFactory.create(EVENT_ID, EVENT_CREATION_DATE_TIME, HOTEL_ROOM_ID, HOTEL_ID, TENANT_ID, DAYS);
+        HotelRoomBooked event = HotelRoomBookedTestFactory.create(EVENT_ID, EVENT_CREATION_DATE_TIME, HOTEL_ID, HOTEL_ROOM_NUMBER, TENANT_ID, DAYS);
 
         channel.publish(event);
 
@@ -68,6 +73,15 @@ class SpringEventChannelTest {
     @Test
     void shouldPublishBookingRejected() {
         BookingRejected event = BookingRejectedTestFactory.create(EVENT_ID, EVENT_CREATION_DATE_TIME, RENTAL_TYPE, RENTAL_PLACE_ID, TENANT_ID, DAYS);
+
+        channel.publish(event);
+
+        then(applicationEventPublisher).should().publishEvent(event);
+    }
+
+    @Test
+    void shouldPublishAgreementAccepted() {
+        AgreementAccepted event = AgreementAcceptedTestFactory.create(EVENT_ID, EVENT_CREATION_DATE_TIME, RENTAL_TYPE, RENTAL_PLACE_ID, OWNER_ID, TENANT_ID, DAYS, PRICE);
 
         channel.publish(event);
 

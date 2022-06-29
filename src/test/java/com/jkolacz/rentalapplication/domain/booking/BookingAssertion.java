@@ -1,5 +1,7 @@
 package com.jkolacz.rentalapplication.domain.booking;
 
+import com.jkolacz.rentalapplication.domain.money.Money;
+import com.jkolacz.rentalapplication.domain.period.Period;
 import org.assertj.core.api.Assertions;
 
 import java.time.LocalDate;
@@ -40,30 +42,24 @@ public class BookingAssertion {
         return this;
     }
 
-    public BookingAssertion isApartment() {
-        return hasRentalTypeEqualTo(RentalType.APARTMENT);
-    }
-
-    public BookingAssertion isHotelRoom() {
-        return hasRentalTypeEqualTo(RentalType.HOTEL_ROOM);
-    }
-
-    private BookingAssertion hasRentalTypeEqualTo(RentalType rentalType) {
-        Assertions.assertThat(actual).hasFieldOrPropertyWithValue("rentalType", rentalType);
+    @Deprecated
+    public BookingAssertion isEqualToBookingApartment(String rentalPlaceId, String tenantId, Period period) {
+        Assertions.assertThat(actual).isEqualTo(Booking.apartment(rentalPlaceId, tenantId, period));
         return this;
     }
 
-    public BookingAssertion hasRentalPlaceIdEqualTo(String expected) {
-        Assertions.assertThat(actual).hasFieldOrPropertyWithValue("rentalPlaceId", expected);
+    public BookingAssertion isEqualToBookingApartment(String rentalPlaceId, String tenantId, String ownerId, Money price, Period period) {
+        Assertions.assertThat(actual).isEqualTo(Booking.apartment(rentalPlaceId, tenantId, ownerId, price, period));
         return this;
     }
 
-    public BookingAssertion hasTenantIdEqualTo(String expected) {
-        Assertions.assertThat(actual).hasFieldOrPropertyWithValue("tenantId", expected);
+    @Deprecated
+    public BookingAssertion isEqualToBookingHotelRoom(String rentalPlaceId, String tenantId, List<LocalDate> days) {
+        Assertions.assertThat(actual).isEqualTo(Booking.hotelRoom(rentalPlaceId, tenantId, days));
         return this;
     }
 
-    public BookingAssertion containsAllDays(LocalDate... expected) {
+    BookingAssertion containsAllDays(LocalDate... expected) {
         return containsAllDays(asList(expected));
     }
 

@@ -2,11 +2,11 @@ package com.jkolacz.rentalapplication.application.apartmentoffer;
 
 import com.jkolacz.rentalapplication.domain.apartment.ApartmentNotFoundException;
 import com.jkolacz.rentalapplication.domain.apartment.ApartmentRepository;
-import com.jkolacz.rentalapplication.domain.apartmentoffer.ApartmentAvailabilityException;
 import com.jkolacz.rentalapplication.domain.apartmentoffer.ApartmentOffer;
 import com.jkolacz.rentalapplication.domain.apartmentoffer.ApartmentOfferAssertion;
 import com.jkolacz.rentalapplication.domain.apartmentoffer.ApartmentOfferRepository;
-import com.jkolacz.rentalapplication.domain.apartmentoffer.NotAllowedMoneyValueException;
+import com.jkolacz.rentalapplication.domain.money.NotAllowedMoneyValueException;
+import com.jkolacz.rentalapplication.domain.offeravailability.OfferAvailabilityException;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
@@ -24,12 +24,12 @@ import static org.mockito.Mockito.mock;
 class ApartmentOfferApplicationServiceTest {
     private static final String APARTMENT_ID = "1234";
     private static final BigDecimal PRICE = BigDecimal.valueOf(123);
-    private static final LocalDate START = LocalDate.of(2020, 10, 11);
-    private static final LocalDate END = LocalDate.of(2020, 10, 20);
+    private static final LocalDate START = LocalDate.of(2030, 10, 11);
+    private static final LocalDate END = LocalDate.of(2030, 10, 20);
 
     private final ApartmentOfferRepository apartmentOfferRepository = mock(ApartmentOfferRepository.class);
     private final ApartmentRepository apartmentRepository = mock(ApartmentRepository.class);
-    private final ApartmentOfferApplicationService service = new ApartmentOfferApplicationService(apartmentOfferRepository, apartmentRepository);
+    private final ApartmentOfferApplicationService service = new ApartmentOfferApplicationServiceFactory().apartmentOfferApplicationService(apartmentOfferRepository, apartmentRepository);
 
     @Test
     void shouldCreateApartmentOfferForExistingApartment() {
@@ -57,17 +57,13 @@ class ApartmentOfferApplicationServiceTest {
     }
 
     @Test
-    void shouldCreateApartmentOfferWithZeroPrice() {
+    void shouldRecognizePriceIsNotGreaterThanZero() {
         givenExistingApartment();
-        ArgumentCaptor<ApartmentOffer> captor = ArgumentCaptor.forClass(ApartmentOffer.class);
+        ApartmentOfferDto dto = new ApartmentOfferDto(APARTMENT_ID, BigDecimal.ZERO, START, END);
 
-        service.add(new ApartmentOfferDto(APARTMENT_ID, BigDecimal.ZERO, START, END));
+        NotAllowedMoneyValueException actual = assertThrows(NotAllowedMoneyValueException.class, () -> service.add(dto));
 
-        then(apartmentOfferRepository).should().save(captor.capture());
-        ApartmentOfferAssertion.assertThat(captor.getValue())
-                .hasApartmentIdEqualTo(APARTMENT_ID)
-                .hasPriceEqualTo(BigDecimal.ZERO)
-                .hasAvailabilityEqualTo(START, END);
+        assertThat(actual).hasMessage("Price 0 is not greater than zero.");
     }
 
     @Test
@@ -80,23 +76,23 @@ class ApartmentOfferApplicationServiceTest {
     }
 
     @Test
-    void shouldRecognizePriceLowerThanZero() {
-        givenExistingApartment();
-        ApartmentOfferDto dto = new ApartmentOfferDto(APARTMENT_ID, BigDecimal.valueOf(-13), START, END);
-
-        NotAllowedMoneyValueException actual = assertThrows(NotAllowedMoneyValueException.class, () -> service.add(dto));
-
-        assertThat(actual).hasMessage("Price -13 is lower than zero.");
-    }
-
-    @Test
     void shouldRecognizeThanStartIsAfterEnd() {
         givenExistingApartment();
         ApartmentOfferDto dto = new ApartmentOfferDto(APARTMENT_ID, PRICE, END, START);
 
-        ApartmentAvailabilityException actual = assertThrows(ApartmentAvailabilityException.class, () -> service.add(dto));
+        OfferAvailabilityException actual = assertThrows(OfferAvailabilityException.class, () -> service.add(dto));
 
-        assertThat(actual).hasMessage("Start date: 2020-10-20 of availability is after end date: 2020-10-11.");
+        assertThat(actual).hasMessage("Start date: 2030-10-20 of availability is after end date: 2030-10-11.");
+    }
+
+    @Test
+    void shouldRecognizeAvailabilityStartDateIsFromPast() {
+        givenExistingApartment();
+        ApartmentOfferDto dto = new ApartmentOfferDto(APARTMENT_ID, PRICE, LocalDate.of(2020, 10, 10), END);
+
+        OfferAvailabilityException actual = assertThrows(OfferAvailabilityException.class, () -> service.add(dto));
+
+        assertThat(actual).hasMessage("Start date: 2020-10-10 is past date.");
     }
 
     private ApartmentOfferDto givenApartmentOfferDto() {

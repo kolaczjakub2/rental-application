@@ -4,11 +4,11 @@ import com.google.common.collect.ImmutableMap;
 import com.jkolacz.rentalapplication.domain.hotel.Hotel;
 import com.jkolacz.rentalapplication.domain.hotel.HotelRepository;
 import com.jkolacz.rentalapplication.domain.hotel.HotelRoomNotFoundException;
-import com.jkolacz.rentalapplication.domain.hotelroomoffer.HotelRoomAvailabilityException;
+import com.jkolacz.rentalapplication.domain.offeravailability.OfferAvailabilityException;
 import com.jkolacz.rentalapplication.domain.hotelroomoffer.HotelRoomOffer;
 import com.jkolacz.rentalapplication.domain.hotelroomoffer.HotelRoomOfferAssertion;
 import com.jkolacz.rentalapplication.domain.hotelroomoffer.HotelRoomOfferRepository;
-import com.jkolacz.rentalapplication.domain.hotelroomoffer.NotAllowedMoneyValueException;
+import com.jkolacz.rentalapplication.domain.money.NotAllowedMoneyValueException;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
@@ -25,7 +25,6 @@ import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.mock;
 
 class HotelRoomOfferApplicationServiceTest {
-    private static final String HOTEL_ROOM_ID = "213131";
     private static final BigDecimal PRICE = BigDecimal.valueOf(42);
     private static final LocalDate START = LocalDate.of(2040, 12, 10);
     private static final LocalDate START_YEAR_LATER = LocalDate.of(2041, 12, 10);
@@ -48,7 +47,8 @@ class HotelRoomOfferApplicationServiceTest {
 
         then(hotelRoomOfferRepository).should().save(captor.capture());
         HotelRoomOfferAssertion.assertThat(captor.getValue())
-                .hasHotelRoomEqualTo(HOTEL_ROOM_ID)
+                .hasHotelIdEqualTo(HOTEL_ID)
+                .hasHotelRoomNumberEqualTo(ROOM_NUMBER)
                 .hasPriceEqualTo(PRICE)
                 .hasAvailabilityEqualTo(START, END);
     }
@@ -70,12 +70,12 @@ class HotelRoomOfferApplicationServiceTest {
 
         HotelRoomNotFoundException actual = assertThrows(HotelRoomNotFoundException.class, () -> service.add(givenHotelRoomOfferDto()));
 
-        assertThat(actual).hasMessage("Hotel room with id: " + HOTEL_ROOM_ID + " does not exist.");
+        assertThat(actual).hasMessage("The room with number: " + ROOM_NUMBER + " in hotel with id: " + HOTEL_ID + " does not exist.");
     }
 
     @Test
     void shouldRecognizePriceIsNotHigherThanZero() {
-        HotelRoomOfferDto dto = new HotelRoomOfferDto(HOTEL_ID, ROOM_NUMBER, HOTEL_ROOM_ID, BigDecimal.ZERO, START, END);
+        HotelRoomOfferDto dto = new HotelRoomOfferDto(HOTEL_ID, ROOM_NUMBER, BigDecimal.ZERO, START, END);
         givenExistingHotelRoom();
 
         NotAllowedMoneyValueException actual = assertThrows(NotAllowedMoneyValueException.class, () -> service.add(dto));
@@ -85,30 +85,30 @@ class HotelRoomOfferApplicationServiceTest {
 
     @Test
     void shouldRecognizeAvailabilityStartIsAfterEnd() {
-        HotelRoomOfferDto dto = new HotelRoomOfferDto(HOTEL_ID, ROOM_NUMBER, HOTEL_ROOM_ID, PRICE, END, START);
+        HotelRoomOfferDto dto = new HotelRoomOfferDto(HOTEL_ID, ROOM_NUMBER, PRICE, END, START);
         givenExistingHotelRoom();
 
-        HotelRoomAvailabilityException actual = assertThrows(HotelRoomAvailabilityException.class, () -> service.add(dto));
+        OfferAvailabilityException actual = assertThrows(OfferAvailabilityException.class, () -> service.add(dto));
 
         assertThat(actual).hasMessage("Start date: 2041-12-20 of availability is after end date: 2040-12-10.");
     }
 
     @Test
     void shouldRecognizeAvailabilityStartDateIsFromPast() {
-        HotelRoomOfferDto dto = new HotelRoomOfferDto(HOTEL_ID, ROOM_NUMBER, HOTEL_ROOM_ID, PRICE, LocalDate.of(2020, 10, 10), END);
+        HotelRoomOfferDto dto = new HotelRoomOfferDto(HOTEL_ID, ROOM_NUMBER, PRICE, LocalDate.of(2020, 10, 10), END);
         givenExistingHotelRoom();
 
-        HotelRoomAvailabilityException actual = assertThrows(HotelRoomAvailabilityException.class, () -> service.add(dto));
+        OfferAvailabilityException actual = assertThrows(OfferAvailabilityException.class, () -> service.add(dto));
 
         assertThat(actual).hasMessage("Start date: 2020-10-10 is past date.");
     }
 
     @Test
     void shouldRecognizeAvailabilityStartDateIsFromPastWhenEndNotGiven() {
-        HotelRoomOfferDto dto = new HotelRoomOfferDto(HOTEL_ID, ROOM_NUMBER, HOTEL_ROOM_ID, PRICE, LocalDate.of(2020, 10, 10), NO_DATE);
+        HotelRoomOfferDto dto = new HotelRoomOfferDto(HOTEL_ID, ROOM_NUMBER, PRICE, LocalDate.of(2020, 10, 10), NO_DATE);
         givenExistingHotelRoom();
 
-        HotelRoomAvailabilityException actual = assertThrows(HotelRoomAvailabilityException.class, () -> service.add(dto));
+        OfferAvailabilityException actual = assertThrows(OfferAvailabilityException.class, () -> service.add(dto));
 
         assertThat(actual).hasMessage("Start date: 2020-10-10 is past date.");
     }
@@ -117,19 +117,20 @@ class HotelRoomOfferApplicationServiceTest {
     void shouldCreateHotelRoomOfferWhenAvailabilityEndNotGiven() {
         ArgumentCaptor<HotelRoomOffer> captor = ArgumentCaptor.forClass(HotelRoomOffer.class);
         givenExistingHotelRoom();
-        HotelRoomOfferDto dto = new HotelRoomOfferDto(HOTEL_ID, ROOM_NUMBER, HOTEL_ROOM_ID, PRICE, START, NO_DATE);
+        HotelRoomOfferDto dto = new HotelRoomOfferDto(HOTEL_ID, ROOM_NUMBER, PRICE, START, NO_DATE);
 
         service.add(dto);
 
         then(hotelRoomOfferRepository).should().save(captor.capture());
         HotelRoomOfferAssertion.assertThat(captor.getValue())
-                .hasHotelRoomEqualTo(HOTEL_ROOM_ID)
+                .hasHotelIdEqualTo(HOTEL_ID)
+                .hasHotelRoomNumberEqualTo(ROOM_NUMBER)
                 .hasPriceEqualTo(PRICE)
                 .hasAvailabilityEqualTo(START, START_YEAR_LATER);
     }
 
     private HotelRoomOfferDto givenHotelRoomOfferDto() {
-        return new HotelRoomOfferDto(HOTEL_ID, ROOM_NUMBER, HOTEL_ROOM_ID, PRICE, START, END);
+        return new HotelRoomOfferDto(HOTEL_ID, ROOM_NUMBER, PRICE, START, END);
     }
 
     private void givenNotExistingHotelRoom() {

@@ -1,6 +1,7 @@
 package com.jkolacz.rentalapplication.infrastructure.persistence.jpa.booking;
 
 import com.jkolacz.rentalapplication.domain.booking.Booking;
+import com.jkolacz.rentalapplication.domain.booking.RentalPlaceIdentifier;
 import com.jkolacz.rentalapplication.domain.period.Period;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
@@ -45,10 +46,7 @@ class JpaBookingRepositoryIntegrationTest {
 
         assertThat(actual)
                 .isOpen()
-                .isHotelRoom()
-                .hasRentalPlaceIdEqualTo(rentalPlaceId)
-                .hasTenantIdEqualTo(TENANT_ID)
-                .containsAllDays(DAYS);
+                .isEqualToBookingHotelRoom(rentalPlaceId, TENANT_ID, DAYS);
     }
 
     @Test
@@ -70,6 +68,11 @@ class JpaBookingRepositoryIntegrationTest {
                 .anySatisfy(actualBooking -> assertThat(actualBooking).hasIdEqualTo(bookingId))
                 .anySatisfy(actualBooking -> assertThat(actualBooking).hasIdEqualTo(bookingId1))
                 .anySatisfy(actualBooking -> assertThat(actualBooking).hasIdEqualTo(bookingId2));
+    }
+
+    @Test
+    void shouldFindNoAcceptedBookingsByRentalPlaceIdentifier() {
+        repository.findAllAcceptedBy(RentalPlaceIdentifier.apartment(randomId()));
     }
 
     private String save(Booking booking) {

@@ -1,5 +1,6 @@
 package com.jkolacz.rentalapplication.application.apartment;
 
+import com.jkolacz.rentalapplication.domain.apartment.NewApartmentDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -17,4 +18,18 @@ public class ApartmentDto {
     private final String country;
     private final String description;
     private final Map<String, Double> spacesDefinition;
+
+    NewApartmentDto asNewApartmentDto() {
+        return NewApartmentDto.builder()
+                .ownerId(ownerId)
+                .street(street)
+                .postalCode(postalCode)
+                .houseNumber(houseNumber)
+                .apartmentNumber(apartmentNumber)
+                .city(city)
+                .country(country)
+                .description(description)
+                .spacesDefinition(spacesDefinition)
+                .build();
+    }
 }

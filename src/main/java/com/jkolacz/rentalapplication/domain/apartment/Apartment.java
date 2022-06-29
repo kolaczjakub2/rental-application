@@ -2,6 +2,8 @@ package com.jkolacz.rentalapplication.domain.apartment;
 
 import com.jkolacz.rentalapplication.domain.address.Address;
 import com.jkolacz.rentalapplication.domain.booking.Booking;
+import com.jkolacz.rentalapplication.domain.booking.RentalPlaceIdentifier;
+import com.jkolacz.rentalapplication.domain.money.Money;
 import com.jkolacz.rentalapplication.domain.period.Period;
 import com.jkolacz.rentalapplication.domain.space.Space;
 import com.jkolacz.rentalapplication.domain.space.SpacesFactory;
@@ -19,6 +21,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +29,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "APARTMENT")
-@SuppressWarnings("PMD.UnusedPrivateField")
+@SuppressWarnings({"PMD.UnusedPrivateField", "checkstyle:ClassFanOutComplexity"})
 public class Apartment {
     @Id
     @GeneratedValue
@@ -61,10 +64,33 @@ public class Apartment {
         this.description = description;
     }
 
-    public Booking book(String tenantId, Period period, ApartmentEventsPublisher apartmentEventsPublisher) {
+    Booking book(ApartmentBooking apartmentBooking) {
+        Period period = apartmentBooking.getPeriod();
+        String tenantId = apartmentBooking.getTenantId();
+
+        if (areNotInGivenPeriod(apartmentBooking.getBookings(), period)) {
+            apartmentBooking.getApartmentEventsPublisher().publishApartmentBooked(id(), ownerId, tenantId, period);
+
+            return Booking.apartment(id(), tenantId, ownerId, apartmentBooking.getPrice(), period);
+        } else {
+            throw new ApartmentBookingException();
+        }
+    }
+
+    @Deprecated
+    @SuppressWarnings("checkstyle:MagicNumber")
+    Booking book(List<Booking> bookings, String tenantId, Period period, ApartmentEventsPublisher apartmentEventsPublisher) {
         apartmentEventsPublisher.publishApartmentBooked(id(), ownerId, tenantId, period);
 
-        return Booking.apartment(id(), tenantId, period);
+        return Booking.apartment(id(), tenantId, ownerId, Money.of(BigDecimal.valueOf(42)), period);
+    }
+
+    private boolean areNotInGivenPeriod(List<Booking> bookings, Period period) {
+        return bookings.stream().noneMatch(booking -> booking.isFor(period));
+    }
+
+    RentalPlaceIdentifier rentalPlaceIdentifier() {
+        return RentalPlaceIdentifier.apartment(id());
     }
 
     public String id() {

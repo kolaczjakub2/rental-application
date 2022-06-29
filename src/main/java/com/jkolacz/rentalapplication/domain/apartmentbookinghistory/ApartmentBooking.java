@@ -1,6 +1,7 @@
 package com.jkolacz.rentalapplication.domain.apartmentbookinghistory;
 
 import com.jkolacz.rentalapplication.domain.period.Period;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 
 @Embeddable
 @SuppressWarnings("PMD.UnusedPrivateField")
+@EqualsAndHashCode
 public class ApartmentBooking {
     @Enumerated(EnumType.STRING)
     private BookingStep bookingStep;
